@@ -7,7 +7,7 @@
     <uses-sdk android:minSdkVersion="9" />
 
     <instrumentation
-        android:name="android.test.JUnitReportTestRunne"
+        android:name="android.test.JUnitReportTestRunner"
         android:targetPackage="edu.bjtu.nourriture_android_test" />
 
     <application
