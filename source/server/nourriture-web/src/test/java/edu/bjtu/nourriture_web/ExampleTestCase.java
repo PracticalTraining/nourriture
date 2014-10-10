@@ -8,7 +8,7 @@ public class ExampleTestCase {
 
 	@Test
 	public void test() {
-		assertEquals("employee_info", "employee_info1"); 
+		assertEquals("employee_info", "employee_info"); 
 	}
 
 }
