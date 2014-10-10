@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="myapp">
+<project name="${project.name}">
     
 	<!-- <property file="build.properties" /> -->
     <property name="jar.libs.dir" value="${jar.libs.dir}" />
