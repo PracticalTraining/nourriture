@@ -1,6 +1,5 @@
 package edu.bjtu.nourriture_android;
 
-import com.example.nourriture.R;
 
 import android.app.Activity;
 import android.os.Bundle;
