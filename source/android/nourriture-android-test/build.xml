@@ -90,6 +90,7 @@
     <import file="${sdk.dir}/tools/ant/build.xml" />
     
     <!-- It only instruments class files, not any external libs -->
+    <!--
     <emma enabled="true">
          <instr verbosity="${verbosity}"
                          mode="overwrite"
@@ -102,5 +103,5 @@
           <!-- TODO: exclusion filters on R*.class and allowing custom exclusion from
                        user defined file -->
 	</emma>
-
+    -->
 </project>
