@@ -97,11 +97,10 @@
                          instrpath="${out.absolute.dir}/classes"
                          outdir="${out.absolute.dir}/classes">
               <!-- DTM: 2011-12-23: added filter for R -->
-               <filter excludes="*.R" />
-               <filter excludes="*.R$*" />
-          </instr>
+              <!-- <filter excludes="*.R" />-->
+              <!-- <filter excludes="*.R$*" />-->
+          <!--</instr>-->
           <!-- TODO: exclusion filters on R*.class and allowing custom exclusion from
                        user defined file -->
-	</emma>
-    -->
+	<!--</emma>-->
 </project>
