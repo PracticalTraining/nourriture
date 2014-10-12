@@ -4,6 +4,6 @@ import android.test.InstrumentationTestCase;
 
 public class SampleTest extends InstrumentationTestCase{
 	public void testAdd(){
-		assertEquals(1, 1);
+		assertEquals(1, 2);
 	}
 }
