@@ -1,0 +1,12 @@
+<?xml version="1.0"?> 
+<!DOCTYPE hibernate-mapping PUBLIC 
+   "-//Hibernate/Hibernate Mapping DTD 2.0//EN" 
+   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+   <hibernate-mapping>
+       <class name="edu.bjtu.nourriture_web.bean.User">
+            <id name="id" type="int" column="id"> 
+     			<generator class="native" /> 
+            </id>
+            <property name="name" column="name" not-null="true"></property>   
+       </class>
+   </hibernate-mapping>  
