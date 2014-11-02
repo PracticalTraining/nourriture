@@ -7,6 +7,7 @@ public class TestService implements ITestService {
 	private ITestDao testDao;
 
 	public String test() {
+		testDao.test();
 		return "this is test function for ssh,run successfully";
 	}
 
