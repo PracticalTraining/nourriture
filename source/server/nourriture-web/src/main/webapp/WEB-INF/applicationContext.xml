@@ -63,11 +63,88 @@
 	<bean name="testDao" class="edu.bjtu.nourriture_web.dao.TestDao">
 	    <property name="sessionFactory" ref="sessionFactory"></property>  
 	</bean>
+	<bean name="adminDao" class="edu.bjtu.nourriture_web.dao.AdminDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
+	<bean name="commentsDao" class="edu.bjtu.nourriture_web.dao.CommentsDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
+	<bean name="cookingStepDao" class="edu.bjtu.nourriture_web.dao.CookingStepDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
+	<bean name="customerDao" class="edu.bjtu.nourriture_web.dao.CustomerDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
+	<bean name="flavourDao" class="edu.bjtu.nourriture_web.dao.FlavourDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
+	<bean name="foodDao" class="edu.bjtu.nourriture_web.dao.FoodDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
+	<bean name="foodCategoryDao" class="edu.bjtu.nourriture_web.dao.FoodCategoryDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
+	<bean name="locationDao" class="edu.bjtu.nourriture_web.dao.LocationDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
+	<bean name="manuFacturerDao" class="edu.bjtu.nourriture_web.dao.ManuFacturerDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
+	<bean name="recipeDao" class="edu.bjtu.nourriture_web.dao.RecipeDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
+	<bean name="recipeCategoryDao" class="edu.bjtu.nourriture_web.dao.RecipeCategoryDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
 
 	<!--业务逻辑类 -->
 	<bean id="testService"
 		class="edu.bjtu.nourriture_web.service.TestService">
 		<property name="testDao" ref="testDao"></property>
+	</bean>
+	<bean id="adminService"
+		class="edu.bjtu.nourriture_web.service.AdminService">
+		<property name="adminDao" ref="adminDao"></property>
+	</bean>
+	<bean id="commentsService"
+		class="edu.bjtu.nourriture_web.service.CommentsService">
+		<property name="commentsDao" ref="commentsDao"></property>
+	</bean>
+	<bean id="cookingStepService"
+		class="edu.bjtu.nourriture_web.service.CookingStepService">
+		<property name="cookingStepDao" ref="cookingStepDao"></property>
+	</bean>
+	<bean id="customerService"
+		class="edu.bjtu.nourriture_web.service.CustomerService">
+		<property name="customerDao" ref="customerDao"></property>
+	</bean>
+	<bean id="flavourService"
+		class="edu.bjtu.nourriture_web.service.FlavourService">
+		<property name="flavourDao" ref="flavourDao"></property>
+	</bean>
+	<bean id="foodCategoryService"
+		class="edu.bjtu.nourriture_web.service.FoodCategoryService">
+		<property name="foodCategoryDao" ref="foodCategoryDao"></property>
+	</bean>
+	<bean id="foodService"
+		class="edu.bjtu.nourriture_web.service.FoodService">
+		<property name="foodDao" ref="foodDao"></property>
+	</bean>
+	<bean id="locationService"
+		class="edu.bjtu.nourriture_web.service.LocationService">
+		<property name="locationDao" ref="locationDao"></property>
+	</bean>
+	<bean id="manuFacturerService"
+		class="edu.bjtu.nourriture_web.service.ManuFacturerService">
+		<property name="manuFacturerDao" ref="manuFacturerDao"></property>
+	</bean>
+	<bean id="recipeCategoryService"
+		class="edu.bjtu.nourriture_web.service.RecipeCategoryService">
+		<property name="recipeCategoryDao" ref="recipeCategoryDao"></property>
+	</bean>
+	<bean id="recipeService"
+		class="edu.bjtu.nourriture_web.service.RecipeService">
+		<property name="recipeDao" ref="recipeDao"></property>
 	</bean>
 
 	<!-- Action -->
