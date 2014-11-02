@@ -31,7 +31,17 @@
 		</property>
 		<property name="mappingResources">
 			<list>
-				<value>edu/bjtu/nourriture_web/bean/User.hbm.xml</value>
+				<value>edu/bjtu/nourriture_web/bean/Customer.hbm.xml</value>
+				<value>edu/bjtu/nourriture_web/bean/Admin.hbm.xml</value>
+				<value>edu/bjtu/nourriture_web/bean/ManuFacturer.hbm.xml</value>
+				<value>edu/bjtu/nourriture_web/bean/Location.hbm.xml</value>
+				<value>edu/bjtu/nourriture_web/bean/FoodCategory.hbm.xml</value>
+				<value>edu/bjtu/nourriture_web/bean/RecipeCategory.hbm.xml</value>
+				<value>edu/bjtu/nourriture_web/bean/Flavour.hbm.xml</value>
+				<value>edu/bjtu/nourriture_web/bean/Food.hbm.xml</value>
+				<value>edu/bjtu/nourriture_web/bean/Recipe.hbm.xml</value>
+				<value>edu/bjtu/nourriture_web/bean/Comments.hbm.xml</value>
+				<value>edu/bjtu/nourriture_web/bean/CookingStep.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -39,7 +49,7 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="show_sql">true</prop>
 				<prop key="hibernate.jdbc.batch_size">20</prop>
-				<prop key="hbm2ddl.auto">update</prop>  
+				<prop key="hibernate.hbm2ddl.auto">update</prop>  
 			</props>
 		</property>
 	</bean>

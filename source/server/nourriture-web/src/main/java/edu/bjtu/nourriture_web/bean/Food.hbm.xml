@@ -1,0 +1,20 @@
+<?xml version="1.0"?> 
+<!DOCTYPE hibernate-mapping PUBLIC 
+   "-//Hibernate/Hibernate Mapping DTD 2.0//EN" 
+   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+   <hibernate-mapping>
+       <class name="edu.bjtu.nourriture_web.bean.Food">
+            <id name="id" type="int" column="id"> 
+     			<generator class="native" /> 
+            </id>
+            <property name="name"></property>
+            <property name="price"></property>
+            <property name="categoryId"></property>
+            <property name="flavourId"></property>
+            <property name="manufacturerId"></property>
+            <property name="produceLocationId"></property>
+            <property name="buyLocationId"></property>
+            <property name="longitude"></property>
+            <property name="latitude"></property>
+       </class>
+   </hibernate-mapping>  

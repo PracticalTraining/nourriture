@@ -10,7 +10,7 @@ public class TestAction extends ActionSupport{
 
 	@Override
 	public String execute() throws Exception {
-		testService.test();
+		str = testService.test();
 		return SUCCESS;
 	}
 
