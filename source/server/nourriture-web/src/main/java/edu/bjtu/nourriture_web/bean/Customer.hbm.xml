@@ -12,6 +12,7 @@
             <property name="sex"></property>
             <property name="age"></property>
             <property name="interestFlavourIds"></property>    
-            <property name="interestCategoryIds"></property>   
+            <property name="interestFoodCategoryIds"></property>
+            <property name="interestRecipeCategoryIds"></property> 
        </class>
    </hibernate-mapping>  
