@@ -12,9 +12,11 @@ public class Customer{
 	/** 年龄 **/
 	private int age;
 	/** 感兴趣的口味 **/
-	private String interestFlavourIds;
+	private int interestFlavourIds;
 	/** 感兴趣的食物类别 **/
-	private String interestCategoryIds;
+	private int interestFoodCategoryIds;
+	/** 感兴趣的食谱类别 **/
+	private int interestRecipeCategoryIds;
 	
 	public int getId() {
 		return id;
@@ -46,16 +48,22 @@ public class Customer{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getInterestFlavourIds() {
+	public int getInterestFlavourIds() {
 		return interestFlavourIds;
 	}
-	public void setInterestFlavourIds(String interestFlavourIds) {
+	public void setInterestFlavourIds(int interestFlavourIds) {
 		this.interestFlavourIds = interestFlavourIds;
 	}
-	public String getInterestCategoryIds() {
-		return interestCategoryIds;
+	public int getInterestFoodCategoryIds() {
+		return interestFoodCategoryIds;
 	}
-	public void setInterestCategoryIds(String interestCategoryIds) {
-		this.interestCategoryIds = interestCategoryIds;
+	public void setInterestFoodCategoryIds(int interestFoodCategoryIds) {
+		this.interestFoodCategoryIds = interestFoodCategoryIds;
+	}
+	public int getInterestRecipeCategoryIds() {
+		return interestRecipeCategoryIds;
+	}
+	public void setInterestRecipeCategoryIds(int interestRecipeCategoryIds) {
+		this.interestRecipeCategoryIds = interestRecipeCategoryIds;
 	}
 }
