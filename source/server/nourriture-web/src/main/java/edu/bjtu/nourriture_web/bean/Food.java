@@ -1,25 +1,25 @@
 package edu.bjtu.nourriture_web.bean;
 
 public class Food {
-	/** 自增序列 **/
+	/** auto increment field (自增序列) **/
 	private int id;
-	/** 食物名 **/
+	/** food name (食物名) **/
 	private String name;
-	/** 价格 **/
+	/** price (价格) **/
 	private double price;
-	/** 种类 **/
+	/** category (种类) **/
 	private int categoryId;
-	/** 口味 **/
+	/** flavour (口味) **/
 	private int flavourId;
-	/** 制造商 **/
+	/** manufacturer (制造商) **/
 	private int manufacturerId;
-	/** 生产地 **/
+	/** produce area (生产地) **/
 	private int produceLocationId;
-	/** 购买地 **/
+	/** selling area (购买地) **/
 	private int buyLocationId;
-	/** 购买地经度 **/
+	/** selling area longitude (购买地经度) **/
 	private double longitude;
-	/** 购买地纬度 **/
+	/** selling area latitude (购买地纬度) **/
 	private double latitude;
 	
 	public int getId() {

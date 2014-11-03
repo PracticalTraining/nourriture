@@ -1,13 +1,13 @@
 package edu.bjtu.nourriture_web.bean;
 
 public class ManuFacturer {
-	/** 自增序列 **/
+	/** auto increment field (自增序列) **/
 	private int id;
-	/** 制造商用户名 **/
+	/** manufacturer name (制造商用户名) **/
 	private String name;
-	/** 制造商密码 **/
+	/** manufacturer password (制造商密码) **/
 	private String password;
-	/** 简介 **/
+	/** introduction (简介) **/
 	private String description;
 	
 	public int getId() {

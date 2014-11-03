@@ -1,15 +1,15 @@
 package edu.bjtu.nourriture_web.bean;
 
 public class Location {
-	/** 自增序列 **/
+	/** auto increment field (自增序列) **/
 	private int id;
-	/** 省级行政区 **/
+	/** province (省级行政区) **/
 	private String province;
-	/** 市级行政区 **/
+	/** city (市级行政区) **/
 	private String city;
-	/** 县级行政区 **/
+	/** district (县级行政区) **/
 	private String distrinct;
-	/** 县级以下详细地址 **/
+	/** detailed address (县级以下详细地址) **/
 	private String address;
 	
 	public int getId() {

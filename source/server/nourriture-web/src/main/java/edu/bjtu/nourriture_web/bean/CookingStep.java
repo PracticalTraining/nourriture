@@ -1,15 +1,17 @@
 package edu.bjtu.nourriture_web.bean;
 
 public class CookingStep {
-	/** 自增序列 **/
+	/** auto increment field (自增序列) **/
 	private int id;
-	/** 序号，如第一步，stepCount ＝ 1，第二步，stepCount ＝ 2 **/
+	/** step ,  e.g. first step, stepCount = 1, second step, stepCount = 2
+	 * (序号，如第一步，stepCount ＝ 1，第二步，stepCount ＝ 2)    
+	  **/
 	private int stepCount;
-	/** 描述 **/
+	/** description (描述) **/
 	private int description;
-	/** 图片在服务器的路径 **/
+	/** path of picture on server (图片在服务器的路径) **/
 	private String picture;
-	/** 描述的菜谱 **/
+	/** recipe described (描述的菜谱) **/
 	private int recipeId;
 	
 	public int getId() {

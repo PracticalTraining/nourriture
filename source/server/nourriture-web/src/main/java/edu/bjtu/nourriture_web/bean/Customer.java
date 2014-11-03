@@ -1,21 +1,21 @@
 package edu.bjtu.nourriture_web.bean;
 
 public class Customer{
-	/** 自增序列 **/
+	/** auto increment field (自增序列) **/
 	private int id;
-	/** 用户名 **/
+	/** user name (用户名) **/
 	private String name;
-	/** 密码 **/
+	/** password (密码) **/
 	private String password;
-	/** 性别 0:男，1女 **/
+	/** gender 0:male , 1: female  (性别 0:男，1:女) **/
 	private int sex;
-	/** 年龄 **/
+	/** age (年龄) **/
 	private int age;
-	/** 感兴趣的口味 **/
+	/** interesting flavour  (感兴趣的口味) **/
 	private int interestFlavourIds;
-	/** 感兴趣的食物类别 **/
+	/** interesting category of food (感兴趣的食物类别) **/
 	private int interestFoodCategoryIds;
-	/** 感兴趣的食谱类别 **/
+	/** interesting category of recipe  (感兴趣的食谱类别) **/
 	private int interestRecipeCategoryIds;
 	
 	public int getId() {
