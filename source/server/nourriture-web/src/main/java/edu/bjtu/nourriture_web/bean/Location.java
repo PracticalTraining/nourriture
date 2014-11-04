@@ -1,16 +1,16 @@
 package edu.bjtu.nourriture_web.bean;
 
 public class Location {
-	/** 自增序列 **/
+	/** auto increment field (自增序列) **/
 	private int id;
-	/** 省级行政区 **/
-	private String province;
-	/** 市级行政区 **/
-	private String city;
-	/** 县级行政区 **/
-	private String distrinct;
-	/** 县级以下详细地址 **/
-	private String address;
+	/** region which the location is in (所在行政区) **/
+	private int regionId;
+    /** detailAddress in the region (行政区以下详细地址) **/
+	private String detailAddress;
+	/** longitude (经度，无经纬度信息用404表示) **/
+	private double longitude;
+	/** latitude (纬度，无经纬度信息用404表示) **/
+	private double latitude;
 	
 	public int getId() {
 		return id;
@@ -18,28 +18,28 @@ public class Location {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getProvince() {
-		return province;
+	public int getRegionId() {
+		return regionId;
 	}
-	public void setProvince(String province) {
-		this.province = province;
+	public void setRegionId(int regionId) {
+		this.regionId = regionId;
 	}
-	public String getCity() {
-		return city;
+	public String getDetailAddress() {
+		return detailAddress;
 	}
-	public void setCity(String city) {
-		this.city = city;
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
 	}
-	public String getDistrinct() {
-		return distrinct;
+	public double getLongitude() {
+		return longitude;
 	}
-	public void setDistrinct(String distrinct) {
-		this.distrinct = distrinct;
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
-	public String getAddress() {
-		return address;
+	public double getLatitude() {
+		return latitude;
 	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}	
 }

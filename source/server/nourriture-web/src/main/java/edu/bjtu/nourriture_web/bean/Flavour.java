@@ -1,13 +1,13 @@
 package edu.bjtu.nourriture_web.bean;
 
 public class Flavour {
-	/** 自增序列 **/
+	/** auto increment field (自增序列) **/
 	private int id;
-	/** 口味名 **/
+	/** flavour name  (口味名) **/
 	private int name;
-	/** 是否是顶级分类 **/
+	/** is the top classification (是否是顶级分类) **/
 	private boolean topFlavour;
-	/** 上级口味 **/
+	/** superior flavour  (上级口味) **/
 	private int superiorFlavourId;
 	
 	public int getId() {

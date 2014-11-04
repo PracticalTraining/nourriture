@@ -1,11 +1,11 @@
 package edu.bjtu.nourriture_web.bean;
 
 public class Admin {
-	/** 自增序列 **/
+	/** auto increment field (自增序列) **/
 	private int id;
-	/** 用户名 **/
+	/** user name (用户名) **/
 	private String name;
-	/** 密码 **/
+	/** password (密码) **/
 	private String password;
 	
 	public int getId() {

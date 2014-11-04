@@ -1,19 +1,19 @@
 package edu.bjtu.nourriture_web.bean;
 
 public class Recipe {
-	/** 自增序列 **/
+	/** auto increment field (自增序列) **/
 	private int id;
-	/** 菜谱名 **/
+	/** recipe name(菜谱名) **/
 	private String name;
-	/** 菜谱描述 **/
+	/** recipe description (菜谱描述) **/
 	private String description;
-	/** 原料 **/
+	/** ingredient (原料) **/
 	private String ingredient;
-	/** 图片 **/
+	/** picture (图片) **/
 	private String picture;
-	/** 发布人 **/
+	/** publisher (发布人) **/
 	private int customerId;
-	/** 类别 **/
+	/** category (类别) **/
 	private int catogeryId;
 	
 	public int getId() {

@@ -42,6 +42,7 @@
 				<value>edu/bjtu/nourriture_web/bean/Recipe.hbm.xml</value>
 				<value>edu/bjtu/nourriture_web/bean/Comments.hbm.xml</value>
 				<value>edu/bjtu/nourriture_web/bean/CookingStep.hbm.xml</value>
+				<value>edu/bjtu/nourriture_web/bean/Region.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

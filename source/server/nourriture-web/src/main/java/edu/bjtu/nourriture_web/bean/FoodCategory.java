@@ -1,13 +1,13 @@
 package edu.bjtu.nourriture_web.bean;
 
 public class FoodCategory {
-	/** 自增序列 **/
+	/** auto increment field (自增序列) **/
 	private int id;
-	/** 类别名 **/
+	/** category name (类别名) **/
 	private int name;
-	/** 是否是顶级分类 **/
+	/** Is the top classification (是否是顶级分类) **/
 	private boolean topCategory;
-	/** 上级分类，用于自关联 **/
+	/** superior flavour , used for relating automatically (上级分类，用于自关联) **/
 	private int superiorCategoryId;
 	
 	public int getId() {
