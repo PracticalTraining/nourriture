@@ -7,6 +7,8 @@ public class ManuFacturer {
 	private String name;
 	/** manufacturer password (制造商密码) **/
 	private String password;
+	/** manufacturer company's name (制造商公司名) **/
+	private String companyName;
 	/** introduction (简介) **/
 	private String description;
 	
@@ -27,6 +29,12 @@ public class ManuFacturer {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 	public String getDescription() {
 		return description;

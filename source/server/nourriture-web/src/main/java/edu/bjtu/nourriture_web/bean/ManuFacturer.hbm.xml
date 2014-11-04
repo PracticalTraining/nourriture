@@ -9,6 +9,7 @@
             </id>
             <property name="name"></property>
             <property name="password"></property>
+            <property name="companyName"></property>
             <property name="description"></property>
        </class>
    </hibernate-mapping>  
