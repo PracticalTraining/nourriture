@@ -14,7 +14,5 @@
             <property name="manufacturerId"></property>
             <property name="produceLocationId"></property>
             <property name="buyLocationId"></property>
-            <property name="longitude"></property>
-            <property name="latitude"></property>
        </class>
    </hibernate-mapping>  

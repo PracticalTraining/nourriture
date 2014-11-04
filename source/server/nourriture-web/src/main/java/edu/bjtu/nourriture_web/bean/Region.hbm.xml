@@ -3,13 +3,12 @@
    "-//Hibernate/Hibernate Mapping DTD 2.0//EN" 
    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
    <hibernate-mapping>
-       <class name="edu.bjtu.nourriture_web.bean.Location">
+       <class name="edu.bjtu.nourriture_web.bean.Region">
             <id name="id" type="int" column="id"> 
      			<generator class="native" /> 
             </id>
-            <property name="regionId"></property>
-            <property name="detailAddress"></property>
-            <property name="longitude"></property>
-            <property name="latitude"></property>
+            <property name="name"></property>
+            <property name="province"></property>
+            <property name="superiorRegionId"></property>
        </class>
    </hibernate-mapping>  
