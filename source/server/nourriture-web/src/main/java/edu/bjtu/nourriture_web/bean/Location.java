@@ -7,9 +7,9 @@ public class Location {
 	private int regionId;
     /** detailAddress in the region (行政区以下详细地址) **/
 	private String detailAddress;
-	/** longitude (经度) **/
+	/** longitude (经度，无经纬度信息用404表示) **/
 	private double longitude;
-	/** latitude (纬度) **/
+	/** latitude (纬度，无经纬度信息用404表示) **/
 	private double latitude;
 	
 	public int getId() {
