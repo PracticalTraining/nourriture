@@ -155,5 +155,8 @@
 	</bean>
 
 	<!-- more bean definitions go here -->
-
+    <bean id="adminRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.AdminRestfulService">
+		<property name="adminDao" ref="adminDao"></property>
+	</bean>
 </beans>
