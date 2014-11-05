@@ -7,6 +7,8 @@ public class Food {
 	private String name;
 	/** price (价格) **/
 	private double price;
+	/** picture (图片) **/
+	private String picture;
 	/** category (种类) **/
 	private int categoryId;
 	/** flavour (口味) **/
@@ -65,5 +67,11 @@ public class Food {
 	}
 	public void setBuyLocationId(int buyLocationId) {
 		this.buyLocationId = buyLocationId;
+	}
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 }

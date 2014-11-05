@@ -9,6 +9,7 @@
             </id>
             <property name="name"></property>
             <property name="price"></property>
+            <property name="picture"></property>
             <property name="categoryId"></property>
             <property name="flavourId"></property>
             <property name="manufacturerId"></property>
