@@ -5,6 +5,9 @@ import java.lang.reflect.Field;
 import com.google.gson.JsonObject;
 
 public class JsonUtil {
+	/*
+	 * transform java bean to json
+	 */
 	public static JsonObject beanToJson(Object bean){
 		JsonObject json = new JsonObject();
 		Field[] fields = bean.getClass().getDeclaredFields();
