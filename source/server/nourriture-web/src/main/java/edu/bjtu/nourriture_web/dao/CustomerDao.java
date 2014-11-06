@@ -20,4 +20,9 @@ public class CustomerDao extends HibernateDaoSupport implements ICustomerDao {
 		return !list.isEmpty();
 	}
 
+	public List<Customer> searchByName(String name) {
+		List<Customer> list = getHibernateTemplate().find("from Customer where name like ?", "%" + name + "%");
+		return list;
+	}
+
 }

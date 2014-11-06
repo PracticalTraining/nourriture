@@ -4,7 +4,7 @@ public class Flavour {
 	/** auto increment field (自增序列) **/
 	private int id;
 	/** flavour name  (口味名) **/
-	private int name;
+	private String name;
 	/** is the top classification (是否是顶级分类) **/
 	private boolean topFlavour;
 	/** superior flavour  (上级口味) **/
@@ -16,10 +16,10 @@ public class Flavour {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getName() {
+	public String getName() {
 		return name;
 	}
-	public void setName(int name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	public boolean isTopFlavour() {

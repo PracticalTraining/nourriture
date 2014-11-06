@@ -162,5 +162,8 @@
 	<bean id="customerRestfulService"
 		class="edu.bjtu.nourriture_web.restfulservice.CustomerRestfulService">
 		<property name="customerDao" ref="customerDao"></property>
+		<property name="flavourDao" ref="flavourDao"></property>
+		<property name="foodCategoryDao" ref="foodCategoryDao"></property>
+		<property name="recipeCategoryDao" ref="recipeCategoryDao"></property>
 	</bean>
 </beans>
