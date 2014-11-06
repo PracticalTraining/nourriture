@@ -159,4 +159,8 @@
 		class="edu.bjtu.nourriture_web.restfulservice.AdminRestfulService">
 		<property name="adminDao" ref="adminDao"></property>
 	</bean>
+	<bean id="customerRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.CustomerRestfulService">
+		<property name="customerDao" ref="customerDao"></property>
+	</bean>
 </beans>
