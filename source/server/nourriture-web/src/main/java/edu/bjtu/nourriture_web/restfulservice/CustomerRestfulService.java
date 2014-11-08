@@ -2,10 +2,13 @@ package edu.bjtu.nourriture_web.restfulservice;
 
 import java.util.List;
 
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
@@ -13,7 +16,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import edu.bjtu.nourriture_web.bean.Customer;
-import edu.bjtu.nourriture_web.bean.Flavour;
 import edu.bjtu.nourriture_web.common.JsonUtil;
 import edu.bjtu.nourriture_web.common.RestfulServiceUtil;
 import edu.bjtu.nourriture_web.idao.ICustomerDao;
@@ -22,15 +24,20 @@ import edu.bjtu.nourriture_web.idao.IFoodCategoryDao;
 import edu.bjtu.nourriture_web.idao.IRecipeCategoryDao;
 
 @Path("customer")
-@Produces("application/json")
+@Produces("application/json;charset=UTF-8")
 public class CustomerRestfulService {
+	//dao
 	private ICustomerDao customerDao;
 	private IFlavourDao flavourDao;
 	private IFoodCategoryDao foodCategoryDao;
 	private IRecipeCategoryDao recipeCategoryDao;
+	//direct children links
 	private JsonArray customerChildrenLinks;
 	private JsonArray searchChildrenLinks;
+	private JsonArray loginChildrenLinks;
+	private JsonArray idChildrenLinks;
 	
+	//get set method for spring IOC
 	public ICustomerDao getCustomerDao() {
 		return customerDao;
 	}
@@ -70,7 +77,13 @@ public class CustomerRestfulService {
 		RestfulServiceUtil.addChildrenLinks(customerChildrenLinks, "search customer", "/search", "GET");
 		RestfulServiceUtil.addChildrenLinks(customerChildrenLinks, "login", "/login", "GET");
 		RestfulServiceUtil.addChildrenLinks(customerChildrenLinks, "get customer according to id", "/{id}", "GET");
+		RestfulServiceUtil.addChildrenLinks(customerChildrenLinks, "update customer according to id", "/{id}", "PUT");
 		searchChildrenLinks = new JsonArray();
+		loginChildrenLinks = new JsonArray();
+		idChildrenLinks = new JsonArray();
+		RestfulServiceUtil.addChildrenLinks(idChildrenLinks, "get customer interests", "/{interest}", "GET");
+		RestfulServiceUtil.addChildrenLinks(idChildrenLinks, "add a customer interest", "/{interest}", "POST");
+		RestfulServiceUtil.addChildrenLinks(idChildrenLinks, "delete a customer interest", "/{interest}", "DELETE");
 	}
 
 	/** add a customer **/
@@ -128,59 +141,149 @@ public class CustomerRestfulService {
 		}
 		JsonArray customers = new JsonArray();
 		for(Customer customer : list){
-			JsonObject jCustomer = JsonUtil.beanToJson(customer);
+			JsonObject jCustomer = transformCustomer(customer);
 			customers.add(jCustomer);
-			//get flavour infomations
-			String str = customer.getInterestFlavourIds();
-			JsonArray flavours = new JsonArray();
-			if(str != null && !str.equals(""))
-			{
-				String[] ids = str.split(",");
-				for(String id : ids){
-					int fId = Integer.parseInt(id);
-					JsonObject flavour = JsonUtil.beanToJson(flavourDao.getById(fId));
-					flavour.remove("topFlavour");
-					flavour.remove("superiorFlavourId");
-					flavours.add(flavour);
-				}
-			}
-			jCustomer.remove("interestFlavours");
-			jCustomer.add("interestFlavours", flavours);
-			//get food category informations
-			str = customer.getInterestFoodCategoryIds();
-			JsonArray foodCategorys = new JsonArray();
-			if(str != null && !str.equals(""))
-			{
-				String[] ids = str.split(",");
-				for(String id : ids){
-					int fId = Integer.parseInt(id);
-					JsonObject foodCategory = JsonUtil.beanToJson(foodCategoryDao.getById(fId));
-					foodCategory.remove("topCategory");
-					foodCategory.remove("superiorCategoryId");
-					flavours.add(foodCategory);
-				}
-			}
-			jCustomer.remove("interestfoodCategorys");
-			jCustomer.add("interestfoodCategorys", foodCategorys);
-			//get food recipe informations
-			str = customer.getInterestRecipeCategoryIds();
-			JsonArray recipeCategorys = new JsonArray();
-			if(str != null && !str.equals(""))
-			{
-				String[] ids = str.split(",");
-				for(String id : ids){
-					int fId = Integer.parseInt(id);
-					JsonObject recipeCategory = JsonUtil.beanToJson(recipeCategoryDao.getById(fId));
-					recipeCategory.remove("topCategory");
-					recipeCategory.remove("superiorCategoryId");
-					flavours.add(recipeCategory);
-				}
-			}
-			jCustomer.remove("interestrecipeCategorys");
-			jCustomer.add("interestrecipeCategorys", recipeCategorys);
 		}
 		ret.add("customers", customers);
 		ret.add("links", searchChildrenLinks);
 		return ret.toString();
+	}
+	
+	/** login by name and password **/
+	@GET
+	@Path("login")
+	public String login(@QueryParam("name")String name,@QueryParam("password") String password){
+		JsonObject ret = new JsonObject();
+		//define error code
+		final int ERROR_CODE_USER_NOT_EXIST = -1;
+		final int ERROR_CODE_PASSWORD_NOT_VALIDATED = -2;
+		final int ERROR_CODE_BAD_PARAM = -3;
+		//check request parameters
+		if(name == null || name.equals("") || password == null || password.equals("")){
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", loginChildrenLinks);
+			return ret.toString();
+		}
+		//check if user name is exsit
+		if(!customerDao.isNameExist(name)){
+			ret.addProperty("errorCode", ERROR_CODE_USER_NOT_EXIST);
+			ret.add("links", loginChildrenLinks);
+			return ret.toString();
+		}
+		//check password
+		int loginResult = customerDao.login(name, password);
+		if(loginResult == -1){
+			ret.addProperty("errorCode", ERROR_CODE_PASSWORD_NOT_VALIDATED);
+			ret.add("links", loginChildrenLinks);
+			return ret.toString();
+		}
+		ret.addProperty("id", loginResult);
+		ret.add("links", loginChildrenLinks);
+		return ret.toString();
+	}
+	
+	/** get detail information about a customer by id **/
+	@GET
+	@Path("{id}")
+	public String getById(@PathParam("id") int id){
+		JsonObject ret = new JsonObject();
+		//select from database
+		Customer customer = customerDao.getById(id);
+		if(customer != null)
+		{
+			JsonObject jCustomer = transformCustomer(customer);
+			ret.add("customer", jCustomer);
+		}
+		ret.add("links", idChildrenLinks);
+		return ret.toString();
+	}
+	
+	/** update customer basic information **/
+	@PUT
+	@Path("{id}")
+	public String updateCustomer(@PathParam("id") int id,
+			@FormParam("age") @DefaultValue("-1") int age,
+			@FormParam("sex") @DefaultValue("-1") int sex){
+		JsonObject ret = new JsonObject();
+		//define error code
+		final int ERROR_CODE_USER_NOT_EXIST = -1;
+		final int ERROR_CODE_BAD_PARAM = -2;
+		//check request parameters
+		if((sex != 0 && sex != 1) || age < 0){
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", idChildrenLinks);
+			return ret.toString();
+		}
+		//check if user exsit
+		Customer customer = customerDao.getById(id);
+		if(customer == null){
+			ret.addProperty("errorCode", ERROR_CODE_USER_NOT_EXIST);
+			ret.add("links", idChildrenLinks);
+			return ret.toString();
+		}
+		customer.setAge(age);
+		customer.setSex(sex);
+		customerDao.update(customer);
+		ret.addProperty("result", 0);
+		ret.add("links", idChildrenLinks);
+		return ret.toString();
+	}
+	
+	/**
+	 * transform customer from bean to json,customer interest ids will be transformed to detail information
+	 * @param bean form of customer
+	 * @return json form of customer
+	 */
+	private JsonObject transformCustomer(Customer customer){
+		JsonObject jCustomer = JsonUtil.beanToJson(customer);
+		//get flavour infomations
+		String str = customer.getInterestFlavourIds();
+		JsonArray flavours = new JsonArray();
+		if(str != null && !str.equals(""))
+		{
+			String[] ids = str.split(",");
+			for(String id : ids){
+				int fId = Integer.parseInt(id);
+				JsonObject flavour = JsonUtil.beanToJson(flavourDao.getById(fId));
+				flavour.remove("topFlavour");
+				flavour.remove("superiorFlavourId");
+				flavours.add(flavour);
+			}
+		}
+		jCustomer.remove("interestFlavourIds");
+		jCustomer.add("interestFlavours", flavours);
+		//get food category informations
+		str = customer.getInterestFoodCategoryIds();
+		JsonArray foodCategorys = new JsonArray();
+		if(str != null && !str.equals(""))
+		{
+			String[] ids = str.split(",");
+			for(String id : ids){
+				int fId = Integer.parseInt(id);
+				JsonObject foodCategory = JsonUtil.beanToJson(foodCategoryDao.getById(fId));
+				foodCategory.remove("topCategory");
+				foodCategory.remove("superiorCategoryId");
+				flavours.add(foodCategory);
+			}
+		}
+		jCustomer.remove("interestFoodCategoryIds");
+		jCustomer.add("interestFoodCategorys", foodCategorys);
+		//get food recipe informations
+		str = customer.getInterestRecipeCategoryIds();
+		JsonArray recipeCategorys = new JsonArray();
+		if(str != null && !str.equals(""))
+		{
+			String[] ids = str.split(",");
+			for(String id : ids){
+				int fId = Integer.parseInt(id);
+				JsonObject recipeCategory = JsonUtil.beanToJson(recipeCategoryDao.getById(fId));
+				recipeCategory.remove("topCategory");
+				recipeCategory.remove("superiorCategoryId");
+				flavours.add(recipeCategory);
+			}
+		}
+		jCustomer.remove("interestRecipeCategoryIds");
+		jCustomer.add("interestRecipeCategorys", recipeCategorys);
+		return jCustomer;
 	}
 }

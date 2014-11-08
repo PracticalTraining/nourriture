@@ -25,4 +25,17 @@ public class CustomerDao extends HibernateDaoSupport implements ICustomerDao {
 		return list;
 	}
 
+	public int login(String name, String password) {
+		List<Customer> list = getHibernateTemplate().find("from Customer where name = ? and password = ?",name,password);
+		return list.isEmpty() ? -1 : list.get(0).getId();
+	}
+
+	public Customer getById(int id) {
+		return getHibernateTemplate().get(Customer.class, id);
+	}
+
+	public void update(Customer customer) {
+		getHibernateTemplate().saveOrUpdate(customer);
+	}
+
 }
