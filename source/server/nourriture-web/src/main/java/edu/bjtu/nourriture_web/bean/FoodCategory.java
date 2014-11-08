@@ -4,7 +4,7 @@ public class FoodCategory {
 	/** auto increment field (自增序列) **/
 	private int id;
 	/** category name (类别名) **/
-	private int name;
+	private String name;
 	/** Is the top classification (是否是顶级分类) **/
 	private boolean topCategory;
 	/** superior flavour , used for relating automatically (上级分类，用于自关联) **/
@@ -16,10 +16,10 @@ public class FoodCategory {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getName() {
+	public String getName() {
 		return name;
 	}
-	public void setName(int name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	public boolean isTopCategory() {

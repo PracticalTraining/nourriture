@@ -1,7 +1,10 @@
 package edu.bjtu.nourriture_web.restfulservice;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -36,6 +39,7 @@ public class CustomerRestfulService {
 	private JsonArray searchChildrenLinks;
 	private JsonArray loginChildrenLinks;
 	private JsonArray idChildrenLinks;
+	private JsonArray interestChildrenLinks;
 	
 	//get set method for spring IOC
 	public ICustomerDao getCustomerDao() {
@@ -84,6 +88,7 @@ public class CustomerRestfulService {
 		RestfulServiceUtil.addChildrenLinks(idChildrenLinks, "get customer interests", "/{interest}", "GET");
 		RestfulServiceUtil.addChildrenLinks(idChildrenLinks, "add a customer interest", "/{interest}", "POST");
 		RestfulServiceUtil.addChildrenLinks(idChildrenLinks, "delete a customer interest", "/{interest}", "DELETE");
+		interestChildrenLinks = new JsonArray();
 	}
 
 	/** add a customer **/
@@ -226,6 +231,174 @@ public class CustomerRestfulService {
 		customerDao.update(customer);
 		ret.addProperty("result", 0);
 		ret.add("links", idChildrenLinks);
+		return ret.toString();
+	}
+	
+	/** add a interest **/
+	@POST
+	@Path("{id}/{interest}")
+	public String addInterest(@PathParam("id") int id,@PathParam("interest") String interest,
+			@FormParam("id") int InId){
+		JsonObject ret = new JsonObject();
+		//define error code
+		final int ERROR_CODE_USER_NOT_EXIST = -1;
+		final int ERROR_CODE_INTEREST_NOT_EXIST = -2;
+		final int ERROR_CODE_INTEREST_ALREADY_SET = -3;
+		final int ERROR_CODE_BAD_PARAM = -4;
+		//check request parameters
+		if(id <= 0 || 
+				interest == null || interest.equals("") || 
+				(!interest.equals("flavour") && !interest.equals("foodCategory") && !interest.equals("recipeCategory")) ||
+				InId < 0){
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", interestChildrenLinks);
+			return ret.toString();
+		}
+		//check if user exsit
+		Customer customer = customerDao.getById(id);
+		if(customer == null){
+			ret.addProperty("errorCode", ERROR_CODE_USER_NOT_EXIST);
+			ret.add("links", interestChildrenLinks);
+			return ret.toString();
+		}
+		//check if interest exsit
+		if((interest.equals("flavour") && flavourDao.getById(InId) == null) ||
+				(interest.equals("foodCategory") && foodCategoryDao.getById(InId) == null) ||
+				(interest.equals("recipeCategory") && recipeCategoryDao.getById(InId) == null)){
+			ret.addProperty("errorCode", ERROR_CODE_INTEREST_NOT_EXIST);
+			ret.add("links", interestChildrenLinks);
+			return ret.toString();
+		}
+		//check if interest is already setted
+		if(interest.equals("flavour")){
+			String sIds = customer.getInterestFlavourIds();
+			if(sIds != null){
+				if(sIds.contains(String.valueOf(InId))){
+					ret.addProperty("errorCode", ERROR_CODE_INTEREST_ALREADY_SET);
+					ret.add("links", interestChildrenLinks);
+					return ret.toString();
+				}
+			}
+		} else if(interest.equals("foodCategory")){
+			String sIds = customer.getInterestFoodCategoryIds();
+			if(sIds != null){
+				if(sIds.contains(String.valueOf(InId))){
+					ret.addProperty("errorCode", ERROR_CODE_INTEREST_ALREADY_SET);
+					ret.add("links", interestChildrenLinks);
+					return ret.toString();
+				}
+			}
+		} else {
+			String sIds = customer.getInterestRecipeCategoryIds();
+			if(sIds != null){
+				if(sIds.contains(String.valueOf(InId))){
+					ret.addProperty("errorCode", ERROR_CODE_INTEREST_ALREADY_SET);
+					ret.add("links", interestChildrenLinks);
+					return ret.toString();
+				}
+			}
+		}
+		//add interest to database
+		if(interest.equals("flavour")){
+			String sIds = customer.getInterestFlavourIds();
+			if(sIds == null || sIds.equals(""))
+				sIds = String.valueOf(InId);
+			else
+				sIds += ("," + InId);
+			customer.setInterestFlavourIds(sIds);
+		} else if(interest.equals("foodCategory")){
+			String sIds = customer.getInterestFoodCategoryIds();
+			if(sIds == null || sIds.equals(""))
+				sIds = String.valueOf(InId);
+			else
+				sIds += ("," + InId);
+			customer.setInterestFoodCategoryIds(sIds);
+		} else {
+			String sIds = customer.getInterestRecipeCategoryIds();
+			if(sIds == null || sIds.equals(""))
+				sIds = String.valueOf(InId);
+			else
+				sIds += ("," + InId);
+			customer.setInterestRecipeCategoryIds(sIds);
+		}
+		customerDao.update(customer);
+		ret.addProperty("result", 0);
+		ret.add("links", interestChildrenLinks);
+		return ret.toString();
+	}
+	
+	/** delete a interest **/
+	@DELETE
+	@Path("{id}/{interest}")
+	public String deleteInterest(@PathParam("id") int id,@PathParam("interest") String interest,
+			@FormParam("id") int InId){
+		JsonObject ret = new JsonObject();
+		//define error code
+		final int ERROR_CODE_USER_NOT_EXIST = -1;
+		final int ERROR_CODE_INTEREST_NOT_EXIST = -2;
+		final int ERROR_CODE_INTEREST_NOT_SET = -3;
+		final int ERROR_CODE_BAD_PARAM = -4;
+		//check request parameters
+		if(id <= 0 || 
+				interest == null || interest.equals("") || 
+				(!interest.equals("flavour") && !interest.equals("foodCategory") && !interest.equals("recipeCategory")) ||
+				InId < 0){
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", interestChildrenLinks);
+			return ret.toString();
+		}
+		//check if user exsit
+		Customer customer = customerDao.getById(id);
+		if(customer == null){
+			ret.addProperty("errorCode", ERROR_CODE_USER_NOT_EXIST);
+			ret.add("links", interestChildrenLinks);
+			return ret.toString();
+		}
+		//check if interest exsit
+		if((interest.equals("flavour") && flavourDao.getById(InId) == null) ||
+				(interest.equals("foodCategory") && foodCategoryDao.getById(InId) == null) ||
+				(interest.equals("recipeCategory") && recipeCategoryDao.getById(InId) == null)){
+			ret.addProperty("errorCode", ERROR_CODE_INTEREST_NOT_EXIST);
+			ret.add("links", interestChildrenLinks);
+			return ret.toString();
+		}
+		//check if interest is already setted
+		if(interest.equals("flavour")){
+			String sIds = customer.getInterestFlavourIds();
+			if(sIds == null || sIds.equals("") || !sIds.contains(String.valueOf(InId))){
+				ret.addProperty("errorCode", ERROR_CODE_INTEREST_NOT_SET);
+				ret.add("links", interestChildrenLinks);
+				return ret.toString();
+			}
+		} else if(interest.equals("foodCategory")){
+			String sIds = customer.getInterestFoodCategoryIds();
+			if(sIds == null || sIds.equals("") || !sIds.contains(String.valueOf(InId))){
+				ret.addProperty("errorCode", ERROR_CODE_INTEREST_NOT_SET);
+				ret.add("links", interestChildrenLinks);
+				return ret.toString();
+			}
+		} else {
+			String sIds = customer.getInterestRecipeCategoryIds();
+			if(sIds == null || sIds.equals("") || !sIds.contains(String.valueOf(InId))){
+				ret.addProperty("errorCode", ERROR_CODE_INTEREST_NOT_SET);
+				ret.add("links", interestChildrenLinks);
+				return ret.toString();
+			}
+		}
+		//delete interest to database
+		if(interest.equals("flavour")){
+			String sIds = customer.getInterestFlavourIds();
+			customer.setInterestFlavourIds(RestfulServiceUtil.deleteIdFromIdList(InId, sIds));
+		} else if(interest.equals("foodCategory")){
+			String sIds = customer.getInterestFoodCategoryIds();
+			customer.setInterestFoodCategoryIds(RestfulServiceUtil.deleteIdFromIdList(InId, sIds));
+		} else {
+			String sIds = customer.getInterestRecipeCategoryIds();
+			customer.setInterestRecipeCategoryIds(RestfulServiceUtil.deleteIdFromIdList(InId, sIds));
+		}
+		customerDao.update(customer);
+		ret.addProperty("result", 0);
+		ret.add("links", interestChildrenLinks);
 		return ret.toString();
 	}
 	
