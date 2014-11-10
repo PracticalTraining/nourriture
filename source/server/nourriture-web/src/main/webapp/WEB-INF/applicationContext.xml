@@ -166,4 +166,10 @@
 		<property name="foodCategoryDao" ref="foodCategoryDao"></property>
 		<property name="recipeCategoryDao" ref="recipeCategoryDao"></property>
 	</bean>
+	<bean id="manuFacturerRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.ManuFacturerRestfulService">
+		<property name="manuFacturerDao" ref="manuFacturerDao"></property>
+		<property name="foodDao" ref="foodDao"></property>
+		<property name="commentsDao" ref="commentsDao"></property>
+	</bean>
 </beans>
