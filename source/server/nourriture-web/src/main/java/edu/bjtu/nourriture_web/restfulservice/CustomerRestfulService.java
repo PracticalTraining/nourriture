@@ -1,7 +1,5 @@
 package edu.bjtu.nourriture_web.restfulservice;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.ws.rs.DELETE;
@@ -232,6 +230,94 @@ public class CustomerRestfulService {
 		ret.addProperty("result", 0);
 		ret.add("links", idChildrenLinks);
 		return ret.toString();
+	}
+
+	/** get insterests **/
+	@GET
+	@Path("{id}/{interest}")
+	public String getInterests(@PathParam("id") int id,@PathParam("interest") String interest){
+		JsonObject ret = new JsonObject();
+		//define error code
+	    final int ERROR_CODE_USER_NOT_EXIST = -1;
+	    final int ERROR_CODE_INTEREST_NOT_SET = -2;
+	    final int ERROR_CODE_BAD_PARAM = -3;
+	    //check request parameters
+	    if(id <= 0 || 
+				interest == null || interest.equals("") || 
+				(!interest.equals("flavour") && !interest.equals("foodCategory") && !interest.equals("recipeCategory"))){
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", interestChildrenLinks);
+			return ret.toString();
+		}
+	    //check if user exsit
+  		Customer customer = customerDao.getById(id);
+  		if(customer == null){
+  			ret.addProperty("errorCode", ERROR_CODE_USER_NOT_EXIST);
+  			ret.add("links", interestChildrenLinks);
+  			return ret.toString();
+  		}
+  	    //check if interest is not setted
+		if(interest.equals("flavour")){
+			String sIds = customer.getInterestFlavourIds();
+			if(sIds == null || sIds.equals("")){
+				ret.addProperty("errorCode", ERROR_CODE_INTEREST_NOT_SET);
+				ret.add("links", interestChildrenLinks);
+				return ret.toString();
+			} else {
+				JsonArray flavours = new JsonArray();
+				String[] ids = sIds.split(",");
+				for(String sid : ids){
+					int fId = Integer.parseInt(sid);
+					JsonObject flavour = JsonUtil.beanToJson(flavourDao.getById(fId));
+					flavour.remove("topFlavour");
+					flavour.remove("superiorFlavourId");
+					flavours.add(flavour);
+				}
+				ret.add("flavours", flavours);
+				ret.add("links", interestChildrenLinks);
+				return ret.toString();
+			}
+		} else if(interest.equals("foodCategory")){
+			String sIds = customer.getInterestFoodCategoryIds();
+			if(sIds == null || sIds.equals("")){
+				ret.addProperty("errorCode", ERROR_CODE_INTEREST_NOT_SET);
+				ret.add("links", interestChildrenLinks);
+				return ret.toString();
+			} else {
+				JsonArray foodCategorys = new JsonArray();
+				String[] ids = sIds.split(",");
+				for(String sid : ids){
+					int fId = Integer.parseInt(sid);
+					JsonObject foodCategory = JsonUtil.beanToJson(foodCategoryDao.getById(fId));
+					foodCategory.remove("topCategory");
+					foodCategory.remove("superiorCategoryId");
+					foodCategorys.add(foodCategory);
+				}
+				ret.add("foodCategorys", foodCategorys);
+				ret.add("links", interestChildrenLinks);
+				return ret.toString();
+			}
+		} else {
+			String sIds = customer.getInterestRecipeCategoryIds();
+			if(sIds == null || sIds.equals("")){
+				ret.addProperty("errorCode", ERROR_CODE_INTEREST_NOT_SET);
+				ret.add("links", interestChildrenLinks);
+				return ret.toString();
+			} else {
+				JsonArray recipeCategorys = new JsonArray();
+				String[] ids = sIds.split(",");
+				for(String sid : ids){
+					int fId = Integer.parseInt(sid);
+					JsonObject recipeCategory = JsonUtil.beanToJson(recipeCategoryDao.getById(fId));
+					recipeCategory.remove("topCategory");
+					recipeCategory.remove("superiorCategoryId");
+					recipeCategorys.add(recipeCategory);
+				}
+				ret.add("foodCategorys", recipeCategorys);
+				ret.add("links", interestChildrenLinks);
+				return ret.toString();
+			}
+		}
 	}
 	
 	/** add a interest **/
