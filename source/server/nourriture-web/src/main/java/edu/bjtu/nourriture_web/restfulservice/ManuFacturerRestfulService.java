@@ -139,7 +139,7 @@ public class ManuFacturerRestfulService {
 		}
 
 		// search in the database
-		List<ManuFacturer> list = manuFacturerDao.searchByName(companyName);
+		List<ManuFacturer> list = manuFacturerDao.searchByCompanyName(companyName);
 		if (list.isEmpty()) {
 			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
 			ret.add("links", searchChildrenLinks);
