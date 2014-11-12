@@ -192,8 +192,36 @@ public class ManuFacturerTestCase {
 		response = jsonParser.parse(
 							rs.put(String.class,params)
 						).getAsJsonObject();
-		System.out.println(response);
 		Assert.assertEquals(response.get("result").getAsInt(),0);
+		
+		//test case: return with error ERROR_CODE_USER_NOT_EXSIT
+		final int ERROR_CODE_USER_NOT_EXSIT = -1;
+		rs = client.resource(WSROOT + "/20000");
+		//get response
+		response = jsonParser.parse(
+							rs.get(String.class)
+						).getAsJsonObject();
+		//define parameters
+		companyName = "bjtu" + UUID.randomUUID();
+		params = new MultivaluedMapImpl();
+		params.add("companyName", companyName);
+		//get response
+		response = jsonParser.parse(
+							rs.put(String.class,params)
+						).getAsJsonObject();
+		Assert.assertEquals(response.get("errorCode").getAsInt(),ERROR_CODE_USER_NOT_EXSIT);
+		
+		//test case: return with error ERROR_CODE_BAD_PARAM
+		final int ERROR_CODE_BAD_PARAM = -2;
+		//get response
+		response = jsonParser.parse(
+							rs.get(String.class)
+						).getAsJsonObject();
+		//get response
+		response = jsonParser.parse(
+							rs.put(String.class)
+						).getAsJsonObject();
+		Assert.assertEquals(response.get("errorCode").getAsInt(),ERROR_CODE_BAD_PARAM);
 	}
 	
 	/** getFoodCount **/
@@ -201,6 +229,39 @@ public class ManuFacturerTestCase {
 	public void getFoodCount(){
 		WebResource rs = client.resource(WSROOT + "/2/foodCount");
 		//test case: return successful
+		//get response
+		JsonObject response = jsonParser.parse(
+							rs.get(String.class)
+						).getAsJsonObject();
+		Assert.assertNotNull(response.get("foodCount"));
+		
+		//test case: return with error ERROR_CODE_USER_NOT_EXSIT
+		final int ERROR_CODE_USER_NOT_EXSIT = -1;
+		rs = client.resource(WSROOT + "/20000/foodCount");
+		response = jsonParser.parse(
+				rs.get(String.class)
+			).getAsJsonObject();
+		Assert.assertEquals(response.get("errorCode"),ERROR_CODE_USER_NOT_EXSIT);
+	}
+	
+	/** get score **/
+	@Test
+	public void getSore(){
+		WebResource rs = client.resource(WSROOT + "/2/score");
+		//test case: return successful
+		//get response
+		JsonObject response = jsonParser.parse(
+							rs.get(String.class)
+						).getAsJsonObject();
+		Assert.assertNotNull(response.get("sum"));
+		
+		//test case: return with error ERROR_CODE_USER_NOT_EXSIT
+		final int ERROR_CODE_USER_NOT_EXSIT = -1;
+		rs = client.resource(WSROOT + "/20000/score");
+		response = jsonParser.parse(
+				rs.get(String.class)
+			).getAsJsonObject();
+		Assert.assertEquals(response.get("errorCode"),ERROR_CODE_USER_NOT_EXSIT);
 	}
 }
 
