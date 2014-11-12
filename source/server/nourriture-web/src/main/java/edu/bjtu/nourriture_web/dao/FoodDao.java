@@ -32,7 +32,7 @@ public class FoodDao extends HibernateDaoSupport implements IFoodDao {
 	/** search the food according to manufacturerId **/
 	public List<Food> getByManufacturerId(int manufacturerId) {
 		List<Food> list = getHibernateTemplate().find(
-				"from food where manufacturerId=?", manufacturerId);
+				"from Food where manufacturerId=?", manufacturerId);
 		return list;
 	}
 }
