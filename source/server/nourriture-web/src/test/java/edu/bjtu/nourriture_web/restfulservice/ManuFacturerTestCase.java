@@ -199,7 +199,7 @@ public class ManuFacturerTestCase {
 	/** getFoodCount **/
 	@Test
 	public void getFoodCount(){
-		WebResource rs = client.resource(WSROOT + "/2/getFoodCount");
+		WebResource rs = client.resource(WSROOT + "/2/foodCount");
 		//test case: return successful
 	}
 }
