@@ -88,7 +88,7 @@ public class ManuFacturerTestCase {
 		//test case: return with error ERROR_CODE_NO_RESULT
 		final int ERROR_CODE_NO_RESULT = -1;
 		//define parameters
-		companyName = "bjtu";
+		companyName = UUID.randomUUID().toString();
 		//get response
 		response = jsonParser.parse(
 				rs.queryParam("companyName", companyName)
@@ -194,6 +194,13 @@ public class ManuFacturerTestCase {
 						).getAsJsonObject();
 		System.out.println(response);
 		Assert.assertEquals(response.get("result").getAsInt(),0);
+	}
+	
+	/** getFoodCount **/
+	@Test
+	public void getFoodCount(){
+		WebResource rs = client.resource(WSROOT + "/2/getFoodCount");
+		//test case: return successful
 	}
 }
 
