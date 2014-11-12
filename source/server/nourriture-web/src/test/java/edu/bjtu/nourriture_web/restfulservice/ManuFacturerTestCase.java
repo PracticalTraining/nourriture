@@ -71,19 +71,96 @@ public class ManuFacturerTestCase {
 	    Assert.assertEquals(response.get("errorCode").getAsInt(),ERROR_CODE_BAD_PARAM);
 	}
 	
-	/** search manufacturer by name **/
-	public void serach(){
+	/** search manufacturer by companyName **/
+	@Test
+	public void serachByCompanyName(){
 		WebResource rs = client.resource(WSROOT + "/search");
 		//test case: return successful
 		//define parameters
-		String companyName = "bj";
+		String companyName = "Manu";
 		rs.queryParam("companyName", companyName);
 		//get response
 		JsonObject response = jsonParser.parse(
 				    rs.get(String.class)
 				).getAsJsonObject();
-		Assert.assertNotNull(response.get(""));
+		System.out.println(response.toString());
+		Assert.assertNotNull(response.get("manufacturers"));
 		
+		//test case: return with error ERROR_CODE_NO_RESULT
+		final int ERROR_CODE_NO_RESULT = -1;
+		//define parameters
+		companyName = "bjtu";
+		rs.queryParam("companyName", companyName);
+		//get response
+		response = jsonParser.parse(
+				    rs.get(String.class)
+				).getAsJsonObject();
+		Assert.assertEquals(response.get("errorCode").getAsInt(),ERROR_CODE_NO_RESULT);
+		
+		//test case: return with error ERROR_CODE_NO_RESULT
+		final int ERROR_CODE_BAD_PARAM = -2;
+		//define parameters
+		companyName = null;
+		rs.queryParam("companyName", companyName);
+		//get response
+		response = jsonParser.parse(
+				    rs.get(String.class)
+				).getAsJsonObject();
+		Assert.assertEquals(response.get("errorCode").getAsInt(),ERROR_CODE_BAD_PARAM);
+	}
+	
+	/** login **/
+	@Test
+	public void login(){
+		WebResource rs = client.resource(WSROOT + "/login");
+		//test case: return successful
+		//define parameters
+		String name = "myManuFacturer";
+		String password = "1234567";
+		rs.queryParam("name", name);
+		rs.queryParam("password", password);
+		//get response
+		JsonObject response = jsonParser.parse(
+						    rs.get(String.class)
+						).getAsJsonObject();
+		Assert.assertNotNull(response.get("id"));
+		
+		//test case: return with error ERROR_CODE_NO_RESULT
+		final int ERROR_CODE_NO_USER = -1;
+		//define parameters
+		name = "myManuFacturer1";
+		password = "1234567";
+		rs.queryParam("name", name);
+		rs.queryParam("password", password);
+		//get response
+		response = jsonParser.parse(
+			    rs.get(String.class)
+			).getAsJsonObject();
+		Assert.assertEquals(response.get("errorCode").getAsInt(),ERROR_CODE_NO_USER);
+		
+		//test case: return with error ERROR_CODE_NOT_VALIDATED
+		final int ERROR_CODE_NOT_VALIDATED = -2;
+		//define parameters
+		name = "myManuFacturer";
+		password = "12345678";
+		rs.queryParam("name", name);
+		rs.queryParam("password", password);
+		//get response
+		response = jsonParser.parse(
+			    rs.get(String.class)
+			).getAsJsonObject();
+		Assert.assertEquals(response.get("errorCode").getAsInt(),ERROR_CODE_NOT_VALIDATED);
+		
+		//test case: return with error ERROR_CODE_NOT_VALIDATED
+		final int ERROR_CODE_BAD_PARAM = -3;
+		//define parameters
+		rs.queryParam("name", null);
+		rs.queryParam("password", null);
+		//get response
+		response = jsonParser.parse(
+			    rs.get(String.class)
+			).getAsJsonObject();
+		Assert.assertEquals(response.get("errorCode").getAsInt(),ERROR_CODE_BAD_PARAM);
 	}
 }
 
