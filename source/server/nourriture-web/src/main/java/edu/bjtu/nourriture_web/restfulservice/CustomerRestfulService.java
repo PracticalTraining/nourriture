@@ -212,7 +212,7 @@ public class CustomerRestfulService {
 		final int ERROR_CODE_USER_NOT_EXIST = -1;
 		final int ERROR_CODE_BAD_PARAM = -2;
 		//check request parameters
-		if((sex != 0 && sex != 1) || age < 0){
+		if((sex != 0 && sex != 1) && age < 0){
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
@@ -224,8 +224,10 @@ public class CustomerRestfulService {
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
 		}
-		customer.setAge(age);
-		customer.setSex(sex);
+		if(age >= 0)
+			customer.setAge(age);
+		if(sex == 0 || sex == 1)
+			customer.setSex(sex);
 		customerDao.update(customer);
 		ret.addProperty("result", 0);
 		ret.add("links", idChildrenLinks);

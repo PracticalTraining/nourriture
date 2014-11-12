@@ -309,7 +309,7 @@ public class ManuFacturerRestfulService {
 	@Path("{id}")
 	public String updateManuFacturer(@PathParam("id") int id,
 			@FormParam("companyName") @DefaultValue("") String companyName,
-			@FormParam("sex") @DefaultValue("") String description) {
+			@FormParam("description") @DefaultValue("") String description) {
 		JsonObject ret = new JsonObject();
 
 		// define error code
@@ -317,8 +317,8 @@ public class ManuFacturerRestfulService {
 		final int ERROR_CODE_BAD_PARAM = -2;
 
 		// check request parameters
-		if (companyName == null || companyName.equals("")
-				|| description == null || description.equals("")) {
+		if ((companyName == null || companyName.equals(""))
+				&& (description == null || description.equals(""))) {
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
@@ -331,8 +331,10 @@ public class ManuFacturerRestfulService {
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
 		}
-		manuFacturer.setCompanyName(companyName);
-		manuFacturer.setDescription(description);
+		if (companyName == null || companyName.equals(""))
+			manuFacturer.setCompanyName(companyName);
+		if (description == null || description.equals(""))
+			manuFacturer.setDescription(description);
 		manuFacturerDao.update(manuFacturer);
 		ret.addProperty("result", 0);
 		ret.add("links", idChildrenLinks);
