@@ -25,6 +25,7 @@ public class ManuFacturerTestCase {
 	/** parse string to json **/
 	private final JsonParser jsonParser = new JsonParser();
 
+	/** add manuFacturer */
 	@Test
 	public void addManuFacturer(){
 		WebResource rs = client.resource(WSROOT);
@@ -68,6 +69,21 @@ public class ManuFacturerTestCase {
 			    rs.post(String.class,params)
 			).getAsJsonObject();
 	    Assert.assertEquals(response.get("errorCode").getAsInt(),ERROR_CODE_BAD_PARAM);
+	}
+	
+	/** search manufacturer by name **/
+	public void serach(){
+		WebResource rs = client.resource(WSROOT + "/search");
+		//test case: return successful
+		//define parameters
+		String name = "manu";
+		rs.queryParam("name", name);
+		//get response
+		JsonObject response = jsonParser.parse(
+				    rs.get(String.class)
+				).getAsJsonObject();
+		Assert.assertNotNull(response.get(""));
+		
 	}
 }
 
