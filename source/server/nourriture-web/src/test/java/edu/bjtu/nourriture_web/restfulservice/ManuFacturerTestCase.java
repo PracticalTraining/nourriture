@@ -173,5 +173,27 @@ public class ManuFacturerTestCase {
 						).getAsJsonObject();
 		Assert.assertNull(response.get("manuFacturer"));
 	}
+	
+	/** update information by id **/
+	@Test
+	public void updateById(){
+		WebResource rs = client.resource(WSROOT + "/2");
+		
+		//test case: return successful
+		//get response
+		JsonObject response = jsonParser.parse(
+							rs.get(String.class)
+						).getAsJsonObject();
+		//define parameters
+		String companyName = "bjtu" + UUID.randomUUID();
+		MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+		params.add("companyName", companyName);
+		//get response
+		response = jsonParser.parse(
+							rs.put(String.class,params)
+						).getAsJsonObject();
+		System.out.println(response);
+		Assert.assertEquals(response.get("result").getAsInt(),0);
+	}
 }
 
