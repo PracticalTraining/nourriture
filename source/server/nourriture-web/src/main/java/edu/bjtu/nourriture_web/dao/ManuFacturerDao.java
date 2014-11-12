@@ -20,7 +20,7 @@ public class ManuFacturerDao extends HibernateDaoSupport implements IManuFacture
 	}
 	
 	public List<ManuFacturer> searchByName(String name) {
-		List<ManuFacturer> list = getHibernateTemplate().find("from ManuFacturer where name like ?", "%" + name + "%");
+		List<ManuFacturer> list = getHibernateTemplate().find("from ManuFacturer where companyName like ?", "%" + name + "%");
 		return list;
 	}
 	
