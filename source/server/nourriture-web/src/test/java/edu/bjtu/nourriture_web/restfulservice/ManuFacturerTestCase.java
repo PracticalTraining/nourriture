@@ -76,8 +76,8 @@ public class ManuFacturerTestCase {
 		WebResource rs = client.resource(WSROOT + "/search");
 		//test case: return successful
 		//define parameters
-		String name = "manu";
-		rs.queryParam("name", name);
+		String companyName = "bj";
+		rs.queryParam("companyName", companyName);
 		//get response
 		JsonObject response = jsonParser.parse(
 				    rs.get(String.class)
