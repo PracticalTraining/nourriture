@@ -180,4 +180,12 @@
 		<property name="locationDao" ref="locationDao"></property>
 		<property name="regionDao" ref="regionDao"></property>
 	</bean>
+		<bean id="foodRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.FoodRestfulService">
+		<property name="foodDao" ref="foodDao"></property>
+		<property name="foodCategoryDao" ref="foodCategoryDao"></property>
+		<property name="flavourDao" ref="flavourDao"></property>
+		<property name="manuFacturerDao" ref="manuFacturerDao"></property>
+		<property name="locationDao" ref="locationDao"></property>
+	</bean>
 </beans>

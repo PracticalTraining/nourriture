@@ -18,6 +18,8 @@ public interface ILocationDao {
 	Location getById(int id);
 	/** update location **/
 	void update(Location location);
-	/**delete location by id**/
+	/** delete location by id**/
     void deletebyid(int id);
+    /** check location is exsit **/
+    boolean isLocationExist(int locationId);
 }

@@ -18,10 +18,15 @@ import com.google.gson.JsonObject;
 
 import edu.bjtu.nourriture_web.bean.Customer;
 import edu.bjtu.nourriture_web.bean.Food;
+import edu.bjtu.nourriture_web.bean.FoodCategory;
+import edu.bjtu.nourriture_web.bean.Flavour;
+import edu.bjtu.nourriture_web.common.RestfulServiceUtil;
 import edu.bjtu.nourriture_web.idao.ICustomerDao;
 import edu.bjtu.nourriture_web.idao.IFlavourDao;
 import edu.bjtu.nourriture_web.idao.IFoodCategoryDao;
 import edu.bjtu.nourriture_web.idao.IFoodDao;
+import edu.bjtu.nourriture_web.idao.ILocationDao;
+import edu.bjtu.nourriture_web.idao.IManuFacturerDao;
 
 import javax.imageio.*;
 
@@ -31,6 +36,9 @@ public class FoodRestfulService {
 	private IFoodDao foodDao;
 	private IFlavourDao flavourDao;
 	private ICustomerDao customerDao;
+	private IFoodCategoryDao foodCategoryDao;
+	private IManuFacturerDao manuFacturerDao;
+	private ILocationDao locationDao;
 	//direct children links
 	private JsonArray foodChildrenLinks;
 	private JsonArray idChildrenLinks;
@@ -58,9 +66,33 @@ public class FoodRestfulService {
 	public void setFlavourDao(IFlavourDao flavourDao) {
 		this.flavourDao = flavourDao;
 	}
+	public IFoodCategoryDao getFoodCategoryDao() {
+		return foodCategoryDao;
+	}
+
+	public void setFoodCategoryDao(IFoodCategoryDao foodCategoryDao) {
+		this.foodCategoryDao = foodCategoryDao;
+	}
+	public IManuFacturerDao getManuFacturerDao() {
+		return manuFacturerDao;
+	}
+
+	public void setManuFacturerDao(IManuFacturerDao manuFacturerDao) {
+		this.manuFacturerDao = manuFacturerDao;
+	}
+	public ILocationDao getLocationDao() {
+		return locationDao;
+    }
+    public void setLocationDao(ILocationDao locationDao) {
+		this.locationDao = locationDao;
+    }
 	//initialize direct children links
 	{
 		foodChildrenLinks = new JsonArray();
+		RestfulServiceUtil.addChildrenLinks(foodChildrenLinks, "search food by id", "/{id}", "GET");
+		RestfulServiceUtil.addChildrenLinks(foodChildrenLinks, "update the food by id", "/{id}", "PUT");
+		RestfulServiceUtil.addChildrenLinks(foodChildrenLinks, "delete the food by id", "/{id}", "DELETE");
+		idChildrenLinks = new JsonArray();
 	}
 	/** add a food **/
 	@POST
@@ -74,6 +106,8 @@ public class FoodRestfulService {
 		final int ERROR_CODE_CATEGORY_NOT_EXIST = -2;
 		final int ERROR_CODE_FLAVOUR_NOT_EXIST = -3;
 		final int ERROR_CODE_MANUFACTURER_NOT_EXIST = -4;
+		final int ERROR_CODE_PRODUCELOCATION_NOT_EXIST = -5;
+		final int ERROR_CODE_BUYLOCATION_NOT_EXIST = -6;
 		
 		//check request parameters
 		if(name == null || name.equals("") || price < 0|| categoryId < 0 || flavourId < 0
@@ -83,20 +117,33 @@ public class FoodRestfulService {
 			return ret.toString();
 		}
 		//check if  category is not exist
-		if(!foodDao.isCategoryExist(categoryId)){
+		if(!foodCategoryDao.isCategoryExist(categoryId)){
 			ret.addProperty("errorCode", ERROR_CODE_CATEGORY_NOT_EXIST);
 			ret.add("links", foodChildrenLinks);
 			return ret.toString();
 		}
 		//check if flavour is not exist
-		if(!foodDao.isFlavourExist(flavourId)){
+		if(!flavourDao.isFlavourExist(flavourId)){
 			ret.addProperty("errorCode", ERROR_CODE_FLAVOUR_NOT_EXIST);
 			ret.add("links", foodChildrenLinks);
 			return ret.toString();
 		}
 		//check if manufacture is not exist
-		if(!foodDao.isManufacturerExist(manufacturerId)){
+		
+		if(!manuFacturerDao.isManuFacturerExist(manufacturerId)){
 			ret.addProperty("errorCode", ERROR_CODE_MANUFACTURER_NOT_EXIST);
+			ret.add("links", foodChildrenLinks);
+			return ret.toString();
+		}
+		//check if producelocation is not exist
+		if(!locationDao.isLocationExist(produceLocationId)){
+			ret.addProperty("errorCode", ERROR_CODE_PRODUCELOCATION_NOT_EXIST);
+			ret.add("links", foodChildrenLinks);
+			return ret.toString();
+		}
+		//check if buylocation is not exist
+		if(!locationDao.isLocationExist(buyLocationId)){
+			ret.addProperty("errorCode", ERROR_CODE_BUYLOCATION_NOT_EXIST);
 			ret.add("links", foodChildrenLinks);
 			return ret.toString();
 		}
@@ -155,7 +202,7 @@ public class FoodRestfulService {
 			return ret.toString();
 		}
 		//check if  category is not exist
-		if(!foodDao.isCategoryExist(categoryId)){
+		if(!foodCategoryDao.isCategoryExist(categoryId)){
 			ret.addProperty("errorCode", ERROR_CODE_CATEGORY_NOT_EXIST);
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
