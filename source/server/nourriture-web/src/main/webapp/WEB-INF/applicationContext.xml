@@ -97,6 +97,9 @@
 	<bean name="recipeCategoryDao" class="edu.bjtu.nourriture_web.dao.RecipeCategoryDao">
 	    <property name="sessionFactory" ref="sessionFactory"></property>  
 	</bean>
+	<bean name="regionDao" class="edu.bjtu.nourriture_web.dao.RegionDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
 
 	<!--业务逻辑类 -->
 	<bean id="testService"
@@ -172,8 +175,9 @@
 		<property name="foodDao" ref="foodDao"></property>
 		<property name="commentsDao" ref="commentsDao"></property>
 	</bean>
-		<bean id="locationRestfulService"
+	<bean id="locationRestfulService"
 		class="edu.bjtu.nourriture_web.restfulservice.LocationRestfulService">
-		<property name="locationDao" ref="lacationDao"></property>
+		<property name="locationDao" ref="locationDao"></property>
+		<property name="regionDao" ref="regionDao"></property>
 	</bean>
 </beans>

@@ -45,11 +45,14 @@ public class FoodDao extends HibernateDaoSupport implements IFoodDao {
 	public void update(Food food) {
 		getHibernateTemplate().saveOrUpdate(food);
 	}
-	/**search the food**/
-	public List<Food> getBySift(double fromPrice,double toPrice,int categoryId,int flavourId,int produceRegionId,int buyRegionId){
-		List<Food> list = getHibernateTemplate().find("from Food where price > ? AND price < ? AND categoryId = ? AND flavourId = ? AND produceRegion = ?"
-				+ "AND buyRegionId = ?"
-				,fromPrice,toPrice,categoryId,flavourId,produceRegionId,buyRegionId);
+	/**sift the food by price**/
+	public List<Food> siftByPrice(double fromPrice,double toPrice){
+		List<Food> list = getHibernateTemplate().find("from Food where price > ? AND price < ?",fromPrice,toPrice);
+		return list;
+	}
+	/** sift the food by categoryId **/
+	public List<Food> siftByCategoryId(List<Food> list,int categoryId){
+		list = getHibernateTemplate().find("from list where categoryId = ?",categoryId);
 		return list;
 	}
 }

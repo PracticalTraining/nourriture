@@ -215,7 +215,7 @@ public class FoodRestfulService {
 		String[] flavourids = flavourIds.split(",");
 		String[] produceregionids = produceRegionIds.split(",");
 		String[] buyregionids = buyRegionIds.split(",");
-		List<Food> listResult/* = new List<Food>*/;
+		List<Food> listResult = foodDao.siftByPrice(fromPrice, toPrice);
 		return ("aa");
 	   
 	}

@@ -22,8 +22,9 @@ public interface IFoodDao {
 	void deletebyid(int id);
 	/** update the food **/
 	void update(Food food);
-	/** search by sift **/
-	List<Food> getBySift(double fromPrice,double toPrice,int categoryId,int flavourId,int produceRegionId,int buyRegionId);
-	/** initial the List **/
+	/** sift the food by price **/
+	List<Food> siftByPrice(double fromPrice,double toPrice);
+	/** sift the food by categoryId **/
+	List<Food> siftByCategoryId(List<Food> list,int categoryId);
 	//List<Food> initialList();
 }
