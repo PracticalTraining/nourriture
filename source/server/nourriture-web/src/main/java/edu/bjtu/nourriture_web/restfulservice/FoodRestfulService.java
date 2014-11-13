@@ -1,6 +1,10 @@
 package edu.bjtu.nourriture_web.restfulservice;
 
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -15,6 +19,8 @@ import com.google.gson.JsonObject;
 import edu.bjtu.nourriture_web.bean.Customer;
 import edu.bjtu.nourriture_web.bean.Food;
 import edu.bjtu.nourriture_web.idao.ICustomerDao;
+import edu.bjtu.nourriture_web.idao.IFlavourDao;
+import edu.bjtu.nourriture_web.idao.IFoodCategoryDao;
 import edu.bjtu.nourriture_web.idao.IFoodDao;
 
 import javax.imageio.*;
@@ -23,6 +29,8 @@ import javax.imageio.*;
 public class FoodRestfulService {
 	//dao
 	private IFoodDao foodDao;
+	private IFlavourDao flavourDao;
+	private ICustomerDao customerDao;
 	//direct children links
 	private JsonArray foodChildrenLinks;
 	private JsonArray idChildrenLinks;
@@ -35,13 +43,28 @@ public class FoodRestfulService {
 	public void setFoodDao(IFoodDao foodDao) {
 		this.foodDao = foodDao;
 	}
-	{
+	public ICustomerDao getCustomerDao() {
+		return customerDao;
+	}
+	
+	public void setCustomerDao(ICustomerDao customerDao) {
+		this.customerDao = customerDao;
+	}
+	
+	public IFlavourDao getFlavourDao() {
+		return flavourDao;
+	}
+
+	public void setFlavourDao(IFlavourDao flavourDao) {
+		this.flavourDao = flavourDao;
+	}
 	//initialize direct children links
+	{
 		foodChildrenLinks = new JsonArray();
 	}
-	/** add a customer **/
+	/** add a food **/
 	@POST
-	public String addCustomer(@FormParam("name") String name,@FormParam("price") double price,
+	public String addFood(@FormParam("name") String name,@FormParam("price") double price,
 			@FormParam("picture") String picture,@FormParam("categoryId") int categoryId,@FormParam("flavourId") int flavourId
 			,@FormParam("manufacturerId") int manufacturerId,@FormParam("produceLocationId") int produceLocationId,@FormParam("buyLocationId") 
 	int buyLocationId){
@@ -91,7 +114,7 @@ public class FoodRestfulService {
 		ret.add("links", foodChildrenLinks);
 		return ret.toString();
 	}
-	/** get detail information about a customer by id **/
+	/** get detail information about a food by id **/
 	@GET
 	@Path("{id}")
 	public String getById(@PathParam("id") int id) {
@@ -163,7 +186,7 @@ public class FoodRestfulService {
 	/** delete food by id **/
 	@DELETE
 	@Path("{id}")
-	public String deleteInterest(@PathParam("id") int id) {
+	public String deleteFood(@PathParam("id") int id) {
 		JsonObject ret = new JsonObject();
 		final int ERROR_CODE_FOOD_NOT_EXIST = -1;
 
@@ -174,9 +197,41 @@ public class FoodRestfulService {
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
 		}
-
-		return ret.toString();
-
+		foodDao.deletebyid(id);
+		foodDao.update(food);
+		ret.addProperty("result", 0);
+		ret.add("links", idChildrenLinks);
+        return ret.toString();
+    }
+	
+	/** search the food**/
+	@GET
+	@Path("search")
+	public String searchBySift(@PathParam("fromPrice") double fromPrice,@PathParam("toPrice") double toPrice
+		,@PathParam("categoryIds") String categoryIds,@PathParam("flavourIds") String flavourIds,
+		@PathParam("produceRegionIds") String produceRegionIds,@PathParam("buyRegionIds") String buyRegionIds){
+		JsonObject ret = new JsonObject();
+		String[] categoryids = categoryIds.split(",");
+		String[] flavourids = flavourIds.split(",");
+		String[] produceregionids = produceRegionIds.split(",");
+		String[] buyregionids = buyRegionIds.split(",");
+		List<Food> listResult/* = new List<Food>*/;
+		return ("aa");
+	   
 	}
+	/** recommend the food **/
+	@GET
+	@Path("recommend")
+	public String recommendByInterest(@PathParam("customerId") int customerId){
+		JsonObject ret = new JsonObject();
+		//select from database
+		Customer customer = customerDao.getById(customerId);
+		if(customer != null){
+			
+		}
+		return ("aa");
+	}
+	
+	
 
 }

@@ -172,4 +172,8 @@
 		<property name="foodDao" ref="foodDao"></property>
 		<property name="commentsDao" ref="commentsDao"></property>
 	</bean>
+		<bean id="locationRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.LocationRestfulService">
+		<property name="locationDao" ref="lacationDao"></property>
+	</bean>
 </beans>
