@@ -22,4 +22,6 @@ public interface IRegionDao {
 
 	/** delect the region **/
 	void delete(Region deleteRegion);
+
+	boolean isRegionExist(int regionId);
 }

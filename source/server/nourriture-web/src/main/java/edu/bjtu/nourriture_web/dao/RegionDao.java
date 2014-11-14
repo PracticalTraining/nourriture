@@ -55,4 +55,8 @@ public class RegionDao extends HibernateDaoSupport implements IRegionDao {
 		getHibernateTemplate().delete(deleteRegion);
 	}
 
+public boolean isRegionExist(int regionId){
+	List<Region> list = getHibernateTemplate().find("from Region where id = ?", regionId);
+	return !list.isEmpty();
+}
 }
