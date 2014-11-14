@@ -39,8 +39,8 @@ public class RegionRestfulService {
 	{
 		// initialize direct children links
 		regionChildrenLinks = new JsonArray();
-		RestfulServiceUtil.addChildrenLinks(regionChildrenLinks,
-				"get superior region", "/superior", "GET");
+		// RestfulServiceUtil.addChildrenLinks(regionChildrenLinks,
+		// "get superior region", "/superior", "GET");
 		RestfulServiceUtil.addChildrenLinks(regionChildrenLinks,
 				"get region's detail information", "/{id}", "GET");
 		RestfulServiceUtil.addChildrenLinks(regionChildrenLinks,
@@ -138,7 +138,7 @@ public class RegionRestfulService {
 		}
 		// search the database
 		List<Region> regionDetailInfo = regionDao.searchRegionDetailById(id);
-		if (regionDetailInfo == null) {
+		if (regionDetailInfo.isEmpty()) {
 			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();

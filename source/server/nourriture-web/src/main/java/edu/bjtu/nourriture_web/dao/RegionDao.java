@@ -14,7 +14,7 @@ public class RegionDao extends HibernateDaoSupport implements IRegionDao {
 		// TODO Auto-generated method stub
 		List<Region> regions = getHibernateTemplate().find(
 				"from Region where id=?", superiorRegionId);
-		if (regions == null) {
+		if (regions.isEmpty()) {
 			return false;
 		} else {
 			return true;

@@ -51,7 +51,7 @@ public class RecipeCategoryDao extends HibernateDaoSupport implements
 		// TODO Auto-generated method stub
 		List<RecipeCategory> list = getHibernateTemplate().find(
 				"from RecipeCategory  where id=?", superiorCategoryId);
-		if (list == null) {
+		if (list.isEmpty()) {
 			return false;
 		} else {
 			return true;
