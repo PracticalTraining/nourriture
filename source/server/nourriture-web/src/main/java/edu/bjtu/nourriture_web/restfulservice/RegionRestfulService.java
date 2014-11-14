@@ -10,7 +10,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -70,7 +69,7 @@ public class RegionRestfulService {
 		}
 		// check parameters
 		if (!province
-				|| regionDao.isSuperiorRegionIdExist(superiorRegionId) == false) {
+				&& regionDao.isSuperiorRegionIdExist(superiorRegionId) == false) {
 			ret.addProperty("errorCode",
 					ERROR_CODE_NORPROVICE_SUPERIORREGIONNOTEXIST);
 			ret.add("links", regionChildrenLinks);
@@ -78,7 +77,7 @@ public class RegionRestfulService {
 		}
 		// check parameters
 		if (province
-				|| regionDao.isSuperiorRegionIdExist(superiorRegionId) == true) {
+				&& regionDao.isSuperiorRegionIdExist(superiorRegionId) == true) {
 			ret.addProperty("errorCode", ERROR_CODE_PROVICE_SUPERIOREXIST);
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
@@ -94,52 +93,51 @@ public class RegionRestfulService {
 		return ret.toString();
 	}
 
-	/** get the superior region by name **/
-	@GET
-	@Path("superior")
-	public String getSuperiorByName(@QueryParam("name") String name) {
-		JsonObject ret = new JsonObject();
-		// define errorCode
-		final int ERROR_CODE_NO_RESULT = -1;
-		final int ERROR_CODE_BAD_PARAM = -2;
-		// check request parameters
-		if (name == null || "".equals(name)) {
-			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
-			ret.add("links", regionChildrenLinks);
-			return ret.toString();
-		}
-		// search the database
-		List<Region> superiorRecipe = regionDao.searchRegionByName(name);
-		if (superiorRecipe == null) {
-			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
-			ret.add("links", regionChildrenLinks);
-			return ret.toString();
-		}
-
-		JsonObject jSuperiorRecipe = transformRecipeToJson(superiorRecipe);
-		ret.add("superiorRecipe", jSuperiorRecipe);
-		ret.add("links", regionChildrenLinks);
-		return ret.toString();
-
-	}
+	// /** get the superior region by id **/
+	// @GET
+	// @Path("{id}")
+	// public String getSuperiorById(@PathParam("id") int id) {
+	// JsonObject ret = new JsonObject();
+	// // define errorCode
+	// final int ERROR_CODE_BAD_PARAM = -1;
+	// final int ERROR_CODE_NO_RESULT = -2;
+	// // check request parameters
+	// if (id < 0) {
+	// ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+	// ret.add("links", regionChildrenLinks);
+	// return ret.toString();
+	// }
+	// // search the database
+	// List<Region> superiorRegion = regionDao.searchRegionById(id);
+	// if (superiorRegion == null) {
+	// ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
+	// ret.add("links", regionChildrenLinks);
+	// return ret.toString();
+	// }
+	//
+	// JsonObject jSuperiorRecipe = transformRecipeToJson(superiorRegion);
+	// ret.add("superiorRecipe", jSuperiorRecipe);
+	// ret.add("links", regionChildrenLinks);
+	// return ret.toString();
+	//
+	// }
 
 	/** get the detail info of region by name **/
 	@GET
 	@Path("id")
-	public String getDetailInfoByName(@PathParam("name") String name) {
+	public String getDetailInfoById(@PathParam("id") int id) {
 		JsonObject ret = new JsonObject();
 		// define errorCode
-		final int ERROR_CODE_NO_RESULT = -1;
-		final int ERROR_CODE_BAD_PARAM = -2;
+		final int ERROR_CODE_BAD_PARAM = -1;
+		final int ERROR_CODE_NO_RESULT = -2;
 		// check request parameters
-		if (name == null || "".equals(name)) {
+		if (id < 0) {
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
 		}
 		// search the database
-		List<Region> regionDetailInfo = regionDao
-				.searchRegionDetailByName(name);
+		List<Region> regionDetailInfo = regionDao.searchRegionDetailById(id);
 		if (regionDetailInfo == null) {
 			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
 			ret.add("links", regionChildrenLinks);
@@ -207,12 +205,12 @@ public class RegionRestfulService {
 
 	/** delete the region by id **/
 	@DELETE
-	@Path("id")
-	public String deleteRecipeCategoryById(@PathParam("id") int id) {
+	@Path("{id}")
+	public String deleteRegionById(@PathParam("id") int id) {
 		JsonObject ret = new JsonObject();
 		// define errorCode
-		final int ERROR_CODE_NO_RESULT = -1;
-		final int ERROR_CODE_BAD_PARAM = -2;
+		final int ERROR_CODE_BAD_PARAM = -1;
+		final int ERROR_CODE_NO_RESULT = -2;
 		// check request parameters
 		if (id < 0) {
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
@@ -226,7 +224,8 @@ public class RegionRestfulService {
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
 		}
-		regionDao.delete(deleteRegion);
+		regionDao.deleteById(id);
+		regionDao.update(deleteRegion);
 		ret.addProperty("id", id);
 		ret.add("links", regionChildrenLinks);
 		return ret.toString();

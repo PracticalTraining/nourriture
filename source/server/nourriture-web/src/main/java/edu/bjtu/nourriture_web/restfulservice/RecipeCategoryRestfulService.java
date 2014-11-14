@@ -58,32 +58,32 @@ public class RecipeCategoryRestfulService {
 			@FormParam("superiorCategoryId") int superiorCategoryId) {
 		JsonObject ret = new JsonObject();
 		// define errorCode
-		final int ERROR_CODE_NORPROVICE_SUPERIORREGIONNOTEXIST = -1;
-		final int ERROR_CODE_PROVICE_SUPERIOREXIST = -2;
-		final int ERROR_CODE_BAD_PARAM = -3;
-		// check parameters
-		if (!topCategory
-				|| recipeCategoryDao
-						.isSuperiorCategoryIdExist(superiorCategoryId) == false) {
-			ret.addProperty("errorCode",
-					ERROR_CODE_NORPROVICE_SUPERIORREGIONNOTEXIST);
-			ret.add("links", recipecategoryChildrenLinks);
-			return ret.toString();
-		}
-		// check parameters
-		if (topCategory
-				|| recipeCategoryDao
-						.isSuperiorCategoryIdExist(superiorCategoryId) == true) {
-			ret.addProperty("errorCode", ERROR_CODE_PROVICE_SUPERIOREXIST);
-			ret.add("links", recipecategoryChildrenLinks);
-			return ret.toString();
-		}
+		final int ERROR_CODE_BAD_PARAM = -1;
+		final int ERROR_CODE_NOTOPCATEGORY_SUPERIORRENOTEXIST = -2;
+		final int ERROR_CODE_TOPCATEGORY_SUPERIORREEXIST = -3;
 		// check bad request parameter
 		if (name == null || "".equals(name) || superiorCategoryId < 0) {
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
 			ret.add("links", recipecategoryChildrenLinks);
 			return ret.toString();
 		}
+		if (!topCategory
+				&& recipeCategoryDao
+						.isSuperiorCategoryIdExist(superiorCategoryId) == false) {
+			ret.addProperty("errorCode",
+					ERROR_CODE_NOTOPCATEGORY_SUPERIORRENOTEXIST);
+			ret.add("links", recipecategoryChildrenLinks);
+			return ret.toString();
+		}
+		// check parameters
+		if (topCategory
+				&& recipeCategoryDao
+						.isSuperiorCategoryIdExist(superiorCategoryId) == true) {
+			ret.addProperty("errorCode", ERROR_CODE_TOPCATEGORY_SUPERIORREEXIST);
+			ret.add("links", recipecategoryChildrenLinks);
+			return ret.toString();
+		}
+
 		// add one row to database
 		RecipeCategory category = new RecipeCategory();
 		category.setName(name);

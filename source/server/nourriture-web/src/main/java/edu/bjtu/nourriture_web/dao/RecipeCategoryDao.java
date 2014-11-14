@@ -19,7 +19,8 @@ public class RecipeCategoryDao extends HibernateDaoSupport implements
 
 	public int add(RecipeCategory category) {
 		// TODO Auto-generated method stub
-		return (Integer) getHibernateTemplate().save(category);
+		getHibernateTemplate().save(category);
+		return (category.getId());
 	}
 
 	public boolean isRecipeCategoryExist(String categoryName) {
@@ -54,8 +55,7 @@ public class RecipeCategoryDao extends HibernateDaoSupport implements
 	public boolean isSuperiorCategoryIdExist(int superiorCategoryId) {
 		// TODO Auto-generated method stub
 		List<RecipeCategory> list = getHibernateTemplate().find(
-				"from RecipeCategory  where superiorCategoryId=?",
-				superiorCategoryId);
+				"from RecipeCategory  where id=?", superiorCategoryId);
 		if (list == null) {
 			return false;
 		} else {
