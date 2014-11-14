@@ -1,9 +1,10 @@
 package edu.bjtu.nourriture_web.dao;
 
+import java.util.List;
+
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import edu.bjtu.nourriture_web.bean.Flavour;
-import edu.bjtu.nourriture_web.bean.FoodCategory;
 import edu.bjtu.nourriture_web.idao.IFlavourDao;
 
 public class FlavourDao extends HibernateDaoSupport implements IFlavourDao {
@@ -20,5 +21,10 @@ public class FlavourDao extends HibernateDaoSupport implements IFlavourDao {
 	public void update(Flavour flavour) {
 		getHibernateTemplate().saveOrUpdate(flavour);
 	}/**更新口味*/
+	/** check if the flavour is exsit **/
+	public boolean isFlavourExist(int flavourId){
+		List<Flavour> list = getHibernateTemplate().find("from Flavour where id = ?", flavourId);
+		return !list.isEmpty();
+	}
 
 }

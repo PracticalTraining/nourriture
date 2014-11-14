@@ -7,8 +7,7 @@ import edu.bjtu.nourriture_web.bean.Location;
 
 public interface ILocationDao {
 	
-	public int add(Location location);
-	boolean isRegionNotExist(int regionId);
+    int add(Location location);
 	/** search the customer according to name **/
 	List<Location> searchById(int regionId);
 	/** check if there exsit a row with given name and password
@@ -19,5 +18,8 @@ public interface ILocationDao {
 	Location getById(int id);
 	/** update location **/
 	void update(Location location);
-
+	/** delete location by id**/
+    void deletebyid(int id);
+    /** check location is exsit **/
+    boolean isLocationExist(int locationId);
 }

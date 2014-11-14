@@ -19,6 +19,11 @@ public class ManuFacturerDao extends HibernateDaoSupport implements IManuFacture
 		return !list.isEmpty();
 	}
 	
+	public boolean isManuFacturerExist(int manufacturerId) {
+		List<ManuFacturer> list = getHibernateTemplate().find("from ManuFacturer where id = ?", manufacturerId);
+		return !list.isEmpty();
+	}
+	
 	public List<ManuFacturer> searchByCompanyName(String companyName) {
 		List<ManuFacturer> list = getHibernateTemplate().find("from ManuFacturer where companyName like ?", "%" + companyName + "%");
 		return list;

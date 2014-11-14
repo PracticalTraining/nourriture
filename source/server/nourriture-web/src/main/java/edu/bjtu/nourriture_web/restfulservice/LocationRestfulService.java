@@ -18,12 +18,14 @@ import edu.bjtu.nourriture_web.bean.Customer;
 import edu.bjtu.nourriture_web.bean.Location;
 import edu.bjtu.nourriture_web.common.RestfulServiceUtil;
 import edu.bjtu.nourriture_web.idao.ILocationDao;
+import edu.bjtu.nourriture_web.idao.IRegionDao;
 
 @Path("location")
 @Produces("application/json")
 public class LocationRestfulService {
 	//dao
 	private ILocationDao locationDao;
+	private IRegionDao regionDao;
 	//direct children links
 	private JsonArray locationChildrenLinks;
 	private JsonArray idChildrenLinks;
@@ -35,35 +37,39 @@ public class LocationRestfulService {
 	public void setLocationDao(ILocationDao locationDao) {
 			this.locationDao = locationDao;
 	}
+	public IRegionDao getRegionDao() {
+		return regionDao;
+    }
+
+     public void setRegionDao(IRegionDao regionDao) {
+		this.regionDao = regionDao;
+    }
 	
 	{
 	//initialize direct children links
 			locationChildrenLinks = new JsonArray();
-			RestfulServiceUtil.addChildrenLinks(locationChildrenLinks, "search location", "/search", "GET");
 			RestfulServiceUtil.addChildrenLinks(locationChildrenLinks, "get location according to id", "/{id}", "GET");
 			RestfulServiceUtil.addChildrenLinks(locationChildrenLinks, "update location according to id", "/{id}", "PUT");
+			RestfulServiceUtil.addChildrenLinks(locationChildrenLinks, "delete location according to id", "/{id}", "DELETE");
 			idChildrenLinks = new JsonArray();
-			RestfulServiceUtil.addChildrenLinks(idChildrenLinks, "get location", "/{interest}", "GET");
-			RestfulServiceUtil.addChildrenLinks(idChildrenLinks, "add a customer interest", "/{interest}", "POST");
-			RestfulServiceUtil.addChildrenLinks(idChildrenLinks, "delete a customer interest", "/{interest}", "DELETE");
     }
 	/**add a location**/
 	@POST
 	public String addLocation(@FormParam("regionId") int regionId,@FormParam("detailAddress") String detailAddress,
-			@FormParam("longitude") int longitude,@FormParam("latitude") int latitude){
+			@FormParam("longitude") @DefaultValue("404") double longitude,@FormParam("latitude") @DefaultValue("404") double latitude){
 		JsonObject ret = new JsonObject();
 		//define error code
 		final int ERROR_CODE_REGION_NOT_EXIST = -1;
 		final int ERROR_CODE_BAD_PARAM = -2;
 		//check request parameters
-		if(regionId <= 0 || detailAddress == null || detailAddress.equals("")
-		        || longitude < 0 || latitude < 0){
-		    ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
-	        ret.add("links", locationChildrenLinks);
-		    return ret.toString();
-		}
+	    if(regionId <= 0 || detailAddress == null || detailAddress.equals("")
+	        || !((longitude > -180 && longitude < 180 && latitude > -90 && latitude < 90) || (longitude == 404 && latitude == 404))){
+	           ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+               ret.add("links", locationChildrenLinks);
+	           return ret.toString();
+	    }
 		//check if region is not exist
-		if(!locationDao.isRegionNotExist(regionId)){
+		if(!regionDao.isRegionExist(regionId)){
 			ret.addProperty("errorCode", ERROR_CODE_REGION_NOT_EXIST);
 			ret.add("links", locationChildrenLinks);
 			return ret.toString();
@@ -82,11 +88,10 @@ public class LocationRestfulService {
 	/** search location by id **/
 	@GET
 	@Path("{id}")
-	public String getById(@PathParam("id") int id){
+	public String searchLocationById(@PathParam("id") int id){
 		JsonObject ret = new JsonObject();
 		//define error code
 		final int ERROR_CODE_LOCATION_NOT_EXIST = -1;
-		//select from database
 		Location location = locationDao.getById(id);
 		if(location == null)
 		{
@@ -94,11 +99,16 @@ public class LocationRestfulService {
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
 		}
+		ret.addProperty("id", id);
+		ret.addProperty("regionId", location.getRegionId());
+		ret.addProperty("detailAddress", location.getDetailAddress());
+		ret.addProperty("longitude", location.getLongitude());
+		ret.addProperty("latitude", location.getLatitude());
 		ret.add("links", idChildrenLinks);
 		return ret.toString();
 	}
 	
-	/** update customer basic information **/
+	/** update location information **/
 	@PUT
 	@Path("{id}")
 	public String updateLocation(@PathParam("id") int id,
@@ -108,13 +118,14 @@ public class LocationRestfulService {
 		//define error code
 		final int ERROR_CODE_LOCATION_NOT_EXIST = -1;
 		final int ERROR_CODE_BAD_PARAM = -2;
+		final int ERROR_CODE_REGION_NOT_EXIST= -3;
 		//check request parameters
 		if(regionId <= 0 || detailAddress == null || detailAddress.equals("")
-		        || longitude < 0 || latitude < 0){
-		    ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
-	        ret.add("links", locationChildrenLinks);
-		    return ret.toString();
-		}
+		        || !((longitude > -180 && longitude < 180 && latitude > -90 && latitude < 90))|| (longitude == 404 && latitude == 404)){
+		           ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+	               ret.add("links", idChildrenLinks);
+		           return ret.toString();
+		    }
 		//check if Location exsit
 		Location location = locationDao.getById(id);
 		if(location == null)
@@ -123,15 +134,23 @@ public class LocationRestfulService {
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
 		}
+		//check if region exsit
+		if(!regionDao.isRegionExist(regionId)){
+			ret.addProperty("errorCode", ERROR_CODE_REGION_NOT_EXIST);
+			ret.add("links", idChildrenLinks);
+			return ret.toString();
+		}
+		//update the database
 		location.setRegionId(regionId);
 		location.setDetailAddress(detailAddress);
 		location.setLongitude(longitude);
 		location.setLatitude(latitude);
+		locationDao.update(location);
 		ret.addProperty("result", 0);
 		ret.add("links", idChildrenLinks);
 		return ret.toString();
 	}
-	/** delete a interest **/
+	/** delete a location **/
 	@DELETE
 	@Path("{id}")
 	public String deleteLocation(@PathParam("id") int id){
@@ -142,7 +161,7 @@ public class LocationRestfulService {
 		//check request parameters
 		if(id <= 0){
 			 ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
-		     ret.add("links", locationChildrenLinks);
+		     ret.add("links", idChildrenLinks);
 			 return ret.toString();
 		}
 		//check if Location exsit
@@ -154,9 +173,7 @@ public class LocationRestfulService {
 			return ret.toString();
 		}
 		//delete interest to database
-		/**   数据库删除操作   **/
-		locationDao.update(location);
-		ret.addProperty("result", 0);
+		locationDao.deletebyid(id);
 		ret.add("links", idChildrenLinks);
 		return ret.toString();
 	}

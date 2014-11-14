@@ -1,5 +1,7 @@
 package edu.bjtu.nourriture_web.dao;
 
+import java.util.List;
+
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import edu.bjtu.nourriture_web.bean.Customer;
@@ -18,6 +20,10 @@ public class FoodCategoryDao extends HibernateDaoSupport implements IFoodCategor
 	}
 	public void update(FoodCategory foodcategory) {
 		getHibernateTemplate().saveOrUpdate(foodcategory);
+	}
+	public boolean isCategoryExist(int categoryId){
+		List<FoodCategory> list = getHibernateTemplate().find("from FoodCategory where id = ?", categoryId);
+		return !list.isEmpty();
 	}
 	
 }

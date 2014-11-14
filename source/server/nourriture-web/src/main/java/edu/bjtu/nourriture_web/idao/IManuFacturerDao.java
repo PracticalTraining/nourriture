@@ -9,6 +9,8 @@ public interface IManuFacturerDao {
 	int add(ManuFacturer manufacturer);
 	/** check if name already exists **/
 	boolean isNameExist(String name);
+	/** check if the manufacturerId exist **/
+	boolean isManuFacturerExist(int manufacturerId);
 	/** search the manuFacturer according to companyName **/
 	List<ManuFacturer> searchByCompanyName(String companyName);
 	/** check if there exists a row with given name and password

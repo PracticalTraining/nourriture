@@ -10,4 +10,6 @@ public interface IFlavourDao {
 	int add(Flavour flavour);
 	/** update flavour **/
 	void update(Flavour flavour);
+	/** check if the flavour is exsit **/
+	boolean isFlavourExist(int flavourId);
 }

@@ -10,5 +10,7 @@ public interface IFoodCategoryDao {
 	int add(FoodCategory foodcategory);
 	/** update foodcategory **/
 	void update(FoodCategory foodcategory);
+	/** check if the category is exsit **/
+	boolean isCategoryExist(int categoryId);
 }
 
