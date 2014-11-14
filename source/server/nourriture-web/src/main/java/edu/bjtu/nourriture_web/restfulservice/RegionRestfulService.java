@@ -124,7 +124,7 @@ public class RegionRestfulService {
 
 	/** get the detail info of region by name **/
 	@GET
-	@Path("id")
+	@Path("{id}")
 	public String getDetailInfoById(@PathParam("id") int id) {
 		JsonObject ret = new JsonObject();
 		// define errorCode
@@ -154,9 +154,9 @@ public class RegionRestfulService {
 	@PUT
 	@Path("{id}")
 	public String updateRegion(@PathParam("id") int id,
-			@PathParam("name") String name,
-			@PathParam("province") boolean province,
-			@PathParam("superiorRegionId") int superiorRegionId) {
+			@FormParam("name") String name,
+			@FormParam("province") boolean province,
+			@FormParam("superiorRegionId") int superiorRegionId) {
 		JsonObject ret = new JsonObject();
 		// define errorCode
 		final int ERROR_CODE_BAD_PARAM = -1;
@@ -175,7 +175,7 @@ public class RegionRestfulService {
 		}
 		// check parameters
 		if (!province
-				|| regionDao.isSuperiorRegionIdExist(superiorRegionId) == false) {
+				&& regionDao.isSuperiorRegionIdExist(superiorRegionId) == false) {
 			ret.addProperty("errorCode",
 					ERROR_CODE_NORPROVICE_SUPERIORREGIONNOTEXIST);
 			ret.add("links", regionChildrenLinks);
@@ -183,7 +183,7 @@ public class RegionRestfulService {
 		}
 		// check parameters
 		if (province
-				|| regionDao.isSuperiorRegionIdExist(superiorRegionId) == true) {
+				&& regionDao.isSuperiorRegionIdExist(superiorRegionId) == true) {
 			ret.addProperty("errorCode", ERROR_CODE_PROVICE_SUPERIOREXIST);
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
@@ -198,6 +198,7 @@ public class RegionRestfulService {
 		updateRegion.setName(name);
 		updateRegion.setProvince(province);
 		updateRegion.setSuperiorRegionId(superiorRegionId);
+		regionDao.update(updateRegion);
 		ret.addProperty("id", id);
 		ret.add("links", regionChildrenLinks);
 		return ret.toString();
@@ -224,8 +225,7 @@ public class RegionRestfulService {
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
 		}
-		regionDao.deleteById(id);
-		regionDao.update(deleteRegion);
+		regionDao.deleteByName(deleteRegion);
 		ret.addProperty("id", id);
 		ret.add("links", regionChildrenLinks);
 		return ret.toString();

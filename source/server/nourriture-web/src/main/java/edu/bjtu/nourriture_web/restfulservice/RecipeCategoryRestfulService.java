@@ -10,7 +10,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -41,8 +40,8 @@ public class RecipeCategoryRestfulService {
 	{
 		// initialize direct children links
 		recipecategoryChildrenLinks = new JsonArray();
-		RestfulServiceUtil.addChildrenLinks(recipecategoryChildrenLinks,
-				"get uperior recipe", "/superior", "GET");
+		// RestfulServiceUtil.addChildrenLinks(recipecategoryChildrenLinks,
+		// "get uperior recipe", "/superior", "GET");
 		RestfulServiceUtil.addChildrenLinks(recipecategoryChildrenLinks,
 				"get recipe's detail information", "/{id}", "GET");
 		RestfulServiceUtil.addChildrenLinks(recipecategoryChildrenLinks,
@@ -94,60 +93,60 @@ public class RecipeCategoryRestfulService {
 		return ret.toString();
 	}
 
-	/** get the superior classfication **/
+	// /** get the superior classfication **/
+	// @GET
+	// @Path("superior")
+	// public String getSuperior(@QueryParam("name") String name) {
+	// JsonObject ret = new JsonObject();
+	// // define errorCode
+	// final int ERROR_CODE_NO_RESULT = -1;
+	// final int ERROR_CODE_BAD_PARAM = -2;
+	// // check request parameters
+	// if (name == null || "".equals(name)) {
+	// ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+	// ret.add("links", recipecategoryChildrenLinks);
+	// return ret.toString();
+	// }
+	// // search the database
+	// List<RecipeCategory> superiorRecipe = recipeCategoryDao
+	// .searchRecipeByName(name);
+	// if (superiorRecipe == null) {
+	// ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
+	// ret.add("links", recipecategoryChildrenLinks);
+	// return ret.toString();
+	// }
+	//
+	// JsonObject jSuperiorRecipe = transformRecipeToJson(superiorRecipe);
+	// ret.add("superiorRecipe", jSuperiorRecipe);
+	// ret.add("links", recipecategoryChildrenLinks);
+	// return ret.toString();
+	//
+	// }
+
+	/** get the detail info of recipeCategory by id **/
 	@GET
-	@Path("superior")
-	public String getSuperior(@QueryParam("name") String name) {
+	@Path("{id}")
+	public String getDetailInfoById(@PathParam("id") int id) {
 		JsonObject ret = new JsonObject();
 		// define errorCode
-		final int ERROR_CODE_NO_RESULT = -1;
-		final int ERROR_CODE_BAD_PARAM = -2;
+		final int ERROR_CODE_BAD_PARAM = -1;
+		final int ERROR_CODE_NO_RESULT = -2;
 		// check request parameters
-		if (name == null || "".equals(name)) {
+		if (id < 0) {
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
 			ret.add("links", recipecategoryChildrenLinks);
 			return ret.toString();
 		}
 		// search the database
-		List<RecipeCategory> superiorRecipe = recipeCategoryDao
-				.searchRecipeByName(name);
-		if (superiorRecipe == null) {
+		List<RecipeCategory> recipeCategoryDetailInfo = recipeCategoryDao
+				.searchRecipeCategoryDetailById(id);
+		if (recipeCategoryDetailInfo == null) {
 			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
 			ret.add("links", recipecategoryChildrenLinks);
 			return ret.toString();
 		}
 
-		JsonObject jSuperiorRecipe = transformRecipeToJson(superiorRecipe);
-		ret.add("superiorRecipe", jSuperiorRecipe);
-		ret.add("links", recipecategoryChildrenLinks);
-		return ret.toString();
-
-	}
-
-	/** get the detail info of therecipecategory by name **/
-	@GET
-	@Path("id")
-	public String getDetailInfoByName(@PathParam("name ") String name) {
-		JsonObject ret = new JsonObject();
-		// define errorCode
-		final int ERROR_CODE_NO_RESULT = -1;
-		final int ERROR_CODE_BAD_PARAM = -2;
-		// check request parameters
-		if (name == null || "".equals(name)) {
-			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
-			ret.add("links", recipecategoryChildrenLinks);
-			return ret.toString();
-		}
-		// search the database
-		List<RecipeCategory> recipeDetailInfo = recipeCategoryDao
-				.searchRecipeCategoryDetailByName(name);
-		if (recipeDetailInfo == null) {
-			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
-			ret.add("links", recipecategoryChildrenLinks);
-			return ret.toString();
-		}
-
-		JsonObject jSuperiorRecipe = transformRecipeToJson(recipeDetailInfo);
+		JsonObject jSuperiorRecipe = transformRecipeToJson(recipeCategoryDetailInfo);
 		ret.add("superiorRecipe", jSuperiorRecipe);
 		ret.add("links", recipecategoryChildrenLinks);
 		return ret.toString();
@@ -155,20 +154,27 @@ public class RecipeCategoryRestfulService {
 
 	/** update the recipeCategory **/
 	@PUT
-	@Path("id")
+	@Path("{id}")
 	public String updateRecipeCategory(@PathParam("id") int id,
-			@PathParam("name") String name,
-			@PathParam("topCategory") boolean topCategory,
-			@PathParam("superiorCategoryId") int superiorCategoryId) {
+			@FormParam("name") String name,
+			@FormParam("topCategory") boolean topCategory,
+			@FormParam("superiorCategoryId") int superiorCategoryId) {
 		JsonObject ret = new JsonObject();
 		// define errorCode
-		final int ERROR_CODE_NORPROVICE_SUPERIORREGIONNOTEXIST = -1;
-		final int ERROR_CODE_PROVICE_SUPERIOREXIST = -2;
-		final int ERROR_CODE_BAD_PARAM = -3;
+		final int ERROR_CODE_BAD_PARAM = -1;
+		final int ERROR_CODE_NORPROVICE_SUPERIORREGIONNOTEXIST = -2;
+		final int ERROR_CODE_PROVICE_SUPERIOREXIST = -3;
+
 		final int ERROR_CODE_NO_RESULT = -4;
+		// check bad request parameter
+		if (name == null || "".equals(name) || superiorCategoryId < 0) {
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", recipecategoryChildrenLinks);
+			return ret.toString();
+		}
 		// check parameters
 		if (!topCategory
-				|| recipeCategoryDao
+				&& recipeCategoryDao
 						.isSuperiorCategoryIdExist(superiorCategoryId) == false) {
 			ret.addProperty("errorCode",
 					ERROR_CODE_NORPROVICE_SUPERIORREGIONNOTEXIST);
@@ -177,18 +183,13 @@ public class RecipeCategoryRestfulService {
 		}
 		// check parameters
 		if (topCategory
-				|| recipeCategoryDao
+				&& recipeCategoryDao
 						.isSuperiorCategoryIdExist(superiorCategoryId) == true) {
 			ret.addProperty("errorCode", ERROR_CODE_PROVICE_SUPERIOREXIST);
 			ret.add("links", recipecategoryChildrenLinks);
 			return ret.toString();
 		}
-		// check bad request parameter
-		if (name == null || "".equals(name) || superiorCategoryId < 0) {
-			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
-			ret.add("links", recipecategoryChildrenLinks);
-			return ret.toString();
-		}
+
 		// search the database
 		RecipeCategory updateRecipeCategory = recipeCategoryDao.getById(id);
 		if (updateRecipeCategory == null) {
@@ -199,6 +200,7 @@ public class RecipeCategoryRestfulService {
 		updateRecipeCategory.setName(name);
 		updateRecipeCategory.setTopCategory(topCategory);
 		updateRecipeCategory.setSuperiorCategoryId(superiorCategoryId);
+		recipeCategoryDao.update(updateRecipeCategory);
 		ret.addProperty("id", id);
 		ret.add("links", recipecategoryChildrenLinks);
 		return ret.toString();
@@ -206,12 +208,12 @@ public class RecipeCategoryRestfulService {
 
 	/** delete the recipecategory by id **/
 	@DELETE
-	@Path("id")
+	@Path("{id}")
 	public String deleteRecipeCategoryById(@PathParam("id") int id) {
 		JsonObject ret = new JsonObject();
 		// define errorCode
-		final int ERROR_CODE_NO_RESULT = -1;
-		final int ERROR_CODE_BAD_PARAM = -2;
+		final int ERROR_CODE_BAD_PARAM = -1;
+		final int ERROR_CODE_NO_RESULT = -2;
 		// check request parameters
 		if (id < 0) {
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);

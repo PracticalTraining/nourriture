@@ -20,10 +20,13 @@ public interface IRecipeCategoryDao {
 	/** search superior recipecatgory by name **/
 	List<RecipeCategory> searchRecipeByName(String name);
 
-	/** search the detail info of the recipeCategory by name **/
-	List<RecipeCategory> searchRecipeCategoryDetailByName(String name);
-
-	/** delete the recipe **/
+	/** delete the recipecategory **/
 	void delete(RecipeCategory deleteRecipeCategory);
+
+	/** search the detail info of the recipecategory **/
+	List<RecipeCategory> searchRecipeCategoryDetailById(int id);
+
+	/** update the recipecategory **/
+	void update(RecipeCategory updateRecipeCategory);
 
 }

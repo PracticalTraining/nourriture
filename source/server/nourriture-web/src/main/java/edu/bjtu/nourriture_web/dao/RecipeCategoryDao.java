@@ -41,11 +41,6 @@ public class RecipeCategoryDao extends HibernateDaoSupport implements
 
 	}
 
-	// public RecipeCategory searchRecipeById(int id) {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
-
 	/** delete the recipe **/
 	public void delete(RecipeCategory deleteRecipeCategory) {
 		// TODO Auto-generated method stub
@@ -63,17 +58,29 @@ public class RecipeCategoryDao extends HibernateDaoSupport implements
 		}
 	}
 
-	public List<RecipeCategory> searchRecipeCategoryDetailByName(String name) {
+	public List<RecipeCategory> searchRecipeCategoryDetailByName(int id) {
 		// TODO Auto-generated method stub
-		List<RecipeCategory> regions = new ArrayList<RecipeCategory>();
+		List<RecipeCategory> recipeCategorys = new ArrayList<RecipeCategory>();
 		List<Integer> superiorRecipeCategoryIds = getHibernateTemplate().find(
-				" superiorCategoryId from RecipeCategory where name=?", name);
-		for (Integer integer : superiorRecipeCategoryIds) {
-			RecipeCategory recipecategory = (RecipeCategory) getHibernateTemplate()
-					.find("from RecipeCategory where id=? ", integer);
-			regions.add(recipecategory);
+				" superiorCategoryId from RecipeCategory where id=?", id);
+		for (Integer superiorRecipeCategoryId : superiorRecipeCategoryIds) {
+			RecipeCategory recipeCategory = (RecipeCategory) getHibernateTemplate()
+					.find("from RecipeCategory where id=? ",
+							superiorRecipeCategoryId);
+			recipeCategorys.add(recipeCategory);
 		}
-		return regions;
+		return recipeCategorys;
 
+	}
+
+	public void update(RecipeCategory updateRecipeCategory) {
+		// TODO Auto-generated method stub
+		getHibernateTemplate().update(updateRecipeCategory);
+	}
+
+	public List<RecipeCategory> searchRecipeCategoryDetailById(int id) {
+		// TODO Auto-generated method stub
+		return getHibernateTemplate()
+				.find("from RecipeCategory where id=?", id);
 	}
 }
