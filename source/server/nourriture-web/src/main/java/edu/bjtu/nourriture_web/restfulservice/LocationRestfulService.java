@@ -63,7 +63,7 @@ public class LocationRestfulService {
 		final int ERROR_CODE_BAD_PARAM = -2;
 		//check request parameters
 	    if(regionId <= 0 || detailAddress == null || detailAddress.equals("")
-	        || !((longitude > -180 && longitude < 180 && latitude > -90 && latitude < 90)) || (longitude == 404 && latitude == 404)){
+	        || !((longitude > -180 && longitude < 180 && latitude > -90 && latitude < 90) || (longitude == 404 && latitude == 404))){
 	           ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
                ret.add("links", locationChildrenLinks);
 	           return ret.toString();
