@@ -89,7 +89,7 @@ public class FoodRestfulService {
 	//initialize direct children links
 	{
 		foodChildrenLinks = new JsonArray();
-		RestfulServiceUtil.addChildrenLinks(foodChildrenLinks, "search food by id", "/{id}", "GET");
+		RestfulServiceUtil.addChildrenLinks(foodChildrenLinks, "search the food by id", "/{id}", "GET");
 		RestfulServiceUtil.addChildrenLinks(foodChildrenLinks, "update the food by id", "/{id}", "PUT");
 		RestfulServiceUtil.addChildrenLinks(foodChildrenLinks, "delete the food by id", "/{id}", "DELETE");
 		idChildrenLinks = new JsonArray();
@@ -110,7 +110,7 @@ public class FoodRestfulService {
 		final int ERROR_CODE_BUYLOCATION_NOT_EXIST = -6;
 		
 		//check request parameters
-		if(name == null || name.equals("") || price < 0|| categoryId < 0 || flavourId < 0
+		if(name == null || name.equals("") || picture == null || picture.equals("") || price < 0|| categoryId < 0 || flavourId < 0
 				|| manufacturerId < 0 || produceLocationId < 0 || buyLocationId < 0){
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
 			ret.add("links", foodChildrenLinks);
@@ -174,6 +174,15 @@ public class FoodRestfulService {
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
 		}
+		ret.addProperty("id", id);
+		ret.addProperty("name", food.getName());
+		ret.addProperty("price", food.getPrice());
+		ret.addProperty("categoryId", food.getCategoryId());
+		ret.addProperty("flavourId", food.getFlavourId());
+		ret.addProperty("manufacturerId", food.getManufacturerId());
+		ret.addProperty("produceLocationId", food.getProduceLocationId());
+		ret.addProperty("buyLocationId", food.getBuyLocationId());
+		ret.addProperty("picture", food.getPicture());
 		ret.add("links", idChildrenLinks);
 		return ret.toString();
 
@@ -190,12 +199,25 @@ public class FoodRestfulService {
 			@FormParam("manufacturerId") int manufacturerId,
 			@FormParam("produceLocationId") int produceLocationId,
 			@FormParam("buyLocationId") int buyLocationId) {
-		final int ERROR_CODE_CATEGORY_NOT_EXIST = -3;
-		final int ERROR_CODE_FOOD_NOT_EXIST = -1;
-		final int ERROR_CODE_BAD_PARAM = -2;
 		JsonObject ret = new JsonObject();
+		//define error code
+		final int ERROR_CODE_FOOD_NOT_EXIST=-1; 
+		final int ERROR_CODE_BAD_PARAM = -2;
+		final int ERROR_CODE_CATEGORY_NOT_EXIST = -3;
+		final int ERROR_CODE_FLAVOUR_NOT_EXIST = -4;
+		final int ERROR_CODE_MANUFACTURER_NOT_EXIST = -5;
+		final int ERROR_CODE_PRODUCELOCATION_NOT_EXIST = -6;
+		final int ERROR_CODE_BUYLOCATION_NOT_EXIST = -7;
+		
+		//check request parameters
+		if(name == null || name.equals("") || picture == null || picture.equals("")  || price < 0|| categoryId < 0 || flavourId < 0
+				|| manufacturerId < 0 || produceLocationId < 0 || buyLocationId < 0){
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", idChildrenLinks);
+			return ret.toString();
+		}
+		//check if  food is not exist
 		Food food = foodDao.getById(id);
-		//check if food is exist
 		if (food == null) {
 			ret.addProperty("errorCode", ERROR_CODE_FOOD_NOT_EXIST);
 			ret.add("links", idChildrenLinks);
@@ -207,11 +229,28 @@ public class FoodRestfulService {
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
 		}
-		//check request parameters
-		if (name == null || name.equals("") || price < 0 || categoryId < 0
-				|| flavourId < 0 || manufacturerId < 0 || produceLocationId < 0
-				|| buyLocationId < 0) {
-			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+		//check if flavour is not exist
+		if(!flavourDao.isFlavourExist(flavourId)){
+			ret.addProperty("errorCode", ERROR_CODE_FLAVOUR_NOT_EXIST);
+			ret.add("links", idChildrenLinks);
+			return ret.toString();
+		}
+		//check if manufacture is not exist
+		
+		if(!manuFacturerDao.isManuFacturerExist(manufacturerId)){
+			ret.addProperty("errorCode", ERROR_CODE_MANUFACTURER_NOT_EXIST);
+			ret.add("links", idChildrenLinks);
+			return ret.toString();
+		}
+		//check if producelocation is not exist
+		if(!locationDao.isLocationExist(produceLocationId)){
+			ret.addProperty("errorCode", ERROR_CODE_PRODUCELOCATION_NOT_EXIST);
+			ret.add("links", idChildrenLinks);
+			return ret.toString();
+		}
+		//check if buylocation is not exist
+		if(!locationDao.isLocationExist(buyLocationId)){
+			ret.addProperty("errorCode", ERROR_CODE_BUYLOCATION_NOT_EXIST);
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
 		}
@@ -224,7 +263,8 @@ public class FoodRestfulService {
 		food.setProduceLocationId(produceLocationId);
 		food.setBuyLocationId(buyLocationId);
 		food.setPicture(picture);
-		ret.addProperty("id", foodDao.add(food));
+		foodDao.update(food);
+		ret.addProperty("result", 0);
 		ret.add("links", idChildrenLinks);
 		return ret.toString();
 
@@ -245,7 +285,6 @@ public class FoodRestfulService {
 			return ret.toString();
 		}
 		foodDao.deletebyid(id);
-		foodDao.update(food);
 		ret.addProperty("result", 0);
 		ret.add("links", idChildrenLinks);
         return ret.toString();

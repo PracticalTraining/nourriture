@@ -174,6 +174,7 @@ public class LocationRestfulService {
 		}
 		//delete interest to database
 		locationDao.deletebyid(id);
+		ret.addProperty("result", 0);
 		ret.add("links", idChildrenLinks);
 		return ret.toString();
 	}
