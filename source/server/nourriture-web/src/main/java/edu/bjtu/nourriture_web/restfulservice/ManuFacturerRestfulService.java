@@ -224,14 +224,14 @@ public class ManuFacturerRestfulService {
 		// define error code
 		final int ERROR_CODE_MANUFACTURER_NOT_EXIST = -1;
 
-		// select from database
-		List<Food> food = foodDao.getByManufacturerId(id);
-		int foodCount = food.size();
-
-		if ((food.equals(null)) || foodCount < 0) {
+		if (manuFacturerDao.getById(id) != null) {
 			ret.addProperty("errorCode", ERROR_CODE_MANUFACTURER_NOT_EXIST);
 			ret.add("links", numChildrenLinks);
 		}
+		
+		// select from database
+		List<Food> food = foodDao.getByManufacturerId(id);
+		int foodCount = food.size();
 		ret.addProperty("foodCount", foodCount);
 		ret.add("links", numChildrenLinks);
 		return ret.toString();
@@ -245,6 +245,11 @@ public class ManuFacturerRestfulService {
 		// define error code
 		final int ERROR_CODE_MANUFACTURER_NOT_EXIST = -1;
 
+		if (manuFacturerDao.getById(id) != null) {
+			ret.addProperty("errorCode", ERROR_CODE_MANUFACTURER_NOT_EXIST);
+			ret.add("links", numChildrenLinks);
+		}
+		
 		// select from database
 		List<Food> food = foodDao.getByManufacturerId(id);
 
@@ -265,10 +270,6 @@ public class ManuFacturerRestfulService {
 			sum += score[k] / foodCount;
 		}
 
-		if ((food.equals(null)) || sum < 0) {
-			ret.addProperty("errorCode", ERROR_CODE_MANUFACTURER_NOT_EXIST);
-			ret.add("links", sumChildrenLinks);
-		}
 		ret.addProperty("sum", sum);
 		ret.add("links", sumChildrenLinks);
 		return ret.toString();
