@@ -241,7 +241,7 @@ public class ManuFacturerTestCase {
 		response = jsonParser.parse(
 				rs.get(String.class)
 			).getAsJsonObject();
-		Assert.assertEquals(response.get("errorCode"),ERROR_CODE_USER_NOT_EXSIT);
+		Assert.assertEquals(response.get("errorCode").getAsInt(),ERROR_CODE_USER_NOT_EXSIT);
 	}
 	
 	/** get score **/
@@ -261,7 +261,7 @@ public class ManuFacturerTestCase {
 		response = jsonParser.parse(
 				rs.get(String.class)
 			).getAsJsonObject();
-		Assert.assertEquals(response.get("errorCode"),ERROR_CODE_USER_NOT_EXSIT);
+		Assert.assertEquals(response.get("errorCode").getAsInt(),ERROR_CODE_USER_NOT_EXSIT);
 	}
 }
 
