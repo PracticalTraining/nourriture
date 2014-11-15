@@ -224,7 +224,7 @@ public class ManuFacturerRestfulService {
 		// define error code
 		final int ERROR_CODE_MANUFACTURER_NOT_EXIST = -1;
 
-		if (manuFacturerDao.getById(id) != null) {
+		if (manuFacturerDao.getById(id) == null) {
 			ret.addProperty("errorCode", ERROR_CODE_MANUFACTURER_NOT_EXIST);
 			ret.add("links", numChildrenLinks);
 		}
@@ -245,7 +245,7 @@ public class ManuFacturerRestfulService {
 		// define error code
 		final int ERROR_CODE_MANUFACTURER_NOT_EXIST = -1;
 
-		if (manuFacturerDao.getById(id) != null) {
+		if (manuFacturerDao.getById(id) == null) {
 			ret.addProperty("errorCode", ERROR_CODE_MANUFACTURER_NOT_EXIST);
 			ret.add("links", numChildrenLinks);
 		}
