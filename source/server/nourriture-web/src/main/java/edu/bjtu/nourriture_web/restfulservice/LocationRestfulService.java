@@ -55,7 +55,7 @@ public class LocationRestfulService {
     }
 	/**add a location**/
 	@POST
-	public String addLocation(@FormParam("regionId") int regionId,@FormParam("detailAddress") String detailAddress,
+	public String addLocation(@FormParam("regionId") int regionId,@FormParam("detailAddress") @DefaultValue("") String detailAddress,
 			@FormParam("longitude") @DefaultValue("404") double longitude,@FormParam("latitude") @DefaultValue("404") double latitude){
 		JsonObject ret = new JsonObject();
 		//define error code

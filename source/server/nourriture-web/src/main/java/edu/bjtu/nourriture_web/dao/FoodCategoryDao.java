@@ -20,7 +20,7 @@ IFoodCategoryDao {
 	}
 
 	public int add(FoodCategory category) {
-		// TODO Auto-generated method stub
+		System.out.println(category.getName());
 		getHibernateTemplate().save(category);
 		return (category.getId());
 	}

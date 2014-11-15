@@ -22,6 +22,7 @@ import edu.bjtu.nourriture_web.bean.RecipeCategory;
 import edu.bjtu.nourriture_web.common.JsonUtil;
 import edu.bjtu.nourriture_web.common.RestfulServiceUtil;
 import edu.bjtu.nourriture_web.dao.FoodCategoryDao;
+import edu.bjtu.nourriture_web.dao.FoodDao;
 import edu.bjtu.nourriture_web.dao.RecipeCategoryDao;
 import edu.bjtu.nourriture_web.idao.IFoodCategoryDao;
 
@@ -66,7 +67,8 @@ public class FoodCategoryRestfulService {
 		final int ERROR_CODE_TOPCATEGORY__SUPERIORCATEGORYEXIST = -3;
 
 		// check bad request parameter
-		if (name == null || "".equals(name) || superiorCategoryId < 0) {
+		System.out.println(name);
+		if (name.equals("") || superiorCategoryId < 0) {
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
 			ret.add("links", FoodCategoryChildrenLinks);
 			return ret.toString();
@@ -82,15 +84,13 @@ public class FoodCategoryRestfulService {
 		}
 		// check parameters
 		if (topCategory
-				&& foodCategoryDao
-						.isSuperiorCategoryIdExist(superiorCategoryId) == true) {
+				&& superiorCategoryId!=0) {
 			ret.addProperty("errorCode",
 					ERROR_CODE_TOPCATEGORY__SUPERIORCATEGORYEXIST);
 			ret.add("links", FoodCategoryChildrenLinks);
 			return ret.toString();
 		}
-		if (topCategory && superiorCategoryId == 0) {
-
+		
 			// add one row to database
 			FoodCategory foodCategory = new FoodCategory();
 			foodCategory.setName(name);
@@ -98,7 +98,6 @@ public class FoodCategoryRestfulService {
 			foodCategory.setSuperiorCategoryId(superiorCategoryId);
 			ret.addProperty("id", foodCategoryDao.add(foodCategory));
 			ret.add("links", FoodCategoryChildrenLinks);
-		}
 		return ret.toString();
 
 	}
@@ -113,7 +112,7 @@ public class FoodCategoryRestfulService {
 		final int ERROR_CODE_RECIPECATEGORY_NOT_EXIST = -2;
 		final int ERROR_CODE_HASNOR_TOPCATEGROY = -3;
 		// check request parameters
-		if (id < 0) {
+		if (id <= 0) {
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
 			ret.add("links", FoodCategoryChildrenLinks);
 			return ret.toString();
@@ -202,8 +201,7 @@ public class FoodCategoryRestfulService {
 		}
 		// check parameters
 		if (topCategory
-				&& foodCategoryDao
-						.isSuperiorCategoryIdExist(superiorCategoryId) == true) {
+				&& superiorCategoryId != 0) {
 			ret.addProperty("errorCode", ERROR_CODE_PROVICE_SUPERIOREXIST);
 			ret.add("links", FoodCategoryChildrenLinks);
 			return ret.toString();
@@ -216,15 +214,13 @@ public class FoodCategoryRestfulService {
 			ret.add("links", FoodCategoryChildrenLinks);
 			return ret.toString();
 		}
-		if (topCategory && superiorCategoryId == 0) {
 
-			updateFoodCategory.setName(name);
-			updateFoodCategory.setTopCategory(topCategory);
-			updateFoodCategory.setSuperiorCategoryId(superiorCategoryId);
-			foodCategoryDao.update(updateFoodCategory);
-			ret.addProperty("id", id);
-			ret.add("links", FoodCategoryChildrenLinks);
-		}
+		updateFoodCategory.setName(name);
+		updateFoodCategory.setTopCategory(topCategory);
+		updateFoodCategory.setSuperiorCategoryId(superiorCategoryId);
+		foodCategoryDao.update(updateFoodCategory);
+		ret.addProperty("id", id);
+		ret.add("links", FoodCategoryChildrenLinks);
 		return ret.toString();
 	}
 

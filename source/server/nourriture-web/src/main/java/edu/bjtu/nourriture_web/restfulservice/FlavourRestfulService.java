@@ -201,8 +201,7 @@ public class FlavourRestfulService {
 		}
 		// check parameters
 		if (topCategory
-				&& FlavourDao
-						.isSuperiorCategoryIdExist(superiorCategoryId) == true) {
+				&& superiorCategoryId!=0) {
 			ret.addProperty("errorCode", ERROR_CODE_PROVICE_SUPERIOREXIST);
 			ret.add("links", FlavourChildrenLinks);
 			return ret.toString();
@@ -215,7 +214,7 @@ public class FlavourRestfulService {
 			ret.add("links", FlavourChildrenLinks);
 			return ret.toString();
 		}
-		if (topCategory && superiorCategoryId == 0) {
+		
 
 			updateFlavour.setName(name);
 			updateFlavour.setTopCategory(topCategory);
@@ -223,7 +222,7 @@ public class FlavourRestfulService {
 			FlavourDao.update(updateFlavour);
 			ret.addProperty("id", id);
 			ret.add("links", FlavourChildrenLinks);
-		}
+		
 		return ret.toString();
 	}
 
