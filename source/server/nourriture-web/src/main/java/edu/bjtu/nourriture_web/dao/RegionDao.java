@@ -46,7 +46,7 @@ public class RegionDao extends HibernateDaoSupport implements IRegionDao {
 		return !list.isEmpty();
 	}
 
-	public void deleteByName(Region deleteRegion) {
+	public void delete(Region deleteRegion) {
 		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(deleteRegion);
 	}
@@ -67,5 +67,10 @@ public class RegionDao extends HibernateDaoSupport implements IRegionDao {
 			regions.add(region);
 		}
 		return regions;
+	}
+
+	public List<Region> getAllRecipeCategory() {
+		// TODO Auto-generated method stub
+		return getHibernateTemplate().find("from Region");
 	}
 }

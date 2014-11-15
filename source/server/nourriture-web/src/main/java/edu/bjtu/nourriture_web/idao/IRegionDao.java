@@ -21,7 +21,7 @@ public interface IRegionDao {
 	Region getById(int id);
 
 	/** delect the region **/
-	void deleteByName(Region deleteRegion);
+	void delete(Region deleteRegion);
 
 	/** update region **/
 	void update(Region updateRegion);

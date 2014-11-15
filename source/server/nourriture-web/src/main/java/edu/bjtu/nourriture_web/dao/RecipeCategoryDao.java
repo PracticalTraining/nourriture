@@ -76,4 +76,9 @@ public class RecipeCategoryDao extends HibernateDaoSupport implements
 				"from RecipeCategory where superiorCategoryId=?", id);
 
 	}
+
+	public List<RecipeCategory> getAllRecipeCategory() {
+		// TODO Auto-generated method stub
+		return getHibernateTemplate().find("from RecipeCategory");
+	}
 }

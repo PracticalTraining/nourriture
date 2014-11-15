@@ -1,5 +1,6 @@
 package edu.bjtu.nourriture_web.restfulservice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.DELETE;
@@ -103,23 +104,29 @@ public class RegionRestfulService {
 		JsonObject ret = new JsonObject();
 		// define errorCode
 		final int ERROR_CODE_BAD_PARAM = -1;
-		final int ERROR_CODE_NO_RESULT = -2;
+		final int ERROR_CODE_RECIPECATEGORY_NOT_EXIST = -2;
+		final int ERROR_CODE_HASNOR_TOPCATEGROY = -3;
 		// check request parameters
 		if (id < 0) {
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
 		}
-		// search the database
-		List<Region> superiorRegion = regionDao.searchSuperiorRegionById(id);
-		if (superiorRegion == null) {
-			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
+		if (regionDao.isRegionExist(id) == false) {
+			ret.addProperty("errorCode", ERROR_CODE_RECIPECATEGORY_NOT_EXIST);
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
 		}
-
-		JsonObject jSuperiorRecipe = transformRecipeToJson(superiorRegion
-				.get(0));
+		Region region = regionDao.searchRegionDetailById(id);
+		int superiorRegionId = region.getSuperiorRegionId();
+		if (superiorRegionId == 0) {
+			ret.addProperty("errorCode", ERROR_CODE_HASNOR_TOPCATEGROY);
+			ret.add("links", regionChildrenLinks);
+			return ret.toString();
+		}
+		Region superiorRegin = regionDao
+				.searchRegionDetailById(superiorRegionId);
+		JsonObject jSuperiorRecipe = transformRecipeToJson(superiorRegin);
 		ret.add("superiorRecipe", jSuperiorRecipe);
 		ret.add("links", regionChildrenLinks);
 		return ret.toString();
@@ -220,25 +227,43 @@ public class RegionRestfulService {
 		JsonObject ret = new JsonObject();
 		// define errorCode
 		final int ERROR_CODE_BAD_PARAM = -1;
-		final int ERROR_CODE_NO_RESULT = -2;
+		final int ERROR_CODE_RECIPECATEGORY_NOT_EXIST = -2;
+
 		// check request parameters
 		if (id < 0) {
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
 		}
-		// search the database
-		Region deleteRegion = regionDao.getById(id);
-		if (deleteRegion == null) {
-			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
+		if (regionDao.isRegionExist(id) == false) {
+			ret.addProperty("errorCode", ERROR_CODE_RECIPECATEGORY_NOT_EXIST);
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
 		}
-		regionDao.deleteByName(deleteRegion);
+		Region deleteRegion = regionDao.searchRegionDetailById(id);
+		int superiorRegionId = deleteRegion.getSuperiorRegionId();
+		if (superiorRegionId == 0) {
+			List<Region> deleteRegions = new ArrayList<Region>();
+			List<Region> regions = regionDao.getAllRecipeCategory();
+			for (Region region : regions) {
+				if (region.getSuperiorRegionId() == id) {
+					deleteRegions.add(region);
+				}
+			}
+			for (Region regionToBedelete : deleteRegions) {
+				regionDao.delete(regionToBedelete);
+				ret.addProperty("id", id);
+				ret.add("links", regionChildrenLinks);
+			}
+			regionDao.delete(deleteRegion);
+			ret.addProperty("id", id);
+			ret.add("links", regionChildrenLinks);
+			return ret.toString();
+		}
+		regionDao.delete(deleteRegion);
 		ret.addProperty("id", id);
 		ret.add("links", regionChildrenLinks);
 		return ret.toString();
-
 	}
 
 	/**
