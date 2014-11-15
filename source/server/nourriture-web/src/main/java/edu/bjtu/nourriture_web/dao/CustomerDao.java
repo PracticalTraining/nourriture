@@ -36,6 +36,7 @@ public class CustomerDao extends HibernateDaoSupport implements ICustomerDao {
 
 	public void update(Customer customer) {
 		getHibernateTemplate().saveOrUpdate(customer);
+		
 	}
 
 }

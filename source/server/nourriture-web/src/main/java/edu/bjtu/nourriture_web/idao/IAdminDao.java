@@ -11,4 +11,5 @@ public interface IAdminDao {
 	 */
 	int login(String name,String password);
 	boolean isNameExist(String name);
+	//void deleteById(int id);
 }

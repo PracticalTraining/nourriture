@@ -9,8 +9,7 @@ import edu.bjtu.nourriture_web.idao.IFoodCategoryDao;
 public class FoodCategoryDao extends HibernateDaoSupport implements IFoodCategoryDao {
 
 	public FoodCategory getById(int id) {
-		FoodCategory fc = getHibernateTemplate().get(FoodCategory.class, id);
-		return fc;   /** 查看定級分類?*/
+		return getHibernateTemplate().get(FoodCategory.class, id);
 	}
 	public int add(FoodCategory  foodcategory) {
 		getHibernateTemplate().save(foodcategory);

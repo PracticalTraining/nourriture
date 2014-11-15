@@ -172,4 +172,5 @@
 		<property name="foodDao" ref="foodDao"></property>
 		<property name="commentsDao" ref="commentsDao"></property>
 	</bean>
+
 </beans>
