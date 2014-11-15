@@ -231,7 +231,7 @@ public class CustomerRSTestCase {
 
 		// test case: return with error ERROR_CODE_INTEREST_NOT_SET
 		final int ERROR_CODE_INTEREST_NOT_SET = -2;
-		rs = client.resource(WSROOT + "/23/sweet");
+		rs = client.resource(WSROOT + "/23/");
 		response = jsonParser.parse(rs.get(String.class)).getAsJsonObject();
 		Assert.assertEquals(response.get("errorCode").getAsInt(),
 				ERROR_CODE_INTEREST_NOT_SET);
