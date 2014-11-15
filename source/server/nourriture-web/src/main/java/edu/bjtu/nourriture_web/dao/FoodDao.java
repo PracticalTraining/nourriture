@@ -1,5 +1,7 @@
 package edu.bjtu.nourriture_web.dao;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -32,14 +34,86 @@ public class FoodDao extends HibernateDaoSupport implements IFoodDao {
 	public void update(Food food) {
 		getHibernateTemplate().saveOrUpdate(food);
 	}
-	/**sift the food by price**/
-	public List<Food> siftByPrice(double fromPrice,double toPrice){
-		List<Food> list = getHibernateTemplate().find("from Food where price > ? AND price < ?",fromPrice,toPrice);
+	/** search **/
+	public List<Food> search(double fromPrice, double toPrice,
+			String[] categoryIds, String[] flavourIds, String[] produceRegionIds,
+			String[] buyRegionIds) {
+		List<Food> list;
+		StringBuffer sb = new StringBuffer();
+		sb.append("from Food where ");
+		
+		if(fromPrice != -1 && toPrice != -1){
+			sb.append("price > ? and price < ? and ");
+		} else if(fromPrice != -1) {
+			sb.append("price > ? and ");
+		} else if(toPrice != -1){
+			sb.append("price < ? and "); 
+		}
+		
+		boolean hasIds = false;
+		if(categoryIds != null && categoryIds.length != 0 && !categoryIds[0].equals(""))
+		{
+			sb.append("(");
+			hasIds = true;
+			for(String categoryId : categoryIds){
+				sb.append("categoryId = ");
+				sb.append(categoryId);
+				sb.append(" or ");
+			}
+			sb.delete(sb.length() - 3, sb.length());
+			sb.append(") and ");
+		}
+		
+		if(flavourIds != null && flavourIds.length != 0 && !flavourIds[0].equals("")){
+			sb.append("(");
+			hasIds = true;
+			for(String flavourId : flavourIds){
+				sb.append("flavourId =");
+				sb.append(flavourId);
+				sb.append(" or ");
+			}
+			sb.delete(sb.length() - 3, sb.length());
+			sb.append(") and ");
+		}
+		
+//		if(produceRegionIds != null && produceRegionIds.length != 0){
+//			sb.append("(");
+//			hasIds = true;
+//			for(String produceRegionId : produceRegionIds){
+//				sb.append("produceLocationId =");
+//				sb.append(produceRegionId);
+//				sb.append(" or ");
+//			}
+//			sb.delete(sb.length() - 3, sb.length());
+//			sb.append(") and ");
+//		}
+//		
+//		if(buyRegionIds != null && buyRegionIds.length != 0){
+//			sb.append("(");
+//			hasIds = true;
+//			for(String buyRegionId : buyRegionIds){
+//				sb.append("produceLocationId =");
+//				sb.append(buyRegionId);
+//				sb.append(" or ");
+//			}
+//			sb.delete(sb.length() - 3, sb.length());
+//			sb.append(") and ");
+//		}
+		if(hasIds){
+			sb.delete(sb.length() - 5, sb.length());
+		}
+		System.out.println(sb);
+		
+		if(fromPrice != -1 && toPrice != -1){
+			list = getHibernateTemplate().find(sb.toString(),fromPrice,toPrice);
+		} else if(fromPrice != -1) {
+			list = getHibernateTemplate().find(sb.toString(),fromPrice);
+		} else if(toPrice != -1){
+			list = getHibernateTemplate().find(sb.toString(),toPrice);
+		} else {
+			list = new ArrayList<Food>();
+		}
 		return list;
 	}
-	/** sift the food by categoryId **/
-	public List<Food> siftByCategoryId(List<Food> list,int categoryId){
-		list = getHibernateTemplate().find("from list where categoryId = ?",categoryId);
-		return list;
-	}
+	
 }

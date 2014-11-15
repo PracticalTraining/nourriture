@@ -195,5 +195,6 @@
 		<property name="flavourDao" ref="flavourDao"></property>
 		<property name="manuFacturerDao" ref="manuFacturerDao"></property>
 		<property name="locationDao" ref="locationDao"></property>
+		<property name="customerDao" ref="customerDao"></property>
 	</bean>
 </beans>
