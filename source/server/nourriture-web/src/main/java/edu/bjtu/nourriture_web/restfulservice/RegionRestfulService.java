@@ -10,6 +10,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -84,43 +85,46 @@ public class RegionRestfulService {
 		}
 
 		// add one row to database
-		Region region = new Region();
-		region.setName(name);
-		region.setProvince(province);
-		region.setSuperiorRegionId(superiorRegionId);
-		ret.addProperty("id", regionDao.add(region));
-		ret.add("links", regionChildrenLinks);
+		if (province && superiorRegionId == 0) {
+			Region region = new Region();
+			region.setName(name);
+			region.setProvince(province);
+			region.setSuperiorRegionId(superiorRegionId);
+			ret.addProperty("id", regionDao.add(region));
+			ret.add("links", regionChildrenLinks);
+		}
 		return ret.toString();
 	}
 
-	// /** get the superior region by id **/
-	// @GET
-	// @Path("{id}")
-	// public String getSuperiorById(@PathParam("id") int id) {
-	// JsonObject ret = new JsonObject();
-	// // define errorCode
-	// final int ERROR_CODE_BAD_PARAM = -1;
-	// final int ERROR_CODE_NO_RESULT = -2;
-	// // check request parameters
-	// if (id < 0) {
-	// ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
-	// ret.add("links", regionChildrenLinks);
-	// return ret.toString();
-	// }
-	// // search the database
-	// List<Region> superiorRegion = regionDao.searchRegionById(id);
-	// if (superiorRegion == null) {
-	// ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
-	// ret.add("links", regionChildrenLinks);
-	// return ret.toString();
-	// }
-	//
-	// JsonObject jSuperiorRecipe = transformRecipeToJson(superiorRegion);
-	// ret.add("superiorRecipe", jSuperiorRecipe);
-	// ret.add("links", regionChildrenLinks);
-	// return ret.toString();
-	//
-	// }
+	/** get the superior region by id **/
+	@GET
+	@Path("getTop")
+	public String getSuperiorById(@QueryParam("id") int id) {
+		JsonObject ret = new JsonObject();
+		// define errorCode
+		final int ERROR_CODE_BAD_PARAM = -1;
+		final int ERROR_CODE_NO_RESULT = -2;
+		// check request parameters
+		if (id < 0) {
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", regionChildrenLinks);
+			return ret.toString();
+		}
+		// search the database
+		List<Region> superiorRegion = regionDao.searchSuperiorRegionById(id);
+		if (superiorRegion == null) {
+			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
+			ret.add("links", regionChildrenLinks);
+			return ret.toString();
+		}
+
+		JsonObject jSuperiorRecipe = transformRecipeToJson(superiorRegion
+				.get(0));
+		ret.add("superiorRecipe", jSuperiorRecipe);
+		ret.add("links", regionChildrenLinks);
+		return ret.toString();
+
+	}
 
 	/** get the detail info of region by name **/
 	@GET
@@ -136,13 +140,18 @@ public class RegionRestfulService {
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
 		}
-		// search the database
-		List<Region> regionDetailInfo = regionDao.searchRegionDetailById(id);
-		if (regionDetailInfo.isEmpty()) {
+		if (!regionDao.isRegionExist(id)) {
 			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
 		}
+		// search the database
+		Region regionDetailInfo = regionDao.searchRegionDetailById(id);
+		// if (regionDetailInfo.isEmpty()) {
+		// ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
+		// ret.add("links", regionChildrenLinks);
+		// return ret.toString();
+		// }
 
 		JsonObject jSuperiorRecipe = transformRecipeToJson(regionDetailInfo);
 		ret.add("superiorRecipe", jSuperiorRecipe);
@@ -238,7 +247,7 @@ public class RegionRestfulService {
 	 * @param region
 	 * @return
 	 */
-	private JsonObject transformRecipeToJson(List<Region> region) {
+	private JsonObject transformRecipeToJson(Region region) {
 		JsonObject jRegion = JsonUtil.beanToJson(region);
 		return jRegion;
 	}

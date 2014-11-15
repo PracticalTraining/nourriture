@@ -28,22 +28,11 @@ public class RegionDao extends HibernateDaoSupport implements IRegionDao {
 
 	}
 
-	public List<Region> searchRegionById(int id) {
+	public Region searchRegionDetailById(int id) {
 		// TODO Auto-generated method stub
-		List<Region> regions = new ArrayList<Region>();
-		List<Integer> superiorRegionIds = getHibernateTemplate().find(
-				" superiorRegionId from Region where id=?", id);
-		for (Integer superiorRegionId : superiorRegionIds) {
-			Region region = (Region) getHibernateTemplate().find(
-					"from Region where id=? ", superiorRegionId);
-			regions.add(region);
-		}
-		return regions;
-	}
-
-	public List<Region> searchRegionDetailById(int id) {
-		// TODO Auto-generated method stub
-		return getHibernateTemplate().find("from Region where id=?", id);
+		List<Region> regions = getHibernateTemplate().find(
+				"from Region where id=?", id);
+		return regions.get(0);
 	}
 
 	public Region getById(int id) {
@@ -65,5 +54,18 @@ public class RegionDao extends HibernateDaoSupport implements IRegionDao {
 	public void update(Region updateRegion) {
 		// TODO Auto-generated method stub
 		getHibernateTemplate().update(updateRegion);
+	}
+
+	public List<Region> searchSuperiorRegionById(int id) {
+		// TODO Auto-generated method stub
+		List<Region> regions = new ArrayList<Region>();
+		List<Integer> superiorRegionIds = getHibernateTemplate().find(
+				" superiorRegionId from Region where id=?", id);
+		for (Integer superiorRegionId : superiorRegionIds) {
+			Region region = (Region) getHibernateTemplate().find(
+					"from Region where id=? ", superiorRegionId);
+			regions.add(region);
+		}
+		return regions;
 	}
 }

@@ -1,8 +1,5 @@
 package edu.bjtu.nourriture_web.restfulservice;
 
-import java.util.List;
-
-import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,6 +7,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -40,8 +38,8 @@ public class RecipeCategoryRestfulService {
 	{
 		// initialize direct children links
 		recipecategoryChildrenLinks = new JsonArray();
-		// RestfulServiceUtil.addChildrenLinks(recipecategoryChildrenLinks,
-		// "get uperior recipe", "/superior", "GET");
+		RestfulServiceUtil.addChildrenLinks(recipecategoryChildrenLinks,
+				"get superior recipe", "/getTop", "GET");
 		RestfulServiceUtil.addChildrenLinks(recipecategoryChildrenLinks,
 				"get recipe's detail information", "/{id}", "GET");
 		RestfulServiceUtil.addChildrenLinks(recipecategoryChildrenLinks,
@@ -69,8 +67,8 @@ public class RecipeCategoryRestfulService {
 		}
 		// check parameters
 		if (!topCategory
-				&& !recipeCategoryDao
-						.isSuperiorCategoryIdExist(superiorCategoryId)) {
+				&& recipeCategoryDao
+						.isSuperiorCategoryIdExist(superiorCategoryId) == false) {
 			ret.addProperty("errorCode",
 					ERROR_CODE_NOTTOPCATEGORY_SUPERIORCATEGORY_NOTEXIST);
 			ret.add("links", recipecategoryChildrenLinks);
@@ -79,52 +77,78 @@ public class RecipeCategoryRestfulService {
 		// check parameters
 		if (topCategory
 				&& recipeCategoryDao
-						.isSuperiorCategoryIdExist(superiorCategoryId)) {
+						.isSuperiorCategoryIdExist(superiorCategoryId) == true) {
 			ret.addProperty("errorCode",
 					ERROR_CODE_TOPCATEGORY__SUPERIORCATEGORYEXIST);
 			ret.add("links", recipecategoryChildrenLinks);
 			return ret.toString();
 		}
+		if (topCategory && superiorCategoryId == 0) {
 
-		// add one row to database
-		RecipeCategory recipeCategory = new RecipeCategory();
-		recipeCategory.setName(name);
-		recipeCategory.setTopCategory(topCategory);
-		recipeCategory.setSuperiorCategoryId(superiorCategoryId);
-		ret.addProperty("id", recipeCategoryDao.add(recipeCategory));
-		ret.add("links", recipecategoryChildrenLinks);
+			// add one row to database
+			RecipeCategory recipeCategory = new RecipeCategory();
+			recipeCategory.setName(name);
+			recipeCategory.setTopCategory(topCategory);
+			recipeCategory.setSuperiorCategoryId(superiorCategoryId);
+			ret.addProperty("id", recipeCategoryDao.add(recipeCategory));
+			ret.add("links", recipecategoryChildrenLinks);
+		}
 		return ret.toString();
+
 	}
 
-	// /** get the superior classfication **/
-	// @GET
-	// @Path("superior")
-	// public String getSuperior(@QueryParam("name") String name) {
-	// JsonObject ret = new JsonObject();
-	// // define errorCode
-	// final int ERROR_CODE_NO_RESULT = -1;
-	// final int ERROR_CODE_BAD_PARAM = -2;
-	// // check request parameters
-	// if (name == null || "".equals(name)) {
-	// ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
-	// ret.add("links", recipecategoryChildrenLinks);
-	// return ret.toString();
-	// }
-	// // search the database
-	// List<RecipeCategory> superiorRecipe = recipeCategoryDao
-	// .searchRecipeByName(name);
-	// if (superiorRecipe == null) {
-	// ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
-	// ret.add("links", recipecategoryChildrenLinks);
-	// return ret.toString();
-	// }
-	//
-	// JsonObject jSuperiorRecipe = transformRecipeToJson(superiorRecipe);
-	// ret.add("superiorRecipe", jSuperiorRecipe);
-	// ret.add("links", recipecategoryChildrenLinks);
-	// return ret.toString();
-	//
-	// }
+	/** get the superior classfication **/
+	@GET
+	@Path("getTop")
+	public String getSuperiorById(@QueryParam("id") int id) {
+		JsonObject ret = new JsonObject();
+		// define errorCode
+		final int ERROR_CODE_BAD_PARAM = -1;
+		final int ERROR_CODE_RECIPECATEGORY_NOT_EXIST = -2;
+		final int ERROR_CODE_NOT_PROSSBLE = -3;
+		final int ERROR_CODE_HASNOR_TOPCATEGROY = -4;
+		final int ERROR_CODE_SUPERIORCATEGORYID_NOT_EXIST = -5;
+		final int ERROR_CODE_NO_RESULT = -6;
+		// check request parameters
+		if (id < 0) {
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", recipecategoryChildrenLinks);
+			return ret.toString();
+		}
+		if (recipeCategoryDao.isRecipeCategoryExist(id) == false) {
+			ret.addProperty("errorCode", ERROR_CODE_RECIPECATEGORY_NOT_EXIST);
+			ret.add("links", recipecategoryChildrenLinks);
+			return ret.toString();
+		}
+		// search superiorCategoryId from the database
+		// int superiorCategoryId = recipeCategoryDao.getSuperiorCategoryId(id);
+		RecipeCategory recipeCategory = recipeCategoryDao
+				.searchRecipeCategoryDetailById(id);
+		int superiorCategoryId = recipeCategory.getId();
+		if (!recipeCategoryDao.isRecipeCategoryExist(superiorCategoryId)) {
+			ret.addProperty("errorCode", ERROR_CODE_RECIPECATEGORY_NOT_EXIST);
+			ret.add("links", recipecategoryChildrenLinks);
+			return ret.toString();
+		}
+		if (superiorCategoryId == 0) {
+			ret.addProperty("errorCode", ERROR_CODE_HASNOR_TOPCATEGROY);
+			ret.add("links", recipecategoryChildrenLinks);
+			return ret.toString();
+		}
+		if (!recipeCategoryDao.isRecipeCategoryExist(superiorCategoryId)) {
+			ret.addProperty("errorCode",
+					ERROR_CODE_SUPERIORCATEGORYID_NOT_EXIST);
+			ret.add("links", recipecategoryChildrenLinks);
+			return ret.toString();
+		}
+		RecipeCategory recipeCategoryDetailInfo = recipeCategoryDao
+				.searchRecipeCategoryDetailById(superiorCategoryId);
+		JsonObject jSuperiorRecipe = transformRecipeToJson(recipeCategoryDetailInfo);
+		ret.add("superiorRecipe", jSuperiorRecipe);
+		ret.add("links", recipecategoryChildrenLinks);
+		return ret.toString();
+
+	}
 
 	/** get the detail info of recipeCategory by id **/
 	@GET
@@ -140,14 +164,14 @@ public class RecipeCategoryRestfulService {
 			ret.add("links", recipecategoryChildrenLinks);
 			return ret.toString();
 		}
-		// search the database
-		List<RecipeCategory> recipeCategoryDetailInfo = recipeCategoryDao
-				.searchRecipeCategoryDetailById(id);
-		if (recipeCategoryDetailInfo.isEmpty()) {
+		if (!recipeCategoryDao.isRecipeCategoryExist(id)) {
 			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
 			ret.add("links", recipecategoryChildrenLinks);
 			return ret.toString();
 		}
+		// search the database
+		RecipeCategory recipeCategoryDetailInfo = recipeCategoryDao
+				.searchRecipeCategoryDetailById(id);
 
 		JsonObject jSuperiorRecipe = transformRecipeToJson(recipeCategoryDetailInfo);
 		ret.add("superiorRecipe", jSuperiorRecipe);
@@ -200,42 +224,60 @@ public class RecipeCategoryRestfulService {
 			ret.add("links", recipecategoryChildrenLinks);
 			return ret.toString();
 		}
-		updateRecipeCategory.setName(name);
-		updateRecipeCategory.setTopCategory(topCategory);
-		updateRecipeCategory.setSuperiorCategoryId(superiorCategoryId);
-		recipeCategoryDao.update(updateRecipeCategory);
-		ret.addProperty("id", id);
-		ret.add("links", recipecategoryChildrenLinks);
+		if (topCategory && superiorCategoryId == 0) {
+
+			updateRecipeCategory.setName(name);
+			updateRecipeCategory.setTopCategory(topCategory);
+			updateRecipeCategory.setSuperiorCategoryId(superiorCategoryId);
+			recipeCategoryDao.update(updateRecipeCategory);
+			ret.addProperty("id", id);
+			ret.add("links", recipecategoryChildrenLinks);
+		}
 		return ret.toString();
 	}
 
 	/** delete the recipecategory by id **/
-	@DELETE
-	@Path("{id}")
-	public String deleteRecipeCategoryById(@PathParam("id") int id) {
-		JsonObject ret = new JsonObject();
-		// define errorCode
-		final int ERROR_CODE_BAD_PARAM = -1;
-		final int ERROR_CODE_NO_RESULT = -2;
-		// check request parameters
-		if (id < 0) {
-			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
-			ret.add("links", recipecategoryChildrenLinks);
-			return ret.toString();
-		}
-		// search the database
-		RecipeCategory deleteRecipeCategory = recipeCategoryDao.getById(id);
-		if (deleteRecipeCategory == null) {
-			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
-			ret.add("links", recipecategoryChildrenLinks);
-			return ret.toString();
-		}
-		recipeCategoryDao.delete(deleteRecipeCategory);
-		ret.addProperty("id", id);
-		ret.add("links", recipecategoryChildrenLinks);
-		return ret.toString();
-
-	}
+	// @DELETE
+	// @Path("{id}")
+	// public String deleteRecipeCategoryById(@PathParam("id") int id) {
+	// JsonObject ret = new JsonObject();
+	// // define errorCode
+	// final int ERROR_CODE_BAD_PARAM = -1;
+	// final int ERROR_CODE_NO_RESULT = -2;
+	// // check request parameters
+	// if (id < 0) {
+	// ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+	// ret.add("links", recipecategoryChildrenLinks);
+	// return ret.toString();
+	// }
+	// // search its superiorCategoryId
+	// int superiorCategoryId = recipeCategoryDao.getSuperiorCategoryId(id);
+	// // this recipeCategoey is topRecipeCategory
+	// if (superiorCategoryId == 0) {
+	// List<RecipeCategory> childrecipeCategories = recipeCategoryDao
+	// .getChildrenRecipeCategory(id);
+	// for (RecipeCategory recipeCategory : childrecipeCategories) {
+	// recipeCategoryDao.delete(recipeCategory);
+	// ret.addProperty("id", id);
+	// ret.add("links", recipecategoryChildrenLinks);
+	// }
+	// return ret.toString();
+	// }
+	// if (recipeCategoryDao.isRecipeCategoryExist(superiorCategoryId)) {
+	// // search the database
+	// RecipeCategory deleteRecipeCategory = recipeCategoryDao.getById(id);
+	// if (deleteRecipeCategory == null) {
+	// ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
+	// ret.add("links", recipecategoryChildrenLinks);
+	// return ret.toString();
+	// }
+	// recipeCategoryDao.delete(deleteRecipeCategory);
+	// ret.addProperty("id", id);
+	// ret.add("links", recipecategoryChildrenLinks);
+	// }
+	// return ret.toString();
+	//
+	// }
 
 	/**
 	 * transform recipeCategory from bean to json
@@ -243,7 +285,7 @@ public class RecipeCategoryRestfulService {
 	 * @param category
 	 * @return
 	 */
-	private JsonObject transformRecipeToJson(List<RecipeCategory> category) {
+	private JsonObject transformRecipeToJson(RecipeCategory category) {
 		JsonObject jRecipeCategory = JsonUtil.beanToJson(category);
 		return jRecipeCategory;
 	}

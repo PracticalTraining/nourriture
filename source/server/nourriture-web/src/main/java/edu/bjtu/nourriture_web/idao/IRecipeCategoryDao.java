@@ -1,7 +1,5 @@
 package edu.bjtu.nourriture_web.idao;
 
-import java.util.List;
-
 import edu.bjtu.nourriture_web.bean.RecipeCategory;
 
 public interface IRecipeCategoryDao {
@@ -15,16 +13,16 @@ public interface IRecipeCategoryDao {
 	int add(RecipeCategory category);
 
 	/** check if category is already exist **/
-	boolean isRecipeCategoryExist(String categoryName);
+	boolean isRecipeCategoryExist(int id);
 
 	/** search superior recipecatgory by name **/
-	List<RecipeCategory> searchRecipeByName(String name);
+	// RecipeCategory searchSuperiorRecipeById(int id);
 
 	/** delete the recipecategory **/
 	void delete(RecipeCategory deleteRecipeCategory);
 
 	/** search the detail info of the recipecategory **/
-	List<RecipeCategory> searchRecipeCategoryDetailById(int id);
+	RecipeCategory searchRecipeCategoryDetailById(int id);
 
 	/** update the recipecategory **/
 	void update(RecipeCategory updateRecipeCategory);

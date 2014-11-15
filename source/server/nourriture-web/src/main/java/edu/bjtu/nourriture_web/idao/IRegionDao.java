@@ -12,10 +12,10 @@ public interface IRegionDao {
 	int add(Region region);
 
 	/** search region by id **/
-	List<Region> searchRegionById(int id);
+	List<Region> searchSuperiorRegionById(int id);
 
 	/** search the detail info of the region by id **/
-	List<Region> searchRegionDetailById(int id);
+	Region searchRegionDetailById(int id);
 
 	/** get region by id **/
 	Region getById(int id);

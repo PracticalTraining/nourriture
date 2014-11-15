@@ -1,6 +1,5 @@
 package edu.bjtu.nourriture_web.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -23,22 +22,15 @@ public class RecipeCategoryDao extends HibernateDaoSupport implements
 		return (category.getId());
 	}
 
-	public boolean isRecipeCategoryExist(String categoryName) {
+	public boolean isRecipeCategoryExist(int id) {
 		// TODO Auto-generated method stub
 		List<RecipeCategory> list = getHibernateTemplate().find(
-				"from RecipeCategory where name = ?", categoryName);
+				"from RecipeCategory where id= ?", id);
 		if (list.isEmpty()) {
 			return false;
 		} else {
 			return true;
 		}
-	}
-
-	public List<RecipeCategory> searchRecipeByName(String name) {
-		// TODO Auto-generated method stub
-		return getHibernateTemplate().find(
-				"from RecipeCategory where name = ?", name);
-
 	}
 
 	/** delete the recipe **/
@@ -58,29 +50,30 @@ public class RecipeCategoryDao extends HibernateDaoSupport implements
 		}
 	}
 
-	public List<RecipeCategory> searchRecipeCategoryDetailByName(int id) {
-		// TODO Auto-generated method stub
-		List<RecipeCategory> recipeCategorys = new ArrayList<RecipeCategory>();
-		List<Integer> superiorRecipeCategoryIds = getHibernateTemplate().find(
-				" superiorCategoryId from RecipeCategory where id=?", id);
-		for (Integer superiorRecipeCategoryId : superiorRecipeCategoryIds) {
-			RecipeCategory recipeCategory = (RecipeCategory) getHibernateTemplate()
-					.find("from RecipeCategory where id=? ",
-							superiorRecipeCategoryId);
-			recipeCategorys.add(recipeCategory);
-		}
-		return recipeCategorys;
-
-	}
-
 	public void update(RecipeCategory updateRecipeCategory) {
 		// TODO Auto-generated method stub
 		getHibernateTemplate().update(updateRecipeCategory);
 	}
 
-	public List<RecipeCategory> searchRecipeCategoryDetailById(int id) {
+	public RecipeCategory searchRecipeCategoryDetailById(int id) {
 		// TODO Auto-generated method stub
-		return getHibernateTemplate()
-				.find("from RecipeCategory where id=?", id);
+		List<RecipeCategory> recipeCategories = getHibernateTemplate().find(
+				"from RecipeCategory where id=?", id);
+		return recipeCategories.get(0);
+	}
+
+	// get recipeCategory's superiorCategoryId
+	public int getSuperiorCategoryId(int id) {
+		// TODO Auto-generated method stub
+		List<Integer> superiorCategoryId = getHibernateTemplate().find(
+				"superiorCategoryId from RecipeCategory where id=?", id);
+		return superiorCategoryId.get(0);
+	}
+
+	public List<RecipeCategory> getChildrenRecipeCategory(int id) {
+		// TODO Auto-generated method stub
+		return getHibernateTemplate().find(
+				"from RecipeCategory where superiorCategoryId=?", id);
+
 	}
 }
