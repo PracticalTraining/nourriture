@@ -79,24 +79,19 @@ public class RecipeCategoryRestfulService {
 			return ret.toString();
 		}
 		// check parameters
-		if (topCategory
-				&& recipeCategoryDao
-						.isSuperiorCategoryIdExist(superiorCategoryId) == true) {
+		if (topCategory && superiorCategoryId != 0) {
 			ret.addProperty("errorCode",
 					ERROR_CODE_TOPCATEGORY__SUPERIORCATEGORYEXIST);
 			ret.add("links", recipecategoryChildrenLinks);
 			return ret.toString();
 		}
-		if (topCategory && superiorCategoryId == 0) {
-
-			// add one row to database
-			RecipeCategory recipeCategory = new RecipeCategory();
-			recipeCategory.setName(name);
-			recipeCategory.setTopCategory(topCategory);
-			recipeCategory.setSuperiorCategoryId(superiorCategoryId);
-			ret.addProperty("id", recipeCategoryDao.add(recipeCategory));
-			ret.add("links", recipecategoryChildrenLinks);
-		}
+		// add one row to database
+		RecipeCategory recipeCategory = new RecipeCategory();
+		recipeCategory.setName(name);
+		recipeCategory.setTopCategory(topCategory);
+		recipeCategory.setSuperiorCategoryId(superiorCategoryId);
+		ret.addProperty("id", recipeCategoryDao.add(recipeCategory));
+		ret.add("links", recipecategoryChildrenLinks);
 		return ret.toString();
 
 	}
@@ -199,9 +194,7 @@ public class RecipeCategoryRestfulService {
 			return ret.toString();
 		}
 		// check parameters
-		if (topCategory
-				&& recipeCategoryDao
-						.isSuperiorCategoryIdExist(superiorCategoryId) == true) {
+		if (topCategory && superiorCategoryId != 0) {
 			ret.addProperty("errorCode", ERROR_CODE_PROVICE_SUPERIOREXIST);
 			ret.add("links", recipecategoryChildrenLinks);
 			return ret.toString();
@@ -214,15 +207,12 @@ public class RecipeCategoryRestfulService {
 			ret.add("links", recipecategoryChildrenLinks);
 			return ret.toString();
 		}
-		if (topCategory && superiorCategoryId == 0) {
-
-			updateRecipeCategory.setName(name);
-			updateRecipeCategory.setTopCategory(topCategory);
-			updateRecipeCategory.setSuperiorCategoryId(superiorCategoryId);
-			recipeCategoryDao.update(updateRecipeCategory);
-			ret.addProperty("id", id);
-			ret.add("links", recipecategoryChildrenLinks);
-		}
+		updateRecipeCategory.setName(name);
+		updateRecipeCategory.setTopCategory(topCategory);
+		updateRecipeCategory.setSuperiorCategoryId(superiorCategoryId);
+		recipeCategoryDao.update(updateRecipeCategory);
+		ret.addProperty("id", id);
+		ret.add("links", recipecategoryChildrenLinks);
 		return ret.toString();
 	}
 
@@ -269,14 +259,6 @@ public class RecipeCategoryRestfulService {
 			ret.add("links", recipecategoryChildrenLinks);
 			return ret.toString();
 		}
-		// search the database
-		// RecipeCategory deleteTopRecipeCategory =
-		// recipeCategoryDao.getById(id);
-		// if (deleteTopRecipeCategory == null) {
-		// ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
-		// ret.add("links", recipecategoryChildrenLinks);
-		// return ret.toString();
-		// }
 		recipeCategoryDao.delete(deleterecipeCategory);
 		ret.addProperty("id", id);
 		ret.add("links", recipecategoryChildrenLinks);

@@ -78,22 +78,19 @@ public class RegionRestfulService {
 			return ret.toString();
 		}
 		// check parameters
-		if (province
-				&& regionDao.isSuperiorRegionIdExist(superiorRegionId) == true) {
+		if (province && superiorRegionId != 0) {
 			ret.addProperty("errorCode", ERROR_CODE_PROVICE_SUPERIOREXIST);
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
 		}
 
 		// add one row to database
-		if (province && superiorRegionId == 0) {
-			Region region = new Region();
-			region.setName(name);
-			region.setProvince(province);
-			region.setSuperiorRegionId(superiorRegionId);
-			ret.addProperty("id", regionDao.add(region));
-			ret.add("links", regionChildrenLinks);
-		}
+		Region region = new Region();
+		region.setName(name);
+		region.setProvince(province);
+		region.setSuperiorRegionId(superiorRegionId);
+		ret.addProperty("id", regionDao.add(region));
+		ret.add("links", regionChildrenLinks);
 		return ret.toString();
 	}
 
@@ -154,11 +151,6 @@ public class RegionRestfulService {
 		}
 		// search the database
 		Region regionDetailInfo = regionDao.searchRegionDetailById(id);
-		// if (regionDetailInfo.isEmpty()) {
-		// ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
-		// ret.add("links", regionChildrenLinks);
-		// return ret.toString();
-		// }
 
 		JsonObject jSuperiorRecipe = transformRecipeToJson(regionDetailInfo);
 		ret.add("superiorRecipe", jSuperiorRecipe);
@@ -198,8 +190,7 @@ public class RegionRestfulService {
 			return ret.toString();
 		}
 		// check parameters
-		if (province
-				&& regionDao.isSuperiorRegionIdExist(superiorRegionId) == true) {
+		if (province && superiorRegionId != 0) {
 			ret.addProperty("errorCode", ERROR_CODE_PROVICE_SUPERIOREXIST);
 			ret.add("links", regionChildrenLinks);
 			return ret.toString();
