@@ -215,7 +215,7 @@ public class CustomerRSTestCase {
 	/** get interests **/
 	@Test
 	public void getInterests() {
-		WebResource rs = client.resource(WSROOT + "/2/sweet");
+		WebResource rs = client.resource(WSROOT + "/2/flavour");
 		// test case: return success
 		// define parameters
 		JsonObject response = jsonParser.parse(rs.get(String.class))
@@ -224,7 +224,7 @@ public class CustomerRSTestCase {
 
 		// test case: return with error ERROR_CODE_USER_NOT_EXSIT
 		final int ERROR_CODE_USER_NOT_EXIST = -1;
-		rs = client.resource(WSROOT + "/23/sweet");
+		rs = client.resource(WSROOT + "/23/flavour");
 		response = jsonParser.parse(rs.get(String.class)).getAsJsonObject();
 		Assert.assertEquals(response.get("errorCode").getAsInt(),
 				ERROR_CODE_USER_NOT_EXIST);
