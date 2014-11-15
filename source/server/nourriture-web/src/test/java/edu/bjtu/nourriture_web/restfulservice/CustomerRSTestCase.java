@@ -82,7 +82,7 @@ public class CustomerRSTestCase {
 		String customerName = "Cust";
 		// get response
 		JsonObject response = jsonParser.parse(
-				rs.queryParam("customerName", customerName).get(String.class))
+				rs.queryParam("name", customerName).get(String.class))
 				.getAsJsonObject();
 		Assert.assertNotNull(response.get("customers"));
 
@@ -92,7 +92,7 @@ public class CustomerRSTestCase {
 		customerName = UUID.randomUUID().toString();
 		// get response
 		response = jsonParser.parse(
-				rs.queryParam("customerName", customerName).get(String.class))
+				rs.queryParam("name", customerName).get(String.class))
 				.getAsJsonObject();
 		Assert.assertEquals(response.get("errorCode").getAsInt(),
 				ERROR_CODE_NO_RESULT);
