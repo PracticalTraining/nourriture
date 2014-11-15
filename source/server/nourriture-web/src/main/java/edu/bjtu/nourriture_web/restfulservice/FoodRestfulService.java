@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -43,6 +45,7 @@ public class FoodRestfulService {
 	private JsonArray foodChildrenLinks;
 	private JsonArray idChildrenLinks;
 	private JsonArray searchChildrenLinks;
+	private JsonArray recommendChildrenLinks;
 	//get set method for spring IOC
 	public IFoodDao getFoodDao() {
 		return foodDao;
@@ -93,6 +96,8 @@ public class FoodRestfulService {
 		RestfulServiceUtil.addChildrenLinks(foodChildrenLinks, "update the food by id", "/{id}", "PUT");
 		RestfulServiceUtil.addChildrenLinks(foodChildrenLinks, "delete the food by id", "/{id}", "DELETE");
 		idChildrenLinks = new JsonArray();
+		searchChildrenLinks = new JsonArray();
+		recommendChildrenLinks = new JsonArray();
 	}
 	/** add a food **/
 	@POST
@@ -275,9 +280,9 @@ public class FoodRestfulService {
 	@Path("{id}")
 	public String deleteFood(@PathParam("id") int id) {
 		JsonObject ret = new JsonObject();
+		//define error code
 		final int ERROR_CODE_FOOD_NOT_EXIST = -1;
-
-		Food food = foodDao.getById(id);
+        Food food = foodDao.getById(id);
 		//check if food is exist
 		if (food == null) {
 			ret.addProperty("errorCode", ERROR_CODE_FOOD_NOT_EXIST);
@@ -293,31 +298,74 @@ public class FoodRestfulService {
 	/** search the food**/
 	@GET
 	@Path("search")
-	public String searchBySift(@PathParam("fromPrice") double fromPrice,@PathParam("toPrice") double toPrice
-		,@PathParam("categoryIds") String categoryIds,@PathParam("flavourIds") String flavourIds,
-		@PathParam("produceRegionIds") String produceRegionIds,@PathParam("buyRegionIds") String buyRegionIds){
+	public String searchBySift(@QueryParam("fromPrice") @DefaultValue("-1") double fromPrice,@QueryParam("toPrice") @DefaultValue("-1") double toPrice
+		,@QueryParam("categoryIds") @DefaultValue("") String categoryIds,@QueryParam("flavourIds") @DefaultValue("") String flavourIds,
+		@QueryParam("produceRegionIds") @DefaultValue("") String produceRegionIds,@QueryParam("buyRegionIds") @DefaultValue("") String buyRegionIds){
 		JsonObject ret = new JsonObject();
-		String[] categoryids = categoryIds.split(",");
+		String[] categoryids = categoryIds.split(",");	
 		String[] flavourids = flavourIds.split(",");
 		String[] produceregionids = produceRegionIds.split(",");
 		String[] buyregionids = buyRegionIds.split(",");
-		List<Food> listResult = foodDao.siftByPrice(fromPrice, toPrice);
-		return ("aa");
+		List<Food> listResult = foodDao.search(fromPrice, toPrice, categoryids, flavourids, produceregionids, buyregionids);
+		
+		JsonArray foods = new JsonArray();
+		for(Food food:listResult){
+			JsonObject jFood = new JsonObject();
+			jFood.addProperty("id",food.getId());
+			jFood.addProperty("name", food.getName());
+			jFood.addProperty("price", food.getPrice());
+			jFood.addProperty("picture", food.getPicture());
+			jFood.addProperty("categoryId", food.getCategoryId());
+			jFood.addProperty("flavourId", food.getFlavourId());
+			jFood.addProperty("manufacturerId", food.getManufacturerId());
+			jFood.addProperty("produceLocationId", food.getProduceLocationId());
+			jFood.addProperty("buyLocationId", food.getBuyLocationId());
+			
+			foods.add(jFood);
+		}
+		ret.add("foods", foods);
+		ret.add("links", searchChildrenLinks);
+		return ret.toString();
 	   
 	}
 	/** recommend the food **/
 	@GET
 	@Path("recommend")
-	public String recommendByInterest(@PathParam("customerId") int customerId){
+	public String recommendByInterest(@QueryParam("customerId") int customerId){
 		JsonObject ret = new JsonObject();
+		//define error code
+		final int ERROR_CODE_CUSTOMER_NOT_EXIST=-1;
 		//select from database
 		Customer customer = customerDao.getById(customerId);
-		if(customer != null){
-			
+		if(customer == null){
+			ret.addProperty("errorCode", ERROR_CODE_CUSTOMER_NOT_EXIST);
+			ret.add("links", recommendChildrenLinks);
+			return ret.toString();
 		}
-		return ("aa");
+		String interestFlavourIds = customer.getInterestFlavourIds();
+		String interestFoodCategoryIds = customer.getInterestFoodCategoryIds();
+		String[] interestflavourids = interestFlavourIds.split(",");
+		String[] interestfoodcategoryids = interestFoodCategoryIds.split(",");
+		List<Food> listResult = foodDao.search(-1, -1, interestfoodcategoryids, interestflavourids, null, null);
+		JsonArray foods = new JsonArray();
+		for(Food food:listResult){
+			JsonObject jFood = new JsonObject();
+			jFood.addProperty("id",food.getId());
+			jFood.addProperty("name", food.getName());
+			jFood.addProperty("price", food.getPrice());
+			jFood.addProperty("picture", food.getPicture());
+			jFood.addProperty("categoryId", food.getCategoryId());
+			jFood.addProperty("flavourId", food.getFlavourId());
+			jFood.addProperty("manufacturerId", food.getManufacturerId());
+			jFood.addProperty("produceLocationId", food.getProduceLocationId());
+			jFood.addProperty("buyLocationId", food.getBuyLocationId());
+			
+			foods.add(jFood);
+		}
+		ret.add("foods", foods);
+		ret.add("links", searchChildrenLinks);
+		return ret.toString();
 	}
-	
 	
 
 }
