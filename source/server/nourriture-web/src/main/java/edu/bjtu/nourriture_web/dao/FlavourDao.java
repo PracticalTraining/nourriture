@@ -26,7 +26,7 @@ public class FlavourDao extends HibernateDaoSupport implements IFlavourDao {
 	public boolean isFlavourExist(int id) {
 		// TODO Auto-generated method stub
 		List<Flavour> list = getHibernateTemplate().find(
-				"fromFlavour where id= ?", id);
+				"from Flavour where id= ?", id);
 		if (list.isEmpty()) {
 			return false;
 		} else {

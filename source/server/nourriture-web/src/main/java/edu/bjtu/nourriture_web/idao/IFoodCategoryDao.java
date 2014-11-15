@@ -15,7 +15,7 @@ public interface IFoodCategoryDao {
 	int add(FoodCategory category);
 
 	/** check if category is already exist **/
-	boolean isFoodCategoryExist(int id);
+	boolean isCategoryExist(int id);
 
 	/** search superior FoodCategory by name **/
 	// FoodCategory searchSuperiorRecipeById(int id);

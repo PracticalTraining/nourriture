@@ -9,9 +9,6 @@ public interface IFlavourDao {
 	/** get detail information of the Flavour by id **/
 	Flavour getById(int id);
 
-	/** check if Flavourexist **/
-	boolean isFlavourIdExist(int FlavourId);
-
 	/** add one row **/
 	int add(Flavour flavour);
 

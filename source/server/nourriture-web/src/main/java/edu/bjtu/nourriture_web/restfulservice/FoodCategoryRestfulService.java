@@ -72,8 +72,8 @@ public class FoodCategoryRestfulService {
 			return ret.toString();
 		}
 		// check parameters
-		if (!topCategory
-				&& foodCategoryDao
+		if (!topCategory&&
+				 foodCategoryDao
 						.isSuperiorCategoryIdExist(superiorCategoryId) == false) {
 			ret.addProperty("errorCode",
 					ERROR_CODE_NOTTOPCATEGORY_SUPERIORCATEGORY_NOTEXIST);
@@ -118,7 +118,7 @@ public class FoodCategoryRestfulService {
 			ret.add("links", FoodCategoryChildrenLinks);
 			return ret.toString();
 		}
-		if (foodCategoryDao.isFoodCategoryExist(id) == false) {
+		if (foodCategoryDao.isCategoryExist(id) == false) {
 			ret.addProperty("errorCode", ERROR_CODE_RECIPECATEGORY_NOT_EXIST);
 			ret.add("links", FoodCategoryChildrenLinks);
 			return ret.toString();
@@ -156,7 +156,7 @@ public class FoodCategoryRestfulService {
 			ret.add("links", FoodCategoryChildrenLinks);
 			return ret.toString();
 		}
-		if (!foodCategoryDao.isFoodCategoryExist(id)) {
+		if (!foodCategoryDao.isCategoryExist(id)) {
 			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
 			ret.add("links", FoodCategoryChildrenLinks);
 			return ret.toString();
@@ -243,7 +243,7 @@ public class FoodCategoryRestfulService {
 			ret.add("links", FoodCategoryChildrenLinks);
 			return ret.toString();
 		}
-		if (foodCategoryDao.isFoodCategoryExist(id) == false) {
+		if (foodCategoryDao.isCategoryExist(id) == false) {
 			ret.addProperty("errorCode", ERROR_CODE_RECIPECATEGORY_NOT_EXIST);
 			ret.add("links", FoodCategoryChildrenLinks);
 			return ret.toString();

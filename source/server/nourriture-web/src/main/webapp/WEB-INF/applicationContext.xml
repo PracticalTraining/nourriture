@@ -203,6 +203,6 @@
 	</bean>
 	    <bean id="foodcategoryRestfulService"
 		class="edu.bjtu.nourriture_web.restfulservice.FoodCategoryRestfulService">
-		<property name="foodcategoryDao" ref="foodcategoryDao"></property>
+		<property name="foodCategoryDao" ref="foodCategoryDao"></property>
 	</bean>
 </beans>

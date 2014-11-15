@@ -25,15 +25,10 @@ IFoodCategoryDao {
 		return (category.getId());
 	}
 
-	public boolean isFoodCategoryExist(int id) {
-		// TODO Auto-generated method stub
+	public boolean isCategoryExist(int categoryId) {
 		List<FoodCategory> list = getHibernateTemplate().find(
-				"from FoodCategory where id= ?", id);
-		if (list.isEmpty()) {
-			return false;
-		} else {
-			return true;
-		}
+				"from FoodCategory where id= ?", categoryId);
+        return  !list.isEmpty();
 	}
 
 	/** delete the FoodCategory **/
