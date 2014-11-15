@@ -9,6 +9,7 @@ public class Flavour {
 	private boolean topFlavour;
 	/** superior flavour  (上级口味) **/
 	private int superiorFlavourId;
+	private int superiorCategoryId;
 	
 	public int getId() {
 		return id;
@@ -34,4 +35,17 @@ public class Flavour {
 	public void setSuperiorFlavourId(int superiorFlavourId) {
 		this.superiorFlavourId = superiorFlavourId;
 	}
+	public void setSuperiorCategoryId(int superiorCategoryId) {
+		// TODO Auto-generated method stub
+		this.superiorFlavourId = superiorCategoryId;
+	}
+	public void setTopCategory(boolean topCategory) {
+		// TODO Auto-generated method stub
+		this.topFlavour =topCategory;
+	}
+	public int getSuperiorCategoryId() {
+		// TODO Auto-generated method stub
+		return superiorCategoryId;
+	}
+	
 }

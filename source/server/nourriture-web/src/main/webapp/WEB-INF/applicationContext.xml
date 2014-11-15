@@ -97,6 +97,9 @@
 	<bean name="recipeCategoryDao" class="edu.bjtu.nourriture_web.dao.RecipeCategoryDao">
 	    <property name="sessionFactory" ref="sessionFactory"></property>  
 	</bean>
+	<bean name="regionDao" class="edu.bjtu.nourriture_web.dao.RegionDao">
+	    <property name="sessionFactory" ref="sessionFactory"></property>  
+	</bean>
 
 	<!--业务逻辑类 -->
 	<bean id="testService"
@@ -172,5 +175,33 @@
 		<property name="foodDao" ref="foodDao"></property>
 		<property name="commentsDao" ref="commentsDao"></property>
 	</bean>
-
+    <bean id="recipeCategoryRestfulService" 
+	class="edu.bjtu.nourriture_web.restfulservice.RecipeCategoryRestfulService">
+		<property name="recipeCategoryDao" ref="recipeCategoryDao"></property>
+	</bean>
+		<bean id="regionRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.RegionRestfulService">
+		<property name="regionDao" ref="regionDao"></property>
+		</bean>
+	<bean id="locationRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.LocationRestfulService">
+		<property name="locationDao" ref="locationDao"></property>
+		<property name="regionDao" ref="regionDao"></property>
+	</bean>
+		<bean id="foodRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.FoodRestfulService">
+		<property name="foodDao" ref="foodDao"></property>
+		<property name="foodCategoryDao" ref="foodCategoryDao"></property>
+		<property name="flavourDao" ref="flavourDao"></property>
+		<property name="manuFacturerDao" ref="manuFacturerDao"></property>
+		<property name="locationDao" ref="locationDao"></property>
+	</bean>
+	    <bean id="flavourRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.FlavourRestfulService">
+		<property name="flavourDao" ref="flavourDao"></property>
+	</bean>
+	    <bean id="foodcategoryRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.FoodCategoryRestfulService">
+		<property name="foodcategoryDao" ref="foodcategoryDao"></property>
+	</bean>
 </beans>

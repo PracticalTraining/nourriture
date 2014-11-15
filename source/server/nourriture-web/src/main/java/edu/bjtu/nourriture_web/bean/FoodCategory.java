@@ -8,7 +8,7 @@ public class FoodCategory {
 	/** Is the top classification (是否是顶级分类) **/
 	private String topCategory;
 	/** superior flavour , used for relating automatically (上级分类，用于自关联) **/
-	private Object superiorCategoryId;
+	private int superiorCategoryId;
 	
 	public int getId() {
 		return id;
@@ -28,10 +28,10 @@ public class FoodCategory {
 	public void setTopCategory(String topcategory2) {
 		this.topCategory = topcategory2;
 	}
-	public Object getSuperiorCategoryId() {
+	public int getSuperiorCategoryId() {
 		return superiorCategoryId;
 	}
-	public void setSuperiorCategoryId(Object superiorCategoryId2) {
+	public void setSuperiorCategoryId(int superiorCategoryId2) {
 		this.superiorCategoryId = superiorCategoryId2;
 	}
 }
