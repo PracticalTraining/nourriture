@@ -227,6 +227,7 @@ public class ManuFacturerRestfulService {
 		if (manuFacturerDao.getById(id) == null) {
 			ret.addProperty("errorCode", ERROR_CODE_MANUFACTURER_NOT_EXIST);
 			ret.add("links", numChildrenLinks);
+			return ret.toString();
 		}
 		
 		// select from database
@@ -248,6 +249,7 @@ public class ManuFacturerRestfulService {
 		if (manuFacturerDao.getById(id) == null) {
 			ret.addProperty("errorCode", ERROR_CODE_MANUFACTURER_NOT_EXIST);
 			ret.add("links", numChildrenLinks);
+			return ret.toString();
 		}
 		
 		// select from database
