@@ -8,7 +8,7 @@ public class CookingStep {
 	  **/
 	private int stepCount;
 	/** description (描述) **/
-	private int description;
+	private String description;
 	/** path of picture on server (图片在服务器的路径) **/
 	private String picture;
 	/** recipe described (描述的菜谱) **/
@@ -26,10 +26,10 @@ public class CookingStep {
 	public void setStepCount(int stepCount) {
 		this.stepCount = stepCount;
 	}
-	public int getDescription() {
+	public String getDescription() {
 		return description;
 	}
-	public void setDescription(int description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 	public String getPicture() {
