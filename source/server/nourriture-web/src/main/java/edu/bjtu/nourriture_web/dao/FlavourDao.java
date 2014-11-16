@@ -5,16 +5,13 @@ import java.util.List;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import edu.bjtu.nourriture_web.bean.Flavour;
-import edu.bjtu.nourriture_web.bean.FoodCategory;
-import edu.bjtu.nourriture_web.bean.RecipeCategory;
 import edu.bjtu.nourriture_web.idao.IFlavourDao;
 
 public class FlavourDao extends HibernateDaoSupport implements IFlavourDao {
 
-	public  Flavour getById(int id) {
-		Flavour flavour = getHibernateTemplate()
-		.get( Flavour.class, id);
-        return flavour;
+	public Flavour getById(int id) {
+		Flavour flavour = getHibernateTemplate().get(Flavour.class, id);
+		return flavour;
 	}
 
 	public int add(Flavour flavour) {
@@ -58,9 +55,10 @@ public class FlavourDao extends HibernateDaoSupport implements IFlavourDao {
 
 	public Flavour searchFlavourDetailById(int id) {
 		// TODO Auto-generated method stub
-		List<Flavour> Flavours = getHibernateTemplate().find(
+		List<Flavour> flavours = getHibernateTemplate().find(
 				"from Flavour where id=?", id);
-		return Flavours.get(0);
+
+		return flavours.get(0);
 	}
 
 	// get FoodCategory's superiorCategoryId
@@ -73,8 +71,8 @@ public class FlavourDao extends HibernateDaoSupport implements IFlavourDao {
 
 	public List<Flavour> getChildrenFlavour(int id) {
 		// TODO Auto-generated method stub
-		return getHibernateTemplate().find(
-				"from Flavour where FlavourId=?", id);
+		return getHibernateTemplate()
+				.find("from Flavour where FlavourId=?", id);
 
 	}
 
@@ -82,7 +80,5 @@ public class FlavourDao extends HibernateDaoSupport implements IFlavourDao {
 		// TODO Auto-generated method stub
 		return getHibernateTemplate().find("from Flavour");
 	}
-
-
 
 }

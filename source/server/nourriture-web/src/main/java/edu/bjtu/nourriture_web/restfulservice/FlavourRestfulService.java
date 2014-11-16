@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,12 +16,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import edu.bjtu.nourriture_web.bean.Flavour;
-
 import edu.bjtu.nourriture_web.common.JsonUtil;
 import edu.bjtu.nourriture_web.common.RestfulServiceUtil;
 import edu.bjtu.nourriture_web.dao.FlavourDao;
-import edu.bjtu.nourriture_web.idao.IFlavourDao;
-
 
 @Path("flavour")
 public class FlavourRestfulService {
@@ -72,8 +68,7 @@ public class FlavourRestfulService {
 		}
 		// check parameters
 		if (!topCategory
-				&& FlavourDao
-						.isSuperiorCategoryIdExist(superiorCategoryId) == false) {
+				&& FlavourDao.isSuperiorCategoryIdExist(superiorCategoryId) == false) {
 			ret.addProperty("errorCode",
 					ERROR_CODE_NOTTOPCATEGORY_SUPERIORCATEGORY_NOTEXIST);
 			ret.add("links", FlavourChildrenLinks);
@@ -81,23 +76,21 @@ public class FlavourRestfulService {
 		}
 		// check parameters
 		if (topCategory
-				&& FlavourDao
-						.isSuperiorCategoryIdExist(superiorCategoryId) == true) {
+				&& FlavourDao.isSuperiorCategoryIdExist(superiorCategoryId) == true) {
 			ret.addProperty("errorCode",
 					ERROR_CODE_TOPCATEGORY__SUPERIORCATEGORYEXIST);
 			ret.add("links", FlavourChildrenLinks);
 			return ret.toString();
 		}
-		if (topCategory && superiorCategoryId == 0) {
 
-			// add one row to database
-			Flavour Flavour = new Flavour();
-			Flavour.setName(name);
-			Flavour.setTopCategory(topCategory);
-			Flavour.setSuperiorCategoryId(superiorCategoryId);
-			ret.addProperty("id", FlavourDao.add(Flavour));
-			ret.add("links", FlavourChildrenLinks);
-		}
+		// add one row to database
+		Flavour Flavour = new Flavour();
+		Flavour.setName(name);
+		Flavour.setTopCategory(topCategory);
+		Flavour.setSuperiorCategoryId(superiorCategoryId);
+		ret.addProperty("id", FlavourDao.add(Flavour));
+		ret.add("links", FlavourChildrenLinks);
+
 		return ret.toString();
 
 	}
@@ -109,7 +102,7 @@ public class FlavourRestfulService {
 		JsonObject ret = new JsonObject();
 		// define errorCode
 		final int ERROR_CODE_BAD_PARAM = -1;
-		final int ERROR_CODE_RECIPECATEGORY_NOT_EXIST = -2;
+		final int ERROR_CODE_FLAVOURCATEGORY_NOT_EXIST = -2;
 		final int ERROR_CODE_HASNOR_TOPCATEGROY = -3;
 		// check request parameters
 		if (id < 0) {
@@ -118,20 +111,21 @@ public class FlavourRestfulService {
 			return ret.toString();
 		}
 		if (FlavourDao.isFlavourExist(id) == false) {
-			ret.addProperty("errorCode", ERROR_CODE_RECIPECATEGORY_NOT_EXIST);
+			ret.addProperty("errorCode", ERROR_CODE_FLAVOURCATEGORY_NOT_EXIST);
 			ret.add("links", FlavourChildrenLinks);
 			return ret.toString();
 		}
 		// search superiorCategoryId from the database
 		// int superiorCategoryId = FlavourDao.getSuperiorCategoryId(id);
-		Flavour Flavour = FlavourDao
-				.searchFlavourDetailById(id);
-		int superiorCategoryId = Flavour.getSuperiorCategoryId();
-		if (superiorCategoryId == 0) {
+		Flavour flavour = FlavourDao.searchFlavourDetailById(id);
+
+		int superiorCategoryId = flavour.getSuperiorCategoryId();
+		if (superiorCategoryId == 0 || flavour.isTopFlavour()) {
 			ret.addProperty("errorCode", ERROR_CODE_HASNOR_TOPCATEGROY);
 			ret.add("links", FlavourChildrenLinks);
 			return ret.toString();
 		}
+
 		Flavour FlavourDetailInfo = FlavourDao
 				.searchFlavourDetailById(superiorCategoryId);
 		JsonObject jSuperiorFlavour = transformFlavourToJson(FlavourDetailInfo);
@@ -161,8 +155,7 @@ public class FlavourRestfulService {
 			return ret.toString();
 		}
 		// search the database
-		Flavour FlavourDetailInfo = FlavourDao
-				.searchFlavourDetailById(id);
+		Flavour FlavourDetailInfo = FlavourDao.searchFlavourDetailById(id);
 
 		JsonObject jSuperiorFlavour = transformFlavourToJson(FlavourDetailInfo);
 		ret.add("superiorFlavour", jSuperiorFlavour);
@@ -192,16 +185,14 @@ public class FlavourRestfulService {
 		}
 		// check parameters
 		if (!topCategory
-				&& FlavourDao
-						.isSuperiorCategoryIdExist(superiorCategoryId) == false) {
+				&& FlavourDao.isSuperiorCategoryIdExist(superiorCategoryId) == false) {
 			ret.addProperty("errorCode",
 					ERROR_CODE_NORPROVICE_SUPERIORREGIONNOTEXIST);
 			ret.add("links", FlavourChildrenLinks);
 			return ret.toString();
 		}
 		// check parameters
-		if (topCategory
-				&& superiorCategoryId!=0) {
+		if (topCategory && superiorCategoryId != 0) {
 			ret.addProperty("errorCode", ERROR_CODE_PROVICE_SUPERIOREXIST);
 			ret.add("links", FlavourChildrenLinks);
 			return ret.toString();
@@ -214,15 +205,14 @@ public class FlavourRestfulService {
 			ret.add("links", FlavourChildrenLinks);
 			return ret.toString();
 		}
-		
 
-			updateFlavour.setName(name);
-			updateFlavour.setTopCategory(topCategory);
-			updateFlavour.setSuperiorCategoryId(superiorCategoryId);
-			FlavourDao.update(updateFlavour);
-			ret.addProperty("id", id);
-			ret.add("links", FlavourChildrenLinks);
-		
+		updateFlavour.setName(name);
+		updateFlavour.setTopCategory(topCategory);
+		updateFlavour.setSuperiorCategoryId(superiorCategoryId);
+		FlavourDao.update(updateFlavour);
+		ret.addProperty("id", id);
+		ret.add("links", FlavourChildrenLinks);
+
 		return ret.toString();
 	}
 
@@ -246,14 +236,12 @@ public class FlavourRestfulService {
 			ret.add("links", FlavourChildrenLinks);
 			return ret.toString();
 		}
-		Flavour deleteFlavour = FlavourDao
-				.searchFlavourDetailById(id);
+		Flavour deleteFlavour = FlavourDao.searchFlavourDetailById(id);
 		int superiorCategoryId = deleteFlavour.getSuperiorCategoryId();
 		// this recipeCategoey is topRecipeCategory
 		if (superiorCategoryId == 0) {
 			List<Flavour> deleteFoodCategories = new ArrayList<Flavour>();
-			List<Flavour> foodCategories = FlavourDao
-					.getAllFlavour();
+			List<Flavour> foodCategories = FlavourDao.getAllFlavour();
 			for (Flavour Flavour : foodCategories) {
 				if (Flavour.getSuperiorCategoryId() == id) {
 					deleteFoodCategories.add(Flavour);
