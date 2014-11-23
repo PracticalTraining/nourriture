@@ -205,4 +205,16 @@
 		class="edu.bjtu.nourriture_web.restfulservice.FoodCategoryRestfulService">
 		<property name="foodCategoryDao" ref="foodCategoryDao"></property>
 	</bean>
+	    <bean id="cookingStepRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.CookingStepRestfulService">
+		<property name="cookingStepDao" ref="cookingStepDao"></property>
+		<property name="recipeDao" ref="recipeDao"></property>	
+	</bean>
+	    <bean id="recipeRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.RecipeRestfulService">
+		<property name="recipeDao" ref="recipeDao"></property>
+		<property name="customerDao" ref="customerDao"></property>
+		<property name="recipeCategoryDao" ref="recipeCategoryDao"></property>
+		
+	</bean>
 </beans>
