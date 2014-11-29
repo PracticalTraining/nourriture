@@ -16,7 +16,6 @@ import edu.bjtu.nourriture_web.bean.Recipe;
 import edu.bjtu.nourriture_web.common.JsonUtil;
 import edu.bjtu.nourriture_web.common.RestfulServiceUtil;
 import edu.bjtu.nourriture_web.idao.ICookingStepDao;
-import edu.bjtu.nourriture_web.idao.IRecipeCategoryDao;
 import edu.bjtu.nourriture_web.idao.IRecipeDao;
 
 @Path("cookingStep")
@@ -24,16 +23,35 @@ public class CookingStepRestfulService {
 	
 	ICookingStepDao				cookingStepDao;
 	IRecipeDao					recipeDao;
-	private JsonArray 			cookingStepChildrenLinks = new JsonArray();
+	private JsonArray 			cookingStepChildrenLinks;	
 	
 	public ICookingStepDao getCookingStepDao() {
+	
 		return cookingStepDao;
+	
 	}
 	public void setCookingStepDao(ICookingStepDao cookingStepDao) {
+		
 		this.cookingStepDao = cookingStepDao;
+	
 	}
 	
+	public IRecipeDao getRecipeDao() {
+	
+		return recipeDao;
+	
+	}
+	
+	public void setRecipeDao(IRecipeDao recipeDao) {
+	
+		this.recipeDao = recipeDao;
+	
+	}
+
+	
+	
 	{
+		this.cookingStepChildrenLinks = new JsonArray();
 		RestfulServiceUtil.addChildrenLinks(cookingStepChildrenLinks, "get cooking step according to id", "/{id}", "GET");
 		RestfulServiceUtil.addChildrenLinks(cookingStepChildrenLinks, "update cooking step according to id", "/{id}", "PUT");
 		RestfulServiceUtil.addChildrenLinks(cookingStepChildrenLinks, "delete cooking step according to id", "/{id}", "DELETE");
@@ -49,7 +67,7 @@ public class CookingStepRestfulService {
 		final int 	ERROR_CODE_BAD_PARAM					= -1;
 		final int 	ERROR_CODE_RECIPE_DOES_NOT_EXISTS 		= -2;
 		CookingStep my_cookingStep 							= this.cookingStepDao.getById(id);
-		Recipe		my_recipe								= this.recipeDao.getById(my_cookingStep.getId());
+		Recipe		my_recipe								= this.recipeDao.getById(my_cookingStep.getRecipeId());
 		JsonObject ret 										= new JsonObject();	
 		
 		if(stepCount <= 0 || description.equals("") || description == null 
@@ -112,7 +130,7 @@ public class CookingStepRestfulService {
 		final int ERROR_CODE_COOKING_STEP_DOES_NOT_EXIST 	= -1;	//define error code
 		final int ERROR_CODE_RECIPE_DOES_NOT_EXISTS 		= -2;
 		CookingStep my_cookingStep 							= this.cookingStepDao.getById(id);
-		Recipe		my_recipe								= this.recipeDao.getById(my_cookingStep.getId());
+		Recipe		my_recipe								= this.recipeDao.getById(my_cookingStep.getRecipeId());
 		JsonObject ret 										= new JsonObject();	
 
 		if(my_cookingStep == null) {
@@ -126,8 +144,9 @@ public class CookingStepRestfulService {
 			return ret.toString();
 		}
 		
-		JsonObject jRecipe = JsonUtil.beanToJson(my_cookingStep);
-		ret.add("Recipe", jRecipe);
+		JsonObject jCookingStep 							= JsonUtil.beanToJson(my_cookingStep);
+		
+		ret.add("Recipe", jCookingStep);
 		return ret.toString();
 	}
 	
@@ -137,7 +156,7 @@ public class CookingStepRestfulService {
 		
 		final int 	ERROR_CODE_RECIPE_DOES_NOT_EXISTS 		= -1;
 		CookingStep my_cookingStep 							= this.cookingStepDao.getById(id);
-		Recipe		my_recipe								= this.recipeDao.getById(my_cookingStep.getId());
+		Recipe		my_recipe								= this.recipeDao.getById(my_cookingStep.getRecipeId());
 		JsonObject	ret 									= new JsonObject();	
 		
 		if(my_recipe == null) {

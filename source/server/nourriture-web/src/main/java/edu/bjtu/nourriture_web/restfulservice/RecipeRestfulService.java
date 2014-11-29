@@ -27,11 +27,36 @@ public class RecipeRestfulService {
 	IRecipeCategoryDao			recipeCategoryDao;
 	private JsonArray 			recipeChildrenLinks = new JsonArray();
 	
+	public IRecipeDao getRecipeDao() {
+		return recipeDao;
+	}
+
+	public void setRecipeDao(IRecipeDao recipeDao) {
+		this.recipeDao = recipeDao;
+	}
+	
+	public ICustomerDao getCustomerDao() {
+		return CustomerDao;
+	}
+
+	public void setCustomerDao(ICustomerDao customerDao) {
+		CustomerDao = customerDao;
+	}
+
+	public IRecipeCategoryDao getRecipeCategoryDao() {
+		return recipeCategoryDao;
+	}
+
+	public void setRecipeCategoryDao(IRecipeCategoryDao recipeCategoryDao) {
+		this.recipeCategoryDao = recipeCategoryDao;
+	}
+
+
 	
 	{
-		RestfulServiceUtil.addChildrenLinks(recipeChildrenLinks, "get cooking step according to id", "/{id}", "GET");
-		RestfulServiceUtil.addChildrenLinks(recipeChildrenLinks, "update cooking step according to id", "/{id}", "PUT");
-		RestfulServiceUtil.addChildrenLinks(recipeChildrenLinks, "delete cooking step according to id", "/{id}", "DELETE");
+		RestfulServiceUtil.addChildrenLinks(recipeChildrenLinks, "get recipe according to id", "/{id}", "GET");
+		RestfulServiceUtil.addChildrenLinks(recipeChildrenLinks, "update recipe according to id", "/{id}", "PUT");
+		RestfulServiceUtil.addChildrenLinks(recipeChildrenLinks, "delete recipe according to id", "/{id}", "DELETE");
 	}
 	
 	/** update Recipe information **/
@@ -49,7 +74,7 @@ public class RecipeRestfulService {
 
 		Recipe 		my_recipe 								= this.recipeDao.getById(id);
 		Customer	my_customer								= this.CustomerDao.getById(my_recipe.getCustomerId());
-		JsonObject ret 										= new JsonObject();	
+		JsonObject	ret 										= new JsonObject();	
 		
 		if(id <= 0 || name.equals("") || name == null || description.equals("") || description == null
 			|| ingredient.equals("") || ingredient == null || picture.equals("") || picture == null ||
@@ -60,7 +85,6 @@ public class RecipeRestfulService {
 		           return ret.toString();
 		    }
 		if(my_recipe == null) { 			//check if Recipe exsits
-
 			ret.addProperty("errorCode", ERROR_CODE_RECIPE_DOES_NOT_EXISTS);
 			ret.add("links", this.recipeChildrenLinks);
 			return ret.toString();
@@ -141,7 +165,6 @@ public class RecipeRestfulService {
 		final int 	ERROR_CODE_RECIPE_DOES_NOT_EXISTS 		= -1;
 		JsonObject	ret 									= new JsonObject();
 		Recipe 		my_recipe 								= this.recipeDao.getById(id);
-		JsonObject 	jRecipe 								= JsonUtil.beanToJson(my_recipe);
 		
 		if(my_recipe == null) { 			//check if Recipe exsits
 			ret.addProperty("errorCode", ERROR_CODE_RECIPE_DOES_NOT_EXISTS);
@@ -149,6 +172,8 @@ public class RecipeRestfulService {
 			return ret.toString();
 		}
 		
+		JsonObject 	jRecipe 								= JsonUtil.beanToJson(my_recipe);
+
 		ret.add("Recipe", jRecipe);
 		ret.add("links", this.recipeChildrenLinks);
 		
