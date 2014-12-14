@@ -18,7 +18,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!--webfont-->
 <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
 <link href="./css/css.css" rel='stylesheet' type='text/css' />
-<script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="./js/angular.js"></script>
+<script type="text/javascript" src="./js/angular-cookies.js"></script>
+<script type="text/javascript" src="./js/angular/app.js"></script>
+<script type="text/javascript" src="./js/angular/lrCtrl.js"></script>
 <script type="text/javascript" src="./js/login.js"></script>
 <script src="./js/jquery.easydropdown.js"></script>
 <script src="./js/wow.min.js"></script>
@@ -26,6 +30,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <script>
 	new WOW().init();
 </script>
+<link href="./css/mystyle.css" rel='stylesheet' type='text/css' />
 </head>
 <body>
 <div class="header">
@@ -65,25 +70,70 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							new UISearch( document.getElementById( 'sb-search' ) );
 						</script>
 						<!----//search-scripts---->
-				       <div id="loginContainer"><a href="#" id="loginButton"><img src="./images/login.png"><span>Login</span></a>
-						    <div id="loginBox">                
-						        <form id="loginForm">
-						                <fieldset id="body">
-						                	<fieldset>
-						                          <label for="email">Email Address</label>
-						                          <input type="text" name="email" id="email">
-						                    </fieldset>
-						                    <fieldset>
-						                            <label for="password">Password</label>
-						                            <input type="password" name="password" id="password">
-						                     </fieldset>
-						                    <input type="submit" id="login" value="Sign in">
-						                	<label for="checkbox"><input type="checkbox" id="checkbox"> <i>Remember me</i></label>
-						            	</fieldset>
-						                 <span><a href="#">Forgot your password?</a></span>
-							      </form>
-				              </div>
-			             </div>
+				       <div id="loginContainer" ng-app="nourriture" ng-controller="lr">
+				<a href="#" id="loginButton"> <img src="./images/login.png">
+					<span>{{ name }}</span>
+				</a> <a href="#" ng-hide="loginBox" ng-click="logout()"> <span>Logout</span>
+				</a> <a href="#" id="registerButton" ng-show="loginBox"> <span>Register</span>
+				</a>
+				<div id="loginBox" ng-show="loginBox">
+					<form id="loginForm">
+						<fieldset id="body">
+							<fieldset ng-show="hintShow">
+								<label for="username" style="color: red">{{ hint }}</label>
+							</fieldset>
+							<fieldset>
+								<label for="username">User name</label> <input type="text"
+									name="username" id="username" ng-model="username">
+							</fieldset>
+							<fieldset>
+								<label for="password">Password</label> <input type="password"
+									name="password" id="password" ng-model="password">
+							</fieldset>
+							<fieldset>
+								<label for="identity">Identity</label> <select
+									ng-model="identity">
+									<option value="customer">customer</option>
+									<option value="manafacture">manafacture</option>
+								</select>
+							</fieldset>
+							<input type="button" ng-click="login()" id="login"
+								value="Sign in">
+						</fieldset>
+					</form>
+				</div>
+
+				<div id="registerBox" ng-show="loginBox">
+					<form id="registerForm">
+						<fieldset id="body">
+							<fieldset ng-show="rhintShow">
+								<label for="username" style="color: red">{{ rhint }}</label>
+							</fieldset>
+							<fieldset>
+								<label for="username">User name</label> <input type="text"
+									name="username" id="username" ng-model="rusername">
+							</fieldset>
+							<fieldset>
+								<label for="password">Password</label> <input type="password"
+									name="password" id="password" ng-model="rpassword">
+							</fieldset>
+							<fieldset>
+								<label for="password">Confirm Password</label> <input
+									type="password" name="password" id="password">
+							</fieldset>
+							<fieldset>
+								<label for="ridentity">Identity</label> <select
+									ng-model="ridentity">
+									<option value="customer">customer</option>
+									<option value="manafacture">manafacture</option>
+								</select>
+							</fieldset>
+							<input type="button" ng-click="register()" id="register"
+								value="Register">
+						</fieldset>
+					</form>
+				</div>
+			</div>
 		                 <div class="clearfix"></div>
 	                 </div>
 	                <div class="clearfix"></div>

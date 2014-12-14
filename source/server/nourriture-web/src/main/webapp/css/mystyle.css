@@ -1,0 +1,107 @@
+/********** Rigister *************/
+/* Login Button */
+#registerButton {
+	display: inline-block;
+	position: relative;
+	z-index: 30;
+	cursor: pointer;
+}
+/* Login Box */
+#registerBox {
+	position: absolute;
+	top: 81px;
+	left: -70px;
+	display: none;
+	z-index: 29;
+}
+
+#registerForm:after {
+	content: '';
+	position: absolute;
+	right: 25px;
+	top: -10px;
+	border-left: 10px solid rgba(0, 0, 0, 0);
+	border-right: 10px solid rgba(0, 0, 0, 0);
+	border-bottom: 10px solid #f0f0f0;
+}
+/* Login Form */
+#registerForm {
+	width: 400px;
+	background: #fff;
+	border: none;
+	padding: 20px;
+}
+
+#registerForm fieldset {
+	margin: 0 0 15px 0;
+	display: block;
+	border: 0;
+	padding: 0;
+}
+
+#registerForm #checkbox {
+	width: auto;
+	margin: 3px 6px 0 0;
+	float: left;
+	padding: 0;
+	border: 0;
+	*margin: -3px 9px 0 0; /* IE7 Fix */
+}
+
+#registerForm #body fieldset label {
+	display: block;
+	float: none;
+	margin: 0 0 6px 0;
+}
+/* Default Input */
+#registerForm input {
+	width: 92%;
+	border: 1px solid #DADADA;
+	color: #222;
+	background: #FFF;
+	padding: 6px;
+	font-size: 0.8125em;
+	-webkit-apperance: none;
+}
+/* Sign In Button */
+#registerForm #register {
+	width: auto;
+	float: left;
+	background: #e94e38;
+	color: #fff;
+	font-size: 0.8725em;
+	padding: 8px 20px;
+	border: none;
+	margin: 0 12px 0 0;
+	cursor: pointer;
+	transition: all .5s;
+	-webkit-transition: all .5s;
+	-moz-transition: all .5s;
+	-o-transition: all .5s;
+}
+
+#registerForm #register:hover {
+	background: #1db05e;
+}
+/* Forgot your password */
+#registerForm span {
+	display: block;
+	padding: 0px 0px 15px 15px;
+}
+
+#registerForm span a {
+	color: #000;
+	font-size: 0.85em;
+	font-weight: 500;
+	background: none;
+	border: none;
+	box-shadow: none;
+}
+
+#registerForm span a:hover {
+	text-decoration: underline;
+}
+
+a#registerButton img {
+	vertical-align: bottom;
+}
