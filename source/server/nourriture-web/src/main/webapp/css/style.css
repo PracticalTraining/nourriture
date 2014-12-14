@@ -1488,7 +1488,8 @@ ul.service_grid li.desc1 p{
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	min-height: 410px;
+	/*min-height: 410px;*/
+	overflow:hidden;
 	text-align: center;
 	padding-top:4em;
 }
