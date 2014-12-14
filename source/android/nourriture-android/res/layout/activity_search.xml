@@ -16,7 +16,7 @@
         android:orientation="horizontal" >
 
         
-        <com.itau.jingdong.widgets.AutoClearEditText
+        <cn.edu.bjtu.nourriture.widgets.AutoClearEditText
             android:id="@+id/search_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

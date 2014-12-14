@@ -32,7 +32,7 @@
         android:xlargeScreens="true" />
 
     <application
-        android:name="com.itau.jingdong.BaseApplication"
+        android:name="cn.edu.bjtu.nourriture.BaseApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"

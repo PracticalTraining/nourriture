@@ -44,7 +44,7 @@
             android:src="@drawable/android_search_button_icon" />
     </LinearLayout>
 
-    <com.itau.jingdong.widgets.AbScrollView
+    <cn.edu.bjtu.nourriture.widgets.AbScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/index_top_layout"
@@ -60,7 +60,7 @@
             android:layout_gravity="top"
             android:orientation="vertical" >
 
-            <com.itau.jingdong.widgets.jazzviewpager.JazzyViewPager
+            <cn.edu.bjtu.nourriture.widgets.jazzviewpager.JazzyViewPager
                 android:id="@+id/index_product_images_container"
                 android:layout_width="match_parent"
                 android:layout_height="125dp"
@@ -505,6 +505,6 @@
                     android:spacing="10dp" />
             </LinearLayout>
         </LinearLayout>
-    </com.itau.jingdong.widgets.AbScrollView>
+    </cn.edu.bjtu.nourriture.widgets.AbScrollView>
 
 </RelativeLayout>
