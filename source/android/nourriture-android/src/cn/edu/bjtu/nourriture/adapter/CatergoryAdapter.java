@@ -65,17 +65,17 @@ public class CatergoryAdapter extends BaseAdapter {
 		//组装数据
 		if(convertView!=null){
 			convertView=layoutInflater.inflate(R.layout.activity_category_item, null);
-			holder.image=(ImageView) convertView.findViewById(R.id.catergory_image);
+//			holder.image=(ImageView) convertView.findViewById(R.id.catergory_image);
 			holder.title=(TextView) convertView.findViewById(R.id.catergoryitem_title);
-			holder.content=(TextView) convertView.findViewById(R.id.catergoryitem_content);
+//			holder.content=(TextView) convertView.findViewById(R.id.catergoryitem_content);
 			//使用tag存储数据
 			convertView.setTag(holder);
 		}else{
 			holder=(ViewHolder) convertView.getTag();
 		}
-		holder.image.setImageResource(mImageIds[position]);
+//		holder.image.setImageResource(mImageIds[position]);
 		holder.title.setText(mTitleValues[position]);
-		holder.content.setText(mContentValues[position]);
+//		holder.content.setText(mContentValues[position]);
 		return convertView;
 	}
 	
