@@ -50,13 +50,13 @@
                 style="@style/home_tab_bottom"
                 android:background="@drawable/home_tab_background_selector"
                 android:drawableTop="@drawable/home_tab_category_selector" />
-
+			<!-- 
             <RadioButton
                 android:id="@+id/home_tab_cart"
                 style="@style/home_tab_bottom"
                 android:background="@drawable/home_tab_background_selector"
                 android:drawableTop="@drawable/home_tab_cart_selector" />
-
+			-->
             <RadioButton
                 android:id="@+id/home_tab_personal"
                 style="@style/home_tab_bottom"

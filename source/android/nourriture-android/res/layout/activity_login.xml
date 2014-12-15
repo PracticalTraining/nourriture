@@ -50,18 +50,18 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:padding="10sp"
+                    android:padding="10dp"
                     android:background="@drawable/more_activity_item_selector_bottom_corners"
                     android:orientation="horizontal"
                      >
 
                     <TextView
-                            android:id="@+id/tv_loginaccount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/loginacount"
-                            android:textColor="@android:color/black"
-                            android:textSize="18.0sp" />
+                        android:id="@+id/tv_loginaccount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/loginacount"
+                        android:textColor="@android:color/black"
+                        android:textSize="18.0sp" />
                     
                     <EditText
                         android:id="@+id/loginaccount"
@@ -73,35 +73,34 @@
                         android:padding="5.0dip"
                         android:paddingRight="30dp"
                         android:textColor="#ff3b3b3b"
-                        android:textSize="16.0sp" >
+                        android:textSize="16.0sp">
 
                     </EditText>
-                      
-                         <ImageView
+                    <!-- 
+                    <ImageView
                         android:id="@+id/login_more"
                         style="@style/PersonalRightIconStyle"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/android_order_trace_info_more" />
+                     --> 
                 </LinearLayout>
 
                 <View style="@style/PersonalLine" />
 
-                <LinearLayout 
+                <RelativeLayout 
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:padding="10sp"
-                    android:background="@drawable/more_activity_item_selector_bottom_corners"
-                    android:orientation="horizontal"
-                     >
+                    android:background="@drawable/more_activity_item_selector_bottom_corners">
 
                     <TextView
-                            android:id="@+id/tv_loginpassword"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/loginpassword"
-                            android:textColor="@android:color/black"
-                            android:textSize="18.0sp" />
+                        android:id="@+id/tv_loginpassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/loginpassword"
+                        android:textColor="@android:color/black"
+                        android:textSize="18.0sp" />
                     
                     <EditText
                         android:id="@+id/loginpassword"
@@ -114,18 +113,19 @@
                         android:paddingRight="30dp"
                         android:textColor="#ff3b3b3b"
                         android:inputType="textPassword"
-                        android:textSize="16.0sp" >
-
+                        android:textSize="16.0sp"
+                        android:layout_toRightOf="@id/tv_loginpassword">
                     </EditText>
-                      <ToggleButton
+                    <ToggleButton
                         android:id="@+id/isShowPassword"
                         style="@style/ToggleButtonStyle"
                         android:background="@drawable/selector_toggle"
                         android:layout_height="18dp"
                         android:layout_width="40dp"
                         android:textOff=""
-                        android:textOn="" />
-                </LinearLayout>
+                        android:textOn=""
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
         
             </LinearLayout>
             
@@ -135,16 +135,15 @@
                 android:id="@+id/login"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/android_title_bg"
+                android:background="@drawable/btn_style_red"
                 android:gravity="center"
                 android:text="@string/login_btn"
                 android:textColor="#fff"
                 android:textSize="20sp" />
-
+			<!-- 
             <RelativeLayout
                 android:id="@+id/layout_login_userinfo"
                 android:layout_width="fill_parent"
@@ -173,7 +172,7 @@
                     android:textSize="16.0sp" />
                 
             </RelativeLayout>
-
+ 			-->
             <Button
                 android:id="@+id/register"
                 android:layout_width="fill_parent"
@@ -181,10 +180,11 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="25dp"
-                android:background="@drawable/login_register_bg"
+                android:background="@drawable/btn_style_red"
                 android:gravity="center"
                 android:text="@string/registerfree"
-                android:textSize="20sp" />
+                android:textSize="20sp" 
+                android:textColor="#fff"/>
             
         </LinearLayout>
         

@@ -54,7 +54,7 @@ private LoginActivity loginActivity=null;
 	@Override
 	protected void findViewById() {
 		loginLogo=(ImageView)this.findViewById(R.id.logo);
-		login_more=(ImageView)this.findViewById(R.id.login_more);
+//		login_more=(ImageView)this.findViewById(R.id.login_more);
 		loginaccount=(EditText)this.findViewById(R.id.loginaccount);
 		loginpassword=(EditText)this.findViewById(R.id.loginpassword);
 		

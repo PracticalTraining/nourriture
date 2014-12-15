@@ -23,123 +23,75 @@
 
    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="35dp"
-         >
-        
-       <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/register_normal_useraccount"
-            android:textColor="@color/black" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
        
-        <EditText 
+       <EditText 
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:layout_marginLeft="20dp"
             android:hint="@string/register_normal_useraccount_hint"
-            android:inputType="number"
-           android:background="@drawable/category_selection_gridview_bg"
-            android:layout_gravity="center_vertical"
-            />
-        
-    </LinearLayout>
-    
-   
-      <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-         >
-        
-       <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/register_normal_email"
-            android:textColor="@color/black" />
+            android:background="@drawable/category_selection_gridview_bg"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
        
-        <EditText 
+       <EditText 
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:layout_marginLeft="35dp"
-            android:hint="@string/register_normal_email_hint"
-            android:inputType="number"
-           android:background="@drawable/category_selection_gridview_bg"
-            android:layout_gravity="center_vertical"
-            />
-        
-    </LinearLayout>
-    
-         <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-         >
-        
-       <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/register_normal_password"
-            android:textColor="@color/black" />
-       
-        <EditText 
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:layout_marginLeft="35dp"
             android:hint="@string/register_normal_password_hint"
-            android:inputType="number"
-           android:background="@drawable/category_selection_gridview_bg"
-            android:layout_gravity="center_vertical"
-            />
-        
-    </LinearLayout>
-    
-            <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-         >
-        
-       <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/register_normal_repassword"
-            android:textColor="@color/black" />
+            android:background="@drawable/category_selection_gridview_bg"
+            android:inputType="textPassword"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
        
         <EditText 
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:layout_marginLeft="10dp"
             android:hint="@string/register_normal_repassword_hint"
-            android:inputType="number"
-           android:background="@drawable/category_selection_gridview_bg"
-            android:layout_gravity="center_vertical"
-            />
+            android:background="@drawable/category_selection_gridview_bg"
+            android:inputType="textPassword"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+        
+        <RadioGroup
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+            <RadioButton 
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/boy"
+                android:layout_marginRight="10dp"/>
+            <RadioButton 
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/girl"
+                android:layout_marginLeft="10dp"/>
+        </RadioGroup>
+        
+        <EditText 
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:hint="@string/register_normal_age_hint"
+            android:background="@drawable/category_selection_gridview_bg"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
         
     </LinearLayout>
-
+   
             
-            <Button
-                android:id="@+id/login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/edit_product_num_cancle_normal"
-                android:gravity="center"
-                android:text="注册"
-                android:textSize="16sp" />
+    <Button
+        android:id="@+id/login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn_style_alert_dialog_special"
+        android:gravity="center"
+        android:text="注册"
+        android:textSize="16sp"
+        android:textColor="#fff" />
             
 </LinearLayout>

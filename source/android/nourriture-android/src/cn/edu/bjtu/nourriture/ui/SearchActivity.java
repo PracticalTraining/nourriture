@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import cn.edu.bjtu.nourriture.R;
+import cn.edu.bjtu.nourriture.adapter.SearchListAdapter;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
 import cn.edu.bjtu.nourriture.utils.CommonTools;
 import cn.edu.bjtu.nourriture.widgets.AutoClearEditText;
@@ -14,6 +16,8 @@ public class SearchActivity extends BaseActivity {
 
 	private AutoClearEditText mEditText = null;
 	private ImageButton mImageButton = null;
+	private ListView mSearchListView;
+	private SearchListAdapter mSearchListAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,9 @@ public class SearchActivity extends BaseActivity {
 		setContentView(R.layout.activity_search);
 		findViewById();
 		initView();
+		
+		mSearchListAdapter = new SearchListAdapter(this);
+		mSearchListView.setAdapter(mSearchListAdapter);
 	}
 
 	@Override
@@ -29,6 +36,7 @@ public class SearchActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		mEditText = (AutoClearEditText) findViewById(R.id.search_edit);
 		mImageButton = (ImageButton) findViewById(R.id.search_button);
+		mSearchListView = (ListView) findViewById(R.id.search_list);
 	}
 
 	@Override

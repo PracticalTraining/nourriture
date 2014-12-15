@@ -2,7 +2,7 @@
 
     <string name="app_name">京东商城</string>
     <string name="splash_version_info">京东商城客户端\n\nVersion 1.0.0</string>
-    <string name="index_search_edit_hint">搜索京东商品</string>
+    <string name="index_search_edit_hint">搜索食物或食谱</string>
 
     <!-- 菜单 -->
     <string name="menu_setting">设置</string>
@@ -43,16 +43,16 @@
     <string name="index_shopping_remenyouhui">热门特惠</string>
     <!-- 首页 -->
 
-<!-- 商品分类 -->
-<string name="category">全部分类</string>
-<!-- 二维码 -->
-<string name="scan_tip">请将二维码置于取景框内扫描</string>
-<string name="scan_retry">二维码扫描出错啦,请重新扫描</string>
+	<!-- 商品分类 -->
+	<string name="category">全部分类</string>
+	<!-- 二维码 -->
+	<string name="scan_tip">请将二维码置于取景框内扫描</string>
+	<string name="scan_retry">二维码扫描出错啦,请重新扫描</string>
     <string name="scan_title">扫一扫</string>
     <!-- 个人中心 -->
-    <string name="personal_title">我的京东</string>
+    <string name="personal_title">我的nourriture</string>
     <string name="personal_more">更多</string>
-    <string name="personal_welcome">欢迎来到京东</string>
+    <string name="personal_welcome">欢迎来到nourriture</string>
     <string name="personal_login">登录</string>
     <string name="personal_fast_search">订单状态速查</string>
     <string name="personal_wait_pay">待付款订单</string>
@@ -60,11 +60,12 @@
     <string name="personal_my_focus">我的关注</string>
     <string name="personal_comment">商品评价/晒单</string>
     <string name="personal_information">消息中心</string>
-    <string name="personal_quick_buy">轻松购</string>
-    <string name="personal_account">账户安全</string>
+    <string name="personal_language">语言</string>
+    <string name="personal_account">密码</string>
     <string name="personal_return_back">返修/退换货</string>
-    <string name="personal_order_center">订单中心</string>
-    <string name="personal_account_center">账户中心</string>
+    <string name="personal_setting_center">设置</string>
+    <string name="personal_account_center">账户</string>
+    <string name="personal_edit_info">其他信息</string>
     <string name="personal_customer_service">客户服务</string>
     <string name="personal_infomation_service">预约电话服务</string>
     
@@ -112,14 +113,24 @@
 <string name="registerinfo">输入手机号后，点击"获取密码"，系统会自动向你的手机发送一条短信</string>
 <string name="register_tip">【提示】\n 1.使用手机号注册免费 \n 2.此手机号用来登录京东\n 3.你还可以选择其他注册方式</string>
 <string name="register_in_normal">普通用户注册</string>
-<string name="register_normal_useraccount">帐户名：</string>
-<string name="register_normal_useraccount_hint">请输入你的手机号</string>
+<string name="register_in_manu">厂商注册</string>
+<string name="register_normal_useraccount">用户名：</string>
+<string name="register_normal_useraccount_hint">请输入你的用户名</string>
 <string name="register_normal_email">邮箱：</string>
 <string name="register_normal_email_hint">请输入邮箱帐号</string>
 <string name="register_normal_password">密码：</string>
 <string name="register_normal_password_hint">请输入密码</string>
 <string name="register_normal_repassword">确认密码：</string>
 <string name="register_normal_repassword_hint">请输入确认密码</string>
+<string name="boy">男</string>
+<string name="girl">女</string>
+<string name="register_normal_age_hint">请输入年龄</string>
+
+<string name="register_manu_useraccount_hint">请输入你的用户名</string>
+<string name="register_manu_password_hint">请输入密码</string>
+<string name="register_manu_repassword_hint">请确认密码</string>
+<string name="register_manu_company_name_hint">请输入公司名</string>
+<string name="register_manu_company_description_hint">请输入公司简介</string>
 
 <!-- 导航栏的其他的标题和其他 -->
 <string name="clothingcity">服装城</string>
@@ -144,5 +155,11 @@
         <item>Accordion</item>
     </string-array>
     <!-- JazzyViewPager -->
+    
+    <string name="register_phone_unfinished">未开放该功能</string>
+    <string name="input_old_password">输入原密码</string>
+    <string name="input_new_password">输入新密码</string>
+    <string name="confirm_old_password">确认新密码</string>
+    
 
 </resources>

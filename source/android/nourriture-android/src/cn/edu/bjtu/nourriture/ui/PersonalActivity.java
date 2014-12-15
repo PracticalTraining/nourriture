@@ -25,7 +25,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 	private Intent mIntent=null;
 	private ExitView exit;
 	private LinearLayout Ly_login,Ly_Other;
-	private RelativeLayout Ly_personalInfo;
+	private RelativeLayout Ly_personalInfo,ly_changePwd,ly_changeInfo,ly_setLang;
 	private TextView username;
 	private int LOGIN_CODE=100;
 
@@ -44,7 +44,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		mBackgroundImageView = (ImageView) findViewById(R.id.personal_background_image);
 		mLoginButton = (Button) findViewById(R.id.personal_login_button);
 		mScrollView = (CustomScrollView) findViewById(R.id.personal_scrollView);
-		mMoreButton=(Button)this.findViewById(R.id.personal_more_button);
+//		mMoreButton=(Button)this.findViewById(R.id.personal_more_button);
 		mExitButton=(Button)this.findViewById(R.id.personal_exit);
 		
 		
@@ -52,6 +52,9 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		Ly_personalInfo=(RelativeLayout)findViewById(R.id.personal);
 		Ly_Other=(LinearLayout)findViewById(R.id.other_layout);
 		username=(TextView)findViewById(R.id.username);
+		ly_changePwd = (RelativeLayout) findViewById(R.id.relativelayout_change_pwd);
+		ly_changeInfo = (RelativeLayout) findViewById(R.id.relativelayout_change_info);
+		ly_setLang = (RelativeLayout) findViewById(R.id.relativelayout_set_lang);
 	}
 
 	@Override
@@ -60,9 +63,11 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		mScrollView.setImageView(mBackgroundImageView);
 		
 		mLoginButton.setOnClickListener(this);
-		mMoreButton.setOnClickListener(this);
+//		mMoreButton.setOnClickListener(this);
 		mExitButton.setOnClickListener(this);
-		
+		ly_changePwd.setOnClickListener(this);
+		ly_changeInfo.setOnClickListener(this);
+		ly_setLang.setOnClickListener(this);
 	}
 
 	@Override
@@ -75,19 +80,32 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			startActivityForResult(mIntent, LOGIN_CODE);
 			break;
 
-		case R.id.personal_more_button:
-			mIntent=new Intent(PersonalActivity.this, MoreActivity.class);
-			startActivity(mIntent);
-			break;
-			
+//		case R.id.personal_more_button:
+//			mIntent=new Intent(PersonalActivity.this, MoreActivity.class);
+//			startActivity(mIntent);
+//			break;
+//			
 		case R.id.personal_exit:
 			
 			//实例化SelectPicPopupWindow
 			exit = new ExitView(PersonalActivity.this, itemsOnClick);
 			//显示窗口
-			exit.showAtLocation(PersonalActivity.this.findViewById(R.id.layout_personal), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+			exit.showAtLocation(PersonalActivity.this.findViewById(R.id.layout_personal), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
 			
 			
+			break;
+			
+		case R.id.relativelayout_change_pwd:
+			startActivity(new Intent(this,ChangePwdActivity.class));
+			break;
+			
+		case R.id.relativelayout_set_lang:
+			startActivity(new Intent(this,SetLangActivity.class));
+			break;
+			
+		case R.id.relativelayout_change_info:
+			//startActivity(new Intent(this,EditBormalInfoActivity.class));
+			startActivity(new Intent(this,EditManuInfoActivity.class));
 			break;
 			
 		default:
