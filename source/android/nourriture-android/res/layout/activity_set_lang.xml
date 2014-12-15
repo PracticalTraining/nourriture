@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#f0f0f0"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/id_title"
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:background="@drawable/android_title_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
+            android:text="修改语言"
+            android:textColor="#ffffff"
+            android:textSize="15.0dip" />
+    </LinearLayout>
+
+   <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <RadioGroup
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+            <RadioButton 
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="简体中文"/>
+            <View style="@style/PersonalLine" />
+            <RadioButton 
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="English"/>
+        </RadioGroup>
+        
+    </LinearLayout>
+   
+            
+    <Button
+        android:id="@+id/login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn_style_alert_dialog_special"
+        android:gravity="center"
+        android:text="确认"
+        android:textSize="16sp"
+        android:textColor="#fff" />
+            
+</LinearLayout>
