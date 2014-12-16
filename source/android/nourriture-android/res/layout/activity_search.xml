@@ -41,16 +41,28 @@
             android:paddingRight="10dp"
             android:src="@drawable/android_search_icon" />
     </LinearLayout>
-
     <ListView
         android:id="@+id/search_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/search_top_layout" 
+        android:layout_height="wrap_content"
         android:dividerHeight="0dp"
         android:listSelector="@null"
         android:scrollbars="none"
-        android:visibility="visible"/> 
+        android:visibility="visible"/>
+    <View style="@style/SearchLine"/>
+    <RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="50dp"
+	    android:padding="10dp"
+	    android:background="@drawable/bg_search_list">   
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="清空历史记录"
+	        android:drawableLeft="@drawable/ic_clear_search_history"
+	        android:layout_centerInParent="true"/> 
+	</RelativeLayout>
+	<View style="@style/SearchLine"/>	    
 
     <LinearLayout
         android:id="@+id/layout_login"
@@ -58,9 +70,6 @@
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:visibility="gone">
-
-    
-    
 	    <ImageView
 	        android:id="@+id/logo"
 	        android:layout_width="wrap_content"

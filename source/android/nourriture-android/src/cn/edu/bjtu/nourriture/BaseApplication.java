@@ -1,10 +1,10 @@
 package cn.edu.bjtu.nourriture;
 
-import cn.edu.bjtu.nourriture.config.Constants;
-import cn.edu.bjtu.nourriture.image.ImageLoaderConfig;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
+import cn.edu.bjtu.nourriture.config.Constants;
+import cn.edu.bjtu.nourriture.image.ImageLoaderConfig;
 
 
 public class BaseApplication extends Application {

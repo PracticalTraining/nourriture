@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dip"
-            android:text="@string/category"
+            android:text="食物"
             android:textColor="#ffffff"
              android:textSize="@dimen/medium_text_size"  />
     </LinearLayout>

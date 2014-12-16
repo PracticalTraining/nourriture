@@ -1,8 +1,5 @@
 package cn.edu.bjtu.nourriture.ui;
 
-import com.lidroid.xutils.util.LogUtils;
-import com.lidroid.xutils.util.PreferencesCookieStore;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -16,9 +13,10 @@ import android.widget.TextView;
 import cn.edu.bjtu.nourriture.R;
 import cn.edu.bjtu.nourriture.task.EMobileTask;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
-import cn.edu.bjtu.nourriture.utils.CommonTools;
 import cn.edu.bjtu.nourriture.utils.ExitView;
 import cn.edu.bjtu.nourriture.widgets.CustomScrollView;
+
+import com.lidroid.xutils.util.LogUtils;
 
 
 public class PersonalActivity extends BaseActivity implements OnClickListener {
@@ -29,7 +27,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 	private Intent mIntent=null;
 	private ExitView exit;
 	private LinearLayout Ly_login,Ly_Other;
-	private RelativeLayout Ly_personalInfo,ly_changePwd,ly_changeInfo,ly_setLang;
+	private RelativeLayout Ly_personalInfo,ly_changePwd,ly_changeInfo,ly_setLang,ly_add_food,ly_add_recipe;
 	private TextView username,jobtitle;
 	private int LOGIN_CODE=100;
 
@@ -76,6 +74,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		ly_changePwd = (RelativeLayout) findViewById(R.id.relativelayout_change_pwd);
 		ly_changeInfo = (RelativeLayout) findViewById(R.id.relativelayout_change_info);
 		ly_setLang = (RelativeLayout) findViewById(R.id.relativelayout_set_lang);
+		ly_add_food = (RelativeLayout) findViewById(R.id.relativelayout_add_food);
+		ly_add_recipe = (RelativeLayout) findViewById(R.id.relativelayout_add_recipe);
 	}
 
 	@Override
@@ -88,6 +88,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		ly_changePwd.setOnClickListener(this);
 		ly_changeInfo.setOnClickListener(this);
 		ly_setLang.setOnClickListener(this);
+		ly_add_food.setOnClickListener(this);
+		ly_add_recipe.setOnClickListener(this);
 	}
 
 	@Override
@@ -131,7 +133,24 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 				startActivity(new Intent(this,EditManuInfoActivity.class));
 			}
 			break;
-			
+		case R.id.relativelayout_add_food:
+			if(EMobileTask.getCookie("userId") == null){
+				startActivity(new Intent(this,LoginActivity.class));
+			} else if (EMobileTask.getCookie("idendity").equals("普通用户")){
+				DisplayToast("普通用户不能添加食物");
+			} else {
+				//startActivity(new Intent(this,EditBormalInfoActivity.class));
+			}
+			break;
+		case R.id.relativelayout_add_recipe:
+			if(EMobileTask.getCookie("userId") == null){
+				startActivity(new Intent(this,LoginActivity.class));
+			} else if (EMobileTask.getCookie("idendity").equals("普通用户")){
+				//startActivity(new Intent(this,EditBormalInfoActivity.class));
+			} else {
+				DisplayToast("厂商不能添加食谱");
+			}
+			break;
 		default:
 			break;
 		}

@@ -1,9 +1,5 @@
 package cn.edu.bjtu.nourriture.ui;
 
-import java.util.Date;
-
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.cookie.BasicClientCookie;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,8 +28,6 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.util.LogUtils;
-import com.lidroid.xutils.util.OtherUtils;
-import com.lidroid.xutils.util.PreferencesCookieStore;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
@@ -151,7 +145,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		if(identity == R.id.radiobutton_customer){
 			url = Constants.MOBILE_SERVER_URL + "customer/login";
 		} else {
-			url = Constants.MOBILE_SERVER_URL + "manuFacture/login";
+			url = Constants.MOBILE_SERVER_URL + "manuFacturer/login";
 		}
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("name", username);

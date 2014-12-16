@@ -67,6 +67,12 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">1.0dip</item>
     </style>
+    
+    <style name="SearchLine">
+        <item name="android:background">#ffcccccc</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">0.5dip</item>
+    </style>
 
     <style name="PersonalTopStyle">
         <item name="android:layout_width">match_parent</item>

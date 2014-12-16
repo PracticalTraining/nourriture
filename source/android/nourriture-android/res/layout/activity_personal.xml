@@ -296,7 +296,65 @@
                                 android:src="@drawable/android_list_idex" />
                         </RelativeLayout>
                     </LinearLayout>
-                    <!--
+                    
+                     <TextView
+                        style="@style/PersonalCenterText"
+                        android:text="食物" />
+                     
+                      <LinearLayout
+                        style="@style/PersonalMainLayoutStyle" >
+
+                        <View style="@style/PersonalLine" />
+
+                        <RelativeLayout 
+                            android:id="@+id/relativelayout_add_food" 
+                            style="@style/PersonalBottomStyle" >
+
+                            <ImageView
+                                android:id="@+id/personal_icon_11"
+                                style="@style/PersonalIconStyle"
+                                android:src="@drawable/android_my_jd_orders" />
+
+                            <TextView
+                                style="@style/PersonalTextStyle"
+                                android:layout_toRightOf="@id/personal_icon_11"
+                                android:text="添加" />
+
+                            <ImageView
+                                style="@style/PersonalRightIconStyle"
+                                android:src="@drawable/android_list_idex" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                    
+                      <TextView
+                        style="@style/PersonalCenterText"
+                        android:text="菜谱" />
+                     
+                      <LinearLayout
+                        style="@style/PersonalMainLayoutStyle" >
+
+                        <View style="@style/PersonalLine" />
+
+                        <RelativeLayout 
+                            android:id="@+id/relativelayout_add_recipe" 
+                            style="@style/PersonalBottomStyle" >
+
+                            <ImageView
+                                android:id="@+id/personal_icon_12"
+                                style="@style/PersonalIconStyle"
+                                android:src="@drawable/android_personel_waitpay_order" />
+
+                            <TextView
+                                style="@style/PersonalTextStyle"
+                                android:layout_toRightOf="@id/personal_icon_12"
+                                android:text="添加" />
+
+                            <ImageView
+                                style="@style/PersonalRightIconStyle"
+                                android:src="@drawable/android_list_idex" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                   <!--
                    <LinearLayout style="@style/PersonalMainLayoutStyle" >
 
                         <TextView

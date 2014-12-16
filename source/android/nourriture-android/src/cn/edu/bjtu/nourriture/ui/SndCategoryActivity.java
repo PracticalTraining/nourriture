@@ -1,5 +1,6 @@
 package cn.edu.bjtu.nourriture.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,10 +8,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import cn.edu.bjtu.nourriture.R;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
 
@@ -40,7 +39,8 @@ public class SndCategoryActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> adapterview, View view, int parent,
 					long id) {
-				Toast.makeText(SndCategoryActivity.this, "你点击了地"+id+"项", 1).show();
+				//startActivity(new Intent(SndCategoryActivity.this,FoodListActivity.class));
+				startActivity(new Intent(SndCategoryActivity.this,RecipeListActivity.class));
 			}
 		});
 	}
@@ -56,7 +56,7 @@ public class SndCategoryActivity extends BaseActivity {
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return mImageIds.length;
+			return mTitleValues.length;
 		}
 
 		@Override
@@ -81,16 +81,13 @@ public class SndCategoryActivity extends BaseActivity {
 			//组装数据
 			if(convertView==null){
 				convertView=layoutInflater.inflate(R.layout.activity_category_item, null);
-//				holder.image=(ImageView) convertView.findViewById(R.id.catergory_image);
 				holder.title=(TextView) convertView.findViewById(R.id.catergoryitem_title);
 				//使用tag存储数据
 				convertView.setTag(holder);
 			}else{
 				holder=(ViewHolder) convertView.getTag();
 			}
-//			holder.image.setImageResource(mImageIds[position]);
 			holder.title.setText(mTitleValues[position]);
-		//	holder.title.setText(array[position]);
 			
 			return convertView;
 		
@@ -100,25 +97,12 @@ public class SndCategoryActivity extends BaseActivity {
 		
 	}
 	
-	
-	// 适配显示的图片数组
-				private Integer[] mImageIds = {R.drawable.catergory_appliance,R.drawable.catergory_book,R.drawable.catergory_cloth,R.drawable.catergory_deskbook,
-						R.drawable.catergory_digtcamer,R.drawable.catergory_furnitrue,R.drawable.catergory_mobile,R.drawable.catergory_skincare
-						 };
-				//给照片添加文字显示(Title)
-				private String[] mTitleValues = { "家电", "图书", "衣服", "笔记本", "数码",
-						"家具", "手机", "护肤" };
-				
-				private String[] mContentValues={"家电/生活电器/厨房电器", "电子书/图书/小说","男装/女装/童装", "笔记本/笔记本配件/产品外设", "摄影摄像/数码配件", 
-						"家具/灯具/生活用品", "手机通讯/运营商/手机配件", "面部护理/口腔护理/..."};
+	//给照片添加文字显示(Title)
+	private String[] mTitleValues = { "川菜", "鲁菜"};			
 			
 
-		 public static class ViewHolder {
-				ImageView image;
-				TextView title;
-				TextView content;
-			}
+	public static class ViewHolder {
+	    TextView title;
+	}
 	
-	
-
 }

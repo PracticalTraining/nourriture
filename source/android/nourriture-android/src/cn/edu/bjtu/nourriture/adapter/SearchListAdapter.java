@@ -1,13 +1,11 @@
 package cn.edu.bjtu.nourriture.adapter;
 
-import java.util.zip.Inflater;
-
-import cn.edu.bjtu.nourriture.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import cn.edu.bjtu.nourriture.R;
 
 public class SearchListAdapter extends BaseAdapter {
 	private Context context;
@@ -18,7 +16,7 @@ public class SearchListAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return 2;
+		return 3;
 	}
 
 	@Override

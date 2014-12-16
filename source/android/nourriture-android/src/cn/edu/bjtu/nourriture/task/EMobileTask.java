@@ -6,19 +6,17 @@ import java.util.concurrent.Callable;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie;
 
-import com.lidroid.xutils.util.PreferencesCookieStore;
-
-import cn.edu.bjtu.nourriture.BaseApplication;
-import cn.edu.bjtu.nourriture.R;
-import cn.edu.bjtu.nourriture.ui.LoginActivity;
-import cn.edu.bjtu.nourriture.widgets.LoadingWindow;
-import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.util.Log;
+import cn.edu.bjtu.nourriture.BaseApplication;
+import cn.edu.bjtu.nourriture.R;
+import cn.edu.bjtu.nourriture.widgets.LoadingWindow;
+
+import com.lidroid.xutils.util.PreferencesCookieStore;
 
 
 public class EMobileTask {

@@ -139,7 +139,7 @@ public abstract class BaseActivity extends Activity {
 	}
 	
 	protected void DisPlay(String content){
-		Toast.makeText(this, content, 1).show();
+		Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
 	}
 
 	/**加载进度条*/
