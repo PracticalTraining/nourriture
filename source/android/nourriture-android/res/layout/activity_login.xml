@@ -126,6 +126,29 @@
                         android:textOn=""
                         android:layout_alignParentRight="true"/>
                 </RelativeLayout>
+                
+                <View style="@style/PersonalLine" />
+                <RadioGroup
+                    android:id="@+id/radiogroup_idendity"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                   	android:background="@drawable/more_activity_item_selector_bottom_corners">
+                    <RadioButton
+                        android:id="@+id/radiobutton_customer" 
+                        android:layout_width="wrap_content"
+                    	android:layout_height="wrap_content"
+                    	android:text="普通用户"
+                    	android:textColor="@android:color/black"/>
+                    <RadioButton 
+                        android:id="@+id/radiobutton_manu"
+                        android:layout_width="wrap_content"
+                    	android:layout_height="wrap_content"
+                    	android:text="厂商"
+                    	android:textColor="@android:color/black"
+                    	android:layout_marginLeft="20dp"/>
+                </RadioGroup>
         
             </LinearLayout>
             

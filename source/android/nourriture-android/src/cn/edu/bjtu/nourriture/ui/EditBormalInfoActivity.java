@@ -12,7 +12,7 @@ public class EditBormalInfoActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_edit_manu_info);
+		setContentView(R.layout.activity_edit_normal_info);
 	}
 	
 	@Override

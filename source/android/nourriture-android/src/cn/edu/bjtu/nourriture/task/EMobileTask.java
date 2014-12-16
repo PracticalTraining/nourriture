@@ -1,7 +1,18 @@
 package cn.edu.bjtu.nourriture.task;
 
+import java.util.Date;
 import java.util.concurrent.Callable;
 
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.cookie.BasicClientCookie;
+
+import com.lidroid.xutils.util.PreferencesCookieStore;
+
+import cn.edu.bjtu.nourriture.BaseApplication;
+import cn.edu.bjtu.nourriture.R;
+import cn.edu.bjtu.nourriture.ui.LoginActivity;
+import cn.edu.bjtu.nourriture.widgets.LoadingWindow;
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -166,6 +177,41 @@ public class EMobileTask {
 	public static class CancelledException extends Exception {
 		private static final long serialVersionUID = -78123211381435595L;
 	}
+	
+	public static LoadingWindow createLoaingWindow(Context context){
+		LoadingWindow l = new LoadingWindow(context,R.style.Transparent);
+		return l;
+	}
+	
+	private static Date getDate(){
+		Date now = new Date();
+		return new Date(now.getTime() + 1000*60*60*24*7);
+	}
+	
+	public static void addCookie(String name,String value){
+		PreferencesCookieStore pc = new PreferencesCookieStore(BaseApplication.getContext());
+		BasicClientCookie cookie = new BasicClientCookie(name, value);
+		cookie.setExpiryDate(getDate());
+		pc.addCookie(cookie);
+	}
+	
+	public static String getCookie(String name){
+		PreferencesCookieStore pc = new PreferencesCookieStore(BaseApplication.getContext());
+		Cookie c = pc.getCookie(name);
+		if(c == null){
+			return null;
+		} else {
+			return c.getValue();
+		}
+	}
 
+	public static void remove(String name){
+		PreferencesCookieStore pc = new PreferencesCookieStore(BaseApplication.getContext());
+		BasicClientCookie c = (BasicClientCookie) pc.getCookie(name);
+		if(c != null){
+			c.setExpiryDate(new Date(0L));
+		}
+		pc.clearExpired(new Date());
+	}
 	
 }

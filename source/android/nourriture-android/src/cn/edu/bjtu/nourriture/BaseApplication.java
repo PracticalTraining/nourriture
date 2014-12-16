@@ -3,10 +3,12 @@ package cn.edu.bjtu.nourriture;
 import cn.edu.bjtu.nourriture.config.Constants;
 import cn.edu.bjtu.nourriture.image.ImageLoaderConfig;
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Configuration;
 
 
 public class BaseApplication extends Application {
+	private static Context context;
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -18,6 +20,7 @@ public class BaseApplication extends Application {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+		context = this;
 		ImageLoaderConfig.initImageLoader(this, Constants.BASE_IMAGE_CACHE);
 	}
 
@@ -32,5 +35,9 @@ public class BaseApplication extends Application {
 		// TODO Auto-generated method stub
 		super.onTerminate();
 	}
+
+	public static Context getContext() {
+		return context;
+	}		
 
 }

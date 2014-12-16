@@ -1,5 +1,8 @@
 package cn.edu.bjtu.nourriture.ui;
 
+import com.lidroid.xutils.util.LogUtils;
+import com.lidroid.xutils.util.PreferencesCookieStore;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.edu.bjtu.nourriture.R;
+import cn.edu.bjtu.nourriture.task.EMobileTask;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
 import cn.edu.bjtu.nourriture.utils.CommonTools;
 import cn.edu.bjtu.nourriture.utils.ExitView;
@@ -26,7 +30,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 	private ExitView exit;
 	private LinearLayout Ly_login,Ly_Other;
 	private RelativeLayout Ly_personalInfo,ly_changePwd,ly_changeInfo,ly_setLang;
-	private TextView username;
+	private TextView username,jobtitle;
 	private int LOGIN_CODE=100;
 
 	@Override
@@ -37,6 +41,23 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		findViewById();
 		initView();
 	}
+	
+	@Override
+	protected void onStart() {
+		LogUtils.d("onStart");
+		super.onStart();
+		if(EMobileTask.getCookie("userId") == null){
+			Ly_personalInfo.setVisibility(View.GONE);
+			Ly_login.setVisibility(View.VISIBLE);
+			mExitButton.setVisibility(View.GONE);
+		} else {
+			Ly_personalInfo.setVisibility(View.VISIBLE);
+			Ly_login.setVisibility(View.GONE);
+			mExitButton.setVisibility(View.VISIBLE);
+			username.setText(EMobileTask.getCookie("username"));
+			jobtitle.setText(EMobileTask.getCookie("idendity"));
+		}
+	}
 
 	@Override
 	protected void findViewById() {
@@ -44,7 +65,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		mBackgroundImageView = (ImageView) findViewById(R.id.personal_background_image);
 		mLoginButton = (Button) findViewById(R.id.personal_login_button);
 		mScrollView = (CustomScrollView) findViewById(R.id.personal_scrollView);
-//		mMoreButton=(Button)this.findViewById(R.id.personal_more_button);
 		mExitButton=(Button)this.findViewById(R.id.personal_exit);
 		
 		
@@ -52,6 +72,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		Ly_personalInfo=(RelativeLayout)findViewById(R.id.personal);
 		Ly_Other=(LinearLayout)findViewById(R.id.other_layout);
 		username=(TextView)findViewById(R.id.username);
+		jobtitle = (TextView) findViewById(R.id.jobtitle);
 		ly_changePwd = (RelativeLayout) findViewById(R.id.relativelayout_change_pwd);
 		ly_changeInfo = (RelativeLayout) findViewById(R.id.relativelayout_change_info);
 		ly_setLang = (RelativeLayout) findViewById(R.id.relativelayout_set_lang);
@@ -63,7 +84,6 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		mScrollView.setImageView(mBackgroundImageView);
 		
 		mLoginButton.setOnClickListener(this);
-//		mMoreButton.setOnClickListener(this);
 		mExitButton.setOnClickListener(this);
 		ly_changePwd.setOnClickListener(this);
 		ly_changeInfo.setOnClickListener(this);
@@ -79,12 +99,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			
 			startActivityForResult(mIntent, LOGIN_CODE);
 			break;
-
-//		case R.id.personal_more_button:
-//			mIntent=new Intent(PersonalActivity.this, MoreActivity.class);
-//			startActivity(mIntent);
-//			break;
-//			
+			
 		case R.id.personal_exit:
 			
 			//实例化SelectPicPopupWindow
@@ -96,7 +111,11 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			break;
 			
 		case R.id.relativelayout_change_pwd:
-			startActivity(new Intent(this,ChangePwdActivity.class));
+			if(EMobileTask.getCookie("userId") == null){
+				startActivity(new Intent(this,LoginActivity.class));
+			} else {
+				startActivity(new Intent(this,ChangePwdActivity.class));
+			}
 			break;
 			
 		case R.id.relativelayout_set_lang:
@@ -104,8 +123,13 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			break;
 			
 		case R.id.relativelayout_change_info:
-			//startActivity(new Intent(this,EditBormalInfoActivity.class));
-			startActivity(new Intent(this,EditManuInfoActivity.class));
+			if(EMobileTask.getCookie("userId") == null){
+				startActivity(new Intent(this,LoginActivity.class));
+			} else if (EMobileTask.getCookie("idendity").equals("普通用户")){
+				startActivity(new Intent(this,EditBormalInfoActivity.class));
+			} else {
+				startActivity(new Intent(this,EditManuInfoActivity.class));
+			}
 			break;
 			
 		default:
@@ -114,40 +138,23 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		
 	}
 	
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		
-		if(resultCode==20){
-//			String name=data.getExtras().getString("username");
-//			Log.i("name", name);
-//			username.setText(name);
-			if(Ly_login.isShown()){
-				Ly_personalInfo.setVisibility(View.VISIBLE);
-				Ly_login.setVisibility(View.GONE);
-				Ly_Other.setVisibility(View.VISIBLE);
-			}
-			Ly_personalInfo.setVisibility(View.VISIBLE);
-			Ly_login.setVisibility(View.GONE);
-			Ly_Other.setVisibility(View.VISIBLE);
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-	
 	//为弹出窗口实现监听类
-    private OnClickListener  itemsOnClick = new OnClickListener(){
+    private OnClickListener itemsOnClick = new OnClickListener(){
 
 		public void onClick(View v) {
 			
 			switch (v.getId()) {
 			case R.id.btn_exit:
-				CommonTools.showShortToast(PersonalActivity.this, "退出程序");
-				
+				EMobileTask.remove("userId");
+				EMobileTask.remove("username");
+				EMobileTask.remove("idendity");
+				Ly_personalInfo.setVisibility(View.GONE);
+				Ly_login.setVisibility(View.VISIBLE);
+				mExitButton.setVisibility(View.GONE);
+				exit.dismiss();
 				break;
 			case R.id.btn_cancel:
 				PersonalActivity.this.dismissDialog(R.id.btn_cancel);
-				
 				break;
 			default:
 				break;

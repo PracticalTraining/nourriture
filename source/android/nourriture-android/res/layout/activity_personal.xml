@@ -153,13 +153,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="金牌用户"
                                 android:textColor="#FFF8E8" />
-
-                            <TextView
-                                android:id="@+id/dept"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="积分   100"
-                                android:textColor="#FFF8E8" />
+                            
                         </LinearLayout>
                     </RelativeLayout>
                 </RelativeLayout>

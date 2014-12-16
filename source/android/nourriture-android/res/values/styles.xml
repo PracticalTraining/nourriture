@@ -173,5 +173,10 @@
         <item name="android:scaleType">fitCenter</item>
         <item name="android:background">@drawable/back_button_default_style</item>
     </style>
-
+	
+    <style name="Transparent  ">  
+	    <item name="android:windowBackground">@color/transparent_background</item>  
+	    <item name="android:windowNoTitle">true</item>  
+	    <item name="android:windowIsTranslucent">true</item>     
+    </style>  
 </resources>

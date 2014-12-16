@@ -36,7 +36,7 @@
         android:layout_marginTop="5dip" 
          android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="退出程序"
+        android:text="退出登录"
          android:background="@drawable/btn_style_alert_dialog_special"
          android:textStyle="bold"
          />

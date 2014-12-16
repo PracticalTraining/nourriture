@@ -1,13 +1,13 @@
 package cn.edu.bjtu.nourriture.ui;
 
-import java.util.HashMap;
-import java.util.concurrent.Callable;
+import java.util.Date;
 
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.cookie.BasicClientCookie;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +17,23 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.ToggleButton;
 import cn.edu.bjtu.nourriture.R;
 import cn.edu.bjtu.nourriture.bean.Constants;
-import cn.edu.bjtu.nourriture.task.Callback;
+import cn.edu.bjtu.nourriture.task.EMobileTask;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
+import cn.edu.bjtu.nourriture.widgets.LoadingWindow;
+
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.lidroid.xutils.util.LogUtils;
+import com.lidroid.xutils.util.OtherUtils;
+import com.lidroid.xutils.util.PreferencesCookieStore;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
@@ -33,11 +45,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private boolean isDisplayflag = false;// 是否显示密码
 	private String getpassword;
 	private Button loginBtn, register;
-	private Intent mIntent;
-	private String serverAddress = "http://mdemo.e-cology.cn/login.do";
-	public static String MOBILE_SERVERS_URL = "http://mserver.e-cology.cn/servers.do";
-	String username;
-	String password;
+	private RadioGroup mRG_Indendity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,42 +68,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		isShowPassword = (ToggleButton) this.findViewById(R.id.isShowPassword);
 		loginBtn = (Button) this.findViewById(R.id.login);
 		register = (Button) this.findViewById(R.id.register);
+		mRG_Indendity = (RadioGroup) findViewById(R.id.radiogroup_idendity);
 
 		getpassword = loginpassword.getText().toString();
 	}
 
 	@Override
 	protected void initView() {
-
-		// 显示密码的togglebutton点击事件,动态显示隐藏密码--->点击前先判定
-		// isShowPassword.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		//
-		// if(getpassword.equals("")||getpassword.length()<=0){
-		// DisPlay("密码不能为空");
-		// }
-		//
-		// if(!isDisplayflag){
-		// //隐藏密码
-		// //loginpassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-		// //loginpassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-		// loginpassword.setInputType(0x90);
-		//
-		// }else{
-		// //loginpassword.setInputType(InputType.TYPE_CLASS_TEXT |
-		// InputType.TYPE_TEXT_VARIATION_PASSWORD);
-		// //loginpassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-		// loginpassword.setInputType(0x81);
-		// }
-		// //isDisplayflag=!isDisplayflag;
-		// loginpassword.postInvalidate();
-		// }
-		// });
-
 		register.setOnClickListener(this);
-
 		isShowPassword
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -131,16 +111,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.register:
-			mIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+			Intent mIntent = new Intent(LoginActivity.this, RegisterActivity.class);
 			startActivity(mIntent);
-
 			break;
 
 		case R.id.login:
-
-			// doLogin();
 			userlogin();
-
 			break;
 
 		default:
@@ -148,111 +124,68 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 
 	}
-
-	// 之前的方式太繁瑣了
+	
 	private void userlogin() {
-		username = loginaccount.getText().toString().trim();
-		password = loginpassword.getText().toString().trim();
-		String serverAdd = serverAddress;
+		final String username = loginaccount.getText().toString().trim();
+		final String password = loginpassword.getText().toString().trim();
+		final int identity = mRG_Indendity.getCheckedRadioButtonId();
 
 		if (username.equals("")) {
 			DisplayToast("用户名不能为空!");
+			return;
 		}
 		if (password.equals("")) {
 			DisplayToast("密码不能为空!");
+			return;
 		}
-
-		if (username.equals("test") && password.equals("123")) {
-			DisplayToast("登陆成功!");
-			Intent data = new Intent();
-			data.putExtra("name", username);
-			// data.putExtra("values", 100);
-			// 请求代码可以自己设置，这里设置成20
-			setResult(20, data);
-
-			LoginActivity.this.finish();
+		if (identity == -1){
+			DisplayToast("请选择登陆身份");
+			return;
 		}
-
-		// new LoginTask().execute(username, password);
-
-	}
-
-	// 登录系统
-	private void doLogin() {
-
-		final String uaername = loginaccount.getText().toString().trim();
-		final String password = loginpassword.getText().toString().trim();
-		String serverAdd = serverAddress;
-
-		if (uaername.equals("")) {
-			DisplayToast("用户名不能为空!");
+		
+		final LoadingWindow l = EMobileTask.createLoaingWindow(this);
+		l.show();
+		
+		HttpUtils httpUtils = new HttpUtils();
+		String url = null;
+		if(identity == R.id.radiobutton_customer){
+			url = Constants.MOBILE_SERVER_URL + "customer/login";
+		} else {
+			url = Constants.MOBILE_SERVER_URL + "manuFacture/login";
 		}
-		if (password.equals("")) {
-			DisplayToast("密码不能为空!");
-		}
-
-		loginActivity.doAsync(new Callable<Boolean>() {
+		RequestParams params = new RequestParams();
+		params.addQueryStringParameter("name", username);
+		params.addQueryStringParameter("password", password);
+		httpUtils.send(HttpMethod.GET, url , params , new RequestCallBack<String>() {
 
 			@Override
-			public Boolean call() throws Exception {
-
-				String clientVersion = getVersionName();
-				String deviceid = getDeviceId();
-				String token = getToken();
-				String clientOs = getClientOs();
-				String clientOsVer = getClientOsVer();
-				String language = getLanguage();
-				String country = getCountry();
-
-				Constants.clientVersion = clientVersion;
-				Constants.deviceid = deviceid;
-				Constants.token = token;
-				Constants.clientOs = clientOs;
-				Constants.clientOsVer = clientOsVer;
-				Constants.language = language;
-				Constants.country = country;
-				Constants.user = uaername;
-				Constants.pass = password;
-
-				return true;
+			public void onFailure(HttpException arg0, String arg1) {
+				LogUtils.d("onFailure");
+				
+				l.dismiss();
+				DisPlay("登陆失败");
 			}
-
-		}, new Callback<Boolean>() {
 
 			@Override
-			public void onCallback(Boolean pCallbackValue) {
-				// TODO Auto-generated method stub
-
+			public void onSuccess(ResponseInfo<String> arg0) {
+				LogUtils.d("onSuccess");
+				
+				l.dismiss();
+				try {
+					JSONObject json = new JSONObject(arg0.result);
+					int userId = json.getInt("id");
+					EMobileTask.addCookie("userId",String.valueOf(userId));
+					EMobileTask.addCookie("username",username);
+					EMobileTask.addCookie("idendity",identity == R.id.radiobutton_customer ? "普通用户" : "厂商");
+					DisPlay("登陆成功");
+					LoginActivity.this.finish();
+				} catch (JSONException e) {
+					DisPlay("登陆失败");
+					e.printStackTrace();
+				}
 			}
-		}, new Callback<Exception>() {
 
-			@Override
-			public void onCallback(Exception pCallbackValue) {
-				// TODO Auto-generated method stub
-
-			}
-		}, true, getResources().getString(R.string.login_loading));
-
-	}
-
-	class LoginTask extends AsyncTask<String, Void, JSONObject> {
-
-		@Override
-		protected JSONObject doInBackground(String... params) {
-			HashMap<String, String> map = new HashMap<String, String>();
-
-			map.put("name", username);
-			map.put("pass", password);
-			map.put("server", serverAddress);
-
-			try {
-				return new JSONObject(new String("{a:1,b:2}"));
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
+		});
 	}
 
 }
