@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/android_layout_bg"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:id="@+id/personal_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/android_title_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:text="搜索结果"
+            android:textColor="@color/white"
+            android:textSize="@dimen/medium_text_size" />
+    </RelativeLayout>
+    
+    <Button
+        android:id="@+id/food"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/category_selection_gridview_bg"
+        android:drawableRight="@drawable/quick_register_toseeagreement"
+        android:paddingRight="20dp"
+        android:gravity="left"
+        android:paddingTop="10dp"
+        android:paddingLeft="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="食物 1个搜索结果"
+        android:textSize="16sp" />
+    <Button
+        android:id="@+id/recipe"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/category_selection_gridview_bg"
+        android:drawableRight="@drawable/quick_register_toseeagreement"
+        android:paddingRight="20dp"
+        android:gravity="left"
+        android:paddingTop="10dp"
+        android:paddingLeft="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="食谱 0个搜索结果"
+        android:textSize="16sp" />
+    
+</LinearLayout>

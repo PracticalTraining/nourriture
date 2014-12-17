@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:orientation="horizontal" >
+    
+    <ImageView 
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/pai_defult_img"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="食谱名"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:gravity="center_vertical"/>
+      
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="五花肉、葱、蒜、酱油"/>
+           
+    </LinearLayout>
+
+</LinearLayout>

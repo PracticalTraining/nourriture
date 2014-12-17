@@ -64,6 +64,10 @@
             android:name=".ui.CategoryActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme" />
+         <activity
+            android:name=".ui.SndCategoryActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.CartActivity"
             android:launchMode="singleTop"
@@ -142,6 +146,27 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme"></activity>
          <activity android:name=".ui.EditManuInfoActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme"></activity>
+         <activity android:name=".ui.FoodListActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme"></activity>
+         <activity android:name=".ui.RecipeListActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme"></activity>
+         <activity android:name=".ui.FoodActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme"></activity>
+         <activity android:name=".ui.RecipeActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme"></activity>
+         <activity android:name=".ui.SearchResultActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme"></activity>
+          <activity android:name=".ui.SearchFoodListActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme"></activity>
+           <activity android:name=".ui.SearchRecipeListActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme"></activity>
     </application>

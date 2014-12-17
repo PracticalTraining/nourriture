@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@color/white"
+	    android:orientation="vertical" >
+	
+	    <LinearLayout
+	        android:id="@+id/id_title"
+	        android:layout_width="fill_parent"
+	        android:layout_height="45dip"
+	        android:background="@drawable/android_title_bg" >
+	
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:layout_marginLeft="10dip"
+	            android:text="红烧肉"
+	            android:textColor="#ffffff"
+	            android:textSize="@dimen/medium_text_size"  />
+	    </LinearLayout>
+	    
+		<LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical">
+		    <ImageView 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:src="@drawable/bigpic"
+		        android:background="@color/bisque"/>
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal"
+		        android:layout_marginTop="-30dp">
+		        <ImageView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:src="@drawable/recipe_lable_4_2"/>
+		        <TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="贪婪的吃货"
+		            android:layout_gravity="center_vertical"
+		            android:layout_margin="5dp"
+		            android:paddingTop="25dp"
+		            android:textSize="16sp"
+		            android:textStyle="bold"
+		            android:textColor="@color/orangered"/>
+		    </LinearLayout>
+	    </LinearLayout>
+	    <View 
+	        style="@style/SearchLine"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="10dp" />
+	    <TextView 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="10dp"
+	        android:textColor="#555"
+	        android:text="仅售498元！价值600元的储值卡1张，全场通用，可叠加使用，提供免费WiFi。每日清晨空运到餐厅的大连海胆，口感肥腴滑嫩的三文鱼腩，捕捞量极低的蓝鳍金枪鱼，都是在他处难以寻觅的无二美味。温馨提示：名店抢购活动仅限北京区域购买。"/>
+	    <View 
+	        style="@style/SearchLine"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="10dp" />
+	    <LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="10dp"
+	        android:orientation="vertical">
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		         <TextView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:padding="10dp"
+			        android:text="种类：" />
+		         <TextView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:padding="10dp"
+			        android:textColor="#555"
+			        android:text="家常菜" />
+	         </LinearLayout>
+	         <LinearLayout 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		         <TextView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:padding="10dp"
+			        android:text="原料：" />
+		         <TextView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:padding="10dp"
+			        android:textColor="#555"
+			        android:text="新鲜五花肉、葱、姜、蒜、料酒、大料、黄豆" />
+	         </LinearLayout>    
+	    </LinearLayout>
+	    
+	    <View 
+	        style="@style/SearchLine"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="10dp" />
+	    
+	    <LinearLayout
+	        android:id="@+id/linearLayout_cooking_step" 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical">
+	        
+	    </LinearLayout>
+	    
+	    <View 
+	        style="@style/SearchLine"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="10dp" />
+	    
+	    <LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical">
+	        
+	        <Button
+		        android:id="@+id/cmt"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_horizontal"
+		        android:layout_margin="10dp"
+		        android:background="@drawable/btn_style_alert_dialog_special"
+		        android:gravity="center"
+		        android:text="评论"
+		        android:textSize="16sp"
+		        android:textColor="#fff" />
+	        
+	        <Button
+		        android:id="@+id/qr_code"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_horizontal"
+		        android:layout_margin="10dp"
+		        android:background="@drawable/btn_style_alert_dialog_special"
+		        android:gravity="center"
+		        android:text="二维码"
+		        android:textSize="16sp"
+		        android:textColor="#fff" />
+	        
+	    </LinearLayout>
+	</LinearLayout>
+</ScrollView>
