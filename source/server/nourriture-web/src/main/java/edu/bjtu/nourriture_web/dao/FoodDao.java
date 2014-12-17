@@ -115,5 +115,10 @@ public class FoodDao extends HibernateDaoSupport implements IFoodDao {
 		}
 		return list;
 	}
+	public List<Food> search(String name) {
+		List<Food> list = null;
+		list = getHibernateTemplate().find("from Food where name like ?","%" + name + "%");
+		return list;
+	}
 	
 }
