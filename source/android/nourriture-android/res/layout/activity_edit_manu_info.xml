@@ -28,6 +28,7 @@
         android:orientation="vertical">
         
         <EditText 
+            android:id="@+id/ed_manu_company_name"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_manu_company_name_hint"
@@ -37,6 +38,7 @@
             android:layout_marginBottom="5dp"/>
         
         <EditText 
+                        android:id="@+id/ed_manu_company_description"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_manu_company_description_hint"
@@ -48,6 +50,7 @@
    
             
     <Button
+        android:onClick="confirmUpdate"
         android:id="@+id/login"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
