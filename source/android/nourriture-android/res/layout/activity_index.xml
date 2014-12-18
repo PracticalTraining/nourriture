@@ -12,13 +12,14 @@
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
-        <ImageView
+        <TextView
             android:id="@+id/index_top_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
-            android:src="@drawable/home_logo" />
+            android:text="Nourriture"
+         />
 
         <EditText
             android:id="@+id/index_search_edit"

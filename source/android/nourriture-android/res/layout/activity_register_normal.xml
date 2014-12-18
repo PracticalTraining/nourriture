@@ -28,6 +28,7 @@
         android:orientation="vertical">
        
        <EditText 
+           android:id="@+id/ed_register_username"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_normal_useraccount_hint"
@@ -36,6 +37,7 @@
             android:layout_marginBottom="5dp" />
        
        <EditText 
+           android:id="@+id/ed_register_pwd"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_normal_password_hint"
@@ -45,6 +47,7 @@
             android:layout_marginBottom="5dp"/>
        
         <EditText 
+                       android:id="@+id/ed_register_repwd"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_normal_repassword_hint"
@@ -54,17 +57,20 @@
             android:layout_marginBottom="5dp"/>
         
         <RadioGroup
+            android:id="@+id/rd_register_sex"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal">
             <RadioButton 
+                android:id="@+id/rb_boy"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="@string/boy"
                 android:layout_marginRight="10dp"/>
             <RadioButton 
+                android:id="@+id/rb_girl"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="@string/girl"
@@ -72,6 +78,7 @@
         </RadioGroup>
         
         <EditText 
+            android:id="@+id/ed_register_age"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_normal_age_hint"
@@ -92,6 +99,7 @@
         android:gravity="center"
         android:text="注册"
         android:textSize="16sp"
+        android:onClick="register"
         android:textColor="#fff" />
             
 </LinearLayout>

@@ -28,6 +28,7 @@
         android:orientation="vertical">
        
        <EditText 
+           android:id="@+id/ed_register_manu_username"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_manu_useraccount_hint"
@@ -36,6 +37,7 @@
             android:layout_marginBottom="5dp" />
        
        <EditText 
+            android:id="@+id/ed_register_manu_pwd"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_manu_password_hint"
@@ -44,6 +46,7 @@
             android:layout_marginBottom="5dp"/>
        
        <EditText 
+            android:id="@+id/ed_register_manu_repwd"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_manu_repassword_hint"
@@ -53,6 +56,7 @@
             android:layout_marginBottom="5dp"/>
         
         <EditText 
+             android:id="@+id/ed_register_manu_company_name"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_manu_company_name_hint"
@@ -62,6 +66,7 @@
             android:layout_marginBottom="5dp"/>
         
         <EditText 
+             android:id="@+id/ed_register_manu_company_description"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_manu_company_description_hint"
@@ -80,6 +85,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/btn_style_alert_dialog_special"
         android:gravity="center"
+        android:onClick="register"
         android:text="注册"
         android:textSize="16sp"
         android:textColor="#fff" />
