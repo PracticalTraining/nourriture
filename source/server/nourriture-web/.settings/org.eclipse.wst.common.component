@@ -5,6 +5,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
         <property name="context-root" value="nourriture-web"/>
         <property name="java-output-path" value="/nourriture-web/target/classes"/>
     </wb-module>
