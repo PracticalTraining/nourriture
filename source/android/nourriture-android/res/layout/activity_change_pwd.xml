@@ -28,6 +28,7 @@
         android:orientation="vertical">
        
        <EditText 
+           android:id="@+id/ed_old_pwd"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/input_old_password"
@@ -37,6 +38,7 @@
             android:inputType="textPassword" />
        
        <EditText 
+           android:id="@+id/ed_new_pwd"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/input_new_password"
@@ -46,6 +48,7 @@
             android:layout_marginBottom="5dp"/>
        
         <EditText 
+            android:id="@+id/ed_repwd"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/confirm_old_password"
@@ -66,6 +69,7 @@
         android:background="@drawable/btn_style_alert_dialog_special"
         android:gravity="center"
         android:text="确认"
+        android:onClick="changePwd"
         android:textSize="16sp"
         android:textColor="#fff" />
             
