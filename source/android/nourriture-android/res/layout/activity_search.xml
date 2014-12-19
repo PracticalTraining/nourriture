@@ -48,13 +48,16 @@
         android:dividerHeight="0dp"
         android:listSelector="@null"
         android:scrollbars="none"
-        android:visibility="visible"/>
-    <View style="@style/SearchLine"/>
+        android:visibility="gone"/>
+    <View 
+        style="@style/SearchLine"
+        android:visibility="gone"/>
     <RelativeLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="50dp"
 	    android:padding="10dp"
-	    android:background="@drawable/bg_search_list">   
+	    android:background="@drawable/bg_search_list"
+	    android:visibility="gone">   
 	    <TextView 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -69,7 +72,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 	    <ImageView
 	        android:id="@+id/logo"
 	        android:layout_width="wrap_content"

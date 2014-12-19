@@ -36,7 +36,7 @@
         android:paddingLeft="15dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="食物 1个搜索结果"
+        android:text="食物 0个搜索结果"
         android:textSize="16sp" />
     <Button
         android:id="@+id/recipe"
