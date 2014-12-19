@@ -1,7 +1,5 @@
 package cn.edu.bjtu.nourriture.ui;
 
-import org.apache.http.params.HttpParams;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +33,8 @@ public class SearchActivity extends BaseActivity {
 	private ImageButton mImageButton = null;
 	private ListView mSearchListView;
 	private SearchListAdapter mSearchListAdapter;
+	private String foodsStr;
+	private String recipesStr;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class SearchActivity extends BaseActivity {
 					public void onSuccess(ResponseInfo<String> arg0) {
 						try {
 							JSONObject json = new JSONObject(arg0.result);
-							JSONArray foods = json.getJSONArray("foods");
+							foodsStr = json.getJSONArray("foods").toString();
 						} catch (JSONException e) {
 							DisPlay("搜索失败");
 							e.printStackTrace();
@@ -110,13 +110,18 @@ public class SearchActivity extends BaseActivity {
 					public void onSuccess(ResponseInfo<String> arg0) {
 						try {
 							JSONObject json = new JSONObject(arg0.result);
-							JSONArray recipes = json.getJSONArray("recipes");
+							recipesStr = json.getJSONArray("recipes").toString();
 						} catch (JSONException e) {
 							DisPlay("搜索失败");
 							e.printStackTrace();
 						}
 					}
 				});
+				
+				Intent intent = new Intent(SearchActivity.this,SearchResultActivity.class);
+				intent.putExtra("foods", foodsStr);
+				intent.putExtra("recipes", recipesStr);
+				startActivity(intent);
 			}
 		});
 	}
