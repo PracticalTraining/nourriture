@@ -233,7 +233,7 @@ public class RecipeRestfulService {
 			
 			recipes.add(jRecipe);
 		}
-		ret.add("foods", recipes);
+		ret.add("recipes", recipes);
 		ret.add("links", searchByNameChildrenLinks);
 		return ret.toString();
 	}

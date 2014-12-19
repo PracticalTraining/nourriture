@@ -25,7 +25,6 @@ public class SearchResultActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_search_result);
@@ -35,38 +34,12 @@ public class SearchResultActivity extends BaseActivity {
 
 	@Override
 	protected void findViewById() {
-//		mobile = (EditText) this.findViewById(R.id.edit_mobile);
-//		checkBox = (ImageButton) this.findViewById(R.id.checkBox);
-//		access_password = (Button) this.findViewById(R.id.access_password);
 		food = (Button) this.findViewById(R.id.food);
 		recipe = (Button) findViewById(R.id.recipe);
 	}
 
 	@Override
 	protected void initView() {
-//		tools = new CommonTools();
-//		registerNum = mobile.getText().toString();
-//		// 判断是否是手机
-//		tools.isMobileNO(registerNum);
-//		if (flag == false) {
-//			DisPlay("您输入的手机号不合法");
-//		}
-//
-//		checkBox.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				if (flag == false) {
-//					access_password.setTextColor(Color.BLACK);
-//					flag = true;
-//				}
-//
-//				else {
-//					access_password.setTextColor(Color.WHITE);
-//				}
-//
-//			}
-//		});
 		
 		/**
 		 * 跳转到普通注册*/
