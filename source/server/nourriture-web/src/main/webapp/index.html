@@ -18,7 +18,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	
 	
 	
+	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
 
 
 
@@ -31,6 +37,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <script type="text/javascript" src="./js/angular-cookies.js"></script>
 <script type="text/javascript" src="./js/angular/app.js"></script>
 <script type="text/javascript" src="./js/angular/lrCtrl.js"></script>
+<script type="text/javascript" src="./js/angular/searchCtrl.js"></script>
 <script type="text/javascript" src="./js/login.js"></script>
 <script type="text/javascript" src="./js/jquery.easydropdown.js"></script>
 <!--Animation-->
@@ -41,7 +48,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </script>
 <link href="./css/mystyle.css" rel='stylesheet' type='text/css' />
 </head>
-<body>
+<body ng-app="nourriture">
 	<div class="header">
 		<div class="header-left">
 			<div class="logo">
@@ -80,7 +87,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				new UISearch(document.getElementById('sb-search'));
 			</script>
 			<!----//search-scripts---->
-			<div id="loginContainer" ng-app="nourriture" ng-controller="lr">
+			<div id="loginContainer" ng-controller="lr">
 				<a href="#" id="loginButton"> <img src="./images/login.png">
 					<span>{{ name }}</span>
 				</a> <a href="#" ng-hide="loginBox" ng-click="logout()"> <span>Logout</span>
@@ -148,7 +155,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	<div class="banner wow fadeInUp" data-wow-delay="0.4s">
+	<div class="banner wow fadeInUp" data-wow-delay="0.4s"
+		ng-controller="search">
 		<div class="container_wrap">
 			<h1>What are you looking for?</h1>
 			<div class="dropdown-buttons">
@@ -172,13 +180,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				</div>
 			</div>
 			<form>
-				<input type="text" value="Keyword, name, date, ..."
-					onfocus="this.value = '';"
+				<input type="text" ng-model="foodname"
+					value="Keyword, name, date, ..." onfocus="this.value = '';"
 					onblur="if (this.value == '') {this.value = 'Keyword, name, date, ...';}">
 				<div class="contact_btn">
-					<label class="btn1 btn-2 btn-2g"><input name="submit"
-						type="submit" id="submit" value="Search"></label>
+					<label class="btn1 btn-2 btn-2g"> <input name="submit"
+						type="submit" id="submit" value="Search" ng-click="search()" ng-model="submit"></label>
 				</div>
+				<fieldset ng-show="hintShow">
+					<label for="submit" style="color: red">{{ hint }}</label>
+				</fieldset>
 			</form>
 			<div class="clearfix"></div>
 		</div>
