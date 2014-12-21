@@ -169,8 +169,8 @@ public class SearchActivity extends BaseActivity {
 		searchHistory.setTime(new Date().getTime());
 		DbUtils dbUtils = DbUtils.create(SearchActivity.this);
 		try {
-			SqlInfo sqlInfo = new SqlInfo(
-					"select * from search_history where keyword = ?");
+			dbUtils.createTableIfNotExist(SearchHistory.class);
+			SqlInfo sqlInfo = new SqlInfo("select * from search_history where keyword = ?");
 			sqlInfo.addBindArg(keyword);
 			List<DbModel> list = dbUtils.findDbModelAll(sqlInfo);
 			if (list.size() == 0)
