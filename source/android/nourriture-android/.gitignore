@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 *.class
 *.apk
 bin/
 gen/
 .settings/
 proguard/
+=======
+/bin
+>>>>>>> branch 'develop' of https://github.com/PracticalTraining/nourriture.git

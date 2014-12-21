@@ -72,5 +72,4 @@
         android:onClick="changePwd"
         android:textSize="16sp"
         android:textColor="#fff" />
-            
 </LinearLayout>

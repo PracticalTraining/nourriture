@@ -1,0 +1,643 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+
+<script src="js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="css/diyUpload.css">
+<script type="text/javascript" src="js/webuploader.html5only.min.js"></script>
+<script type="text/javascript" src="js/diyUpload.js"></script>
+
+
+<link href="./css/bootstrap.css" rel='stylesheet' type='text/css' />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- Custom Theme files -->
+<link href="./css/style.css" rel='stylesheet' type='text/css' />
+<!-- Custom Theme files -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="application/x-javascript">
+	
+			addEventListener("load", function() {
+				setTimeout(hideURLbar, 0);
+			}, false);
+
+			function hideURLbar() {
+				window.scrollTo(0, 1);
+			}
+		
+</script>
+<!--webfont-->
+<!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+<script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="./js/angular.js"></script>
+<script type="text/javascript" src="./js/angular-cookies.js"></script>
+<script type="text/javascript" src="./js/angular/app.js"></script>
+<script type="text/javascript" src="./js/angular/lrCtrl.js"></script>
+<script type="text/javascript" src="./js/login.js"></script>
+<link href="./css/mystyle.css" rel='stylesheet' type='text/css' />
+<link href="./css/css.css" rel='stylesheet' type='text/css' />
+<script type="text/javascript" src="./js/login.js"></script>
+<script src="./js/jquery.easydropdown.js"></script>
+<!--Animation-->
+<script src="./js/wow.min.js"></script>
+<link href="./css/animate.css" rel='stylesheet' type='text/css' />
+<script>
+	new WOW().init();
+</script>
+</head>
+
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#box {auto;
+	width: 100%;
+	min-height: 400px;
+	background: #FFF
+}
+
+#box_step {auto;
+	width: 100%;
+	min-height: 220px;
+	background: rgb(76, 91, 106)
+}
+
+#box_detail {
+	margin: 50px auto;
+	width: 400;
+	min-height: 400px;
+	background: #FFF
+}
+
+#item {
+	margin: 50px auto;
+	width: 50%;
+	height: inherit
+}
+
+.tip {
+	background: #fff;
+	overflow: hidden;
+	padding: 10px;
+	border-radius: 2px;
+}
+</style>
+
+<body>
+	<div class="header">
+		<div class="header-left">
+			<div class="logo">
+				<a href="index.html"><img src="./images/logo.png" alt="" /></a>
+			</div>
+			<div class="menu">
+				<a class="toggleMenu" href="#"><img src="./images/nav.png"
+					alt="" /></a>
+				<ul class="nav" id="nav">
+					<li><a href="index.html">Reality</a></li>
+					<li><a href="living.html">Living</a></li>
+					<li><a href="education.html">Education</a></li>
+					<li><a href="entertain.html">Entertainment</a></li>
+				</ul>
+				<script type="text/javascript" src="./js/responsive-nav.js"></script>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="header_right">
+			<!-- start search-->
+			<div class="search-box">
+				<div id="sb-search" class="sb-search">
+					<form>
+						<input class="sb-search-input"
+							placeholder="Enter your search term..." type="search"
+							name="search" id="search"> <input
+							class="sb-search-submit" type="submit" value=""> <span
+							class="sb-icon-search"> </span>
+					</form>
+				</div>
+			</div>
+			<!----search-scripts---->
+			<script src="./js/classie.js"></script>
+			<script src="./js/uisearch.js"></script>
+			<script>
+				new UISearch(document.getElementById('sb-search'));
+			</script>
+			<!----//search-scripts---->
+			<div id="loginContainer" ng-app="nourriture" ng-controller="lr">
+				<a href="#" id="loginButton"> <img src="./images/login.png">
+					<span>{{ name }}</span>
+				</a> <a href="#" ng-hide="loginBox" ng-click="logout()"> <span>Logout</span>
+				</a> <a href="#" id="registerButton" ng-show="loginBox"> <span>Register</span>
+				</a>
+				<div id="loginBox" ng-show="loginBox">
+					<form id="loginForm">
+						<fieldset id="body">
+							<fieldset ng-show="hintShow">
+								<label for="username" style="color: red">{{ hint }}</label>
+							</fieldset>
+							<fieldset>
+								<label for="username">User name</label> <input type="text"
+									name="username" id="username" ng-model="username">
+							</fieldset>
+							<fieldset>
+								<label for="password">Password</label> <input type="password"
+									name="password" id="password" ng-model="password">
+							</fieldset>
+							<fieldset>
+								<label for="identity">Identity</label> <select
+									ng-model="identity">
+									<option value="customer">customer</option>
+									<option value="manafacture">manafacture</option>
+								</select>
+							</fieldset>
+							<input type="button" ng-click="login()" id="login"
+								value="Sign in">
+						</fieldset>
+					</form>
+				</div>
+
+				<div id="registerBox" ng-show="loginBox">
+					<form id="registerForm">
+						<fieldset id="body">
+							<fieldset ng-show="rhintShow">
+								<label for="username" style="color: red">{{ rhint }}</label>
+							</fieldset>
+							<fieldset>
+								<label for="username">User name</label> <input type="text"
+									name="username" id="username" ng-model="rusername">
+							</fieldset>
+							<fieldset>
+								<label for="password">Password</label> <input type="password"
+									name="password" id="password" ng-model="rpassword">
+							</fieldset>
+							<fieldset>
+								<label for="password">Confirm Password</label> <input
+									type="password" name="password" id="password">
+							</fieldset>
+							<fieldset>
+								<label for="ridentity">Identity</label> <select
+									ng-model="ridentity">
+									<option value="customer">customer</option>
+									<option value="manafacture">manafacture</option>
+								</select>
+							</fieldset>
+							<input type="button" ng-click="register()" id="register"
+								value="Register">
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="content_top wow bounceInRight"
+		style="background-color: #E5DEE2">
+		<div class="container">
+			<div class="col-sm-9">
+				<form action="" method="post">
+					<!--add recipe name-->
+					<div id="item" align="left">
+						<div class="col-md-12">
+							<label>①add the name of recipe</label> <br>
+						</div>
+						<div class="col-md-6">
+							<input type="text" name="recipename" placeholder="recipe name">
+						</div>
+						<div class="col-md-6">
+							<input type="checkbox" name="origin">origin <input
+								type="checkbox" name="unorigin">unorigin
+						</div>
+					</div>
+					<!--add recipe description-->
+					<div id="item" align="left">
+						<div class="col-md-12">
+							<br> <label>②add the description</label> <br>
+						</div>
+						<div class="col-md-12">
+							<textarea cols="40" rows="5" id="textarea_decription"
+								placeholder="description of your recipe"></textarea>
+						</div>
+					</div>
+
+					<!--add picture-->
+					<div id="item" align="left">
+						<div class="col-md-12" align="left">
+							<br> <label>③add the picture</label> <br>
+							<div id="box">
+								<div id="test"></div>
+							</div>
+						</div>
+					</div>
+
+					<!--add ingredient-->
+					<div id="item" align="left">
+						<div class="col-md-12" align="left">
+							<br> <label>④add the ingredient</label> <br>
+							<div id="box">
+								<label>main material</label> <br>
+								<div id="addmainDiv">
+									<input name="zhuliao" value="Add a main material" type="button"
+										onclick="Add_main();" />
+								</div>
+								<br> <label>auxiliary material</label> <br>
+								<div id="addunmainDiv">
+									<input name="fuliao" value="Add an auxiliary material"
+										type="button" onclick="Add_aux();" />
+								</div>
+								<br>
+							</div>
+						</div>
+					</div>
+					<!--add cookstep-->
+					<div id="item" align="left">
+						<div class="col-md-12" align="left">
+							<br> <label>⑤add cookstep</label> <br>
+							<div id="box">
+								<div id="addstepDiv"></div>
+								<input name="zhuliao" value="Add a step" type="button"
+									onclick="Add_step();" />
+							</div>
+						</div>
+					</div>
+					<!--add cook skill-->
+					<div id="item" align="left">
+						<div class="col-md-12">
+							<br> <label>⑥add some skills</label> <br>
+						</div>
+						<div class="col-md-12">
+							<textarea cols="50" rows="5" id="textarea_skill"
+								onKeyDown="textdown(event)" onKeyUp="textup()"
+								onfocus="if(value==defaultValue){value='';this.style.color='#000'}"
+								onBlur="if(!value){value=defaultValue;this.style.color='#999'}"
+								style="color: #999999; width: 100%; resize: none;">enter some your cooking skill</textarea>
+						</div>
+					</div>
+					<input style="margin-left: 550px;" type="submit" value="submit" />
+				</form>
+			</div>
+			<div class="col-sm-3">
+				<div class="tip">
+					<p>If your recipe is submitted successfully, you can get
+						bonus!!!</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+<script type="text/javascript">
+	/*
+	 * 服务器地址,成功返回,失败返回参数格式依照jquery.ajax习惯;
+	 * 其他参数同WebUploader
+	 */
+
+	$('#test').diyUpload({
+		url : 'server/fileupload.php',
+		success : function(data) {
+			console.info(data);
+		},
+		error : function(err) {
+			console.info(err);
+		}
+	});
+
+	$('#as').diyUpload({
+		url : 'server/fileupload.php',
+		success : function(data) {
+			console.info(data);
+		},
+		error : function(err) {
+			console.info(err);
+		},
+		buttonText : '选择文件',
+		chunked : true,
+		// 分片大小
+		chunkSize : 512 * 1024,
+		//最大上传的文件数量, 总文件大小,单个文件大小(单位字节);
+		fileNumLimit : 4,
+		fileSizeLimit : 50000000 * 1024,
+		fileSingleSizeLimit : 1000000 * 1024,
+		accept : {}
+	});
+</script>
+
+<script type="text/javascript">
+	var count = 0;
+
+	function Add_main(num) {
+		count += 1;
+		var addmainDiv = document.getElementById("addmainDiv");
+		var div = document.createElement("div");
+		var countTxt = document.createTextNode("主料" + count);
+		var weight = document.createTextNode("weight");
+		var inputTxt = document.createElement("input");
+		var inputTxt_2 = document.createElement("input");
+		var tipspan = document.createElement("span");
+		tipspan.id = "tip" + count;
+		tipspan.innerHTML = "这个元素已经存在";
+		tipspan.style.display = 'none';
+		inputTxt.type = "text";
+		inputTxt.name = "name";
+		inputTxt.style.color = "#999999";
+		inputTxt.style.width = "200px"
+
+		inputTxt.style.fontSize = "smaller";
+		inputTxt.defaultValue = "name of main material";
+		inputTxt.id = count;
+		inputTxt_2.type = "text";
+		inputTxt_2.name = "weight";
+		inputTxt_2.style.color = "#999999";
+		inputTxt_2.style.width = "200px"
+
+		inputTxt_2.style.fontSize = "smaller";
+		inputTxt_2.defaultValue = "enter the weight such as:250g";
+		inputTxt_2.id = count;
+		var btn = document.createElement("input");
+
+		btn.type = "button";
+		btn.value = "delete";
+
+		inputTxt.onfocus = function() {
+			document.getElementById("tip" + this.id).style.display = "none";
+			if (this.value == this.defaultValue) {
+				this.value = '';
+				this.style.color = '#000';
+			}
+		}
+		inputTxt.onblur = function() {
+
+			if (this.value == "") {
+				this.value = this.defaultValue;
+				this.style.color = '#999999';
+			} else {
+				name(this.id, "tip" + this.id);
+			}
+		};
+
+		inputTxt_2.onfocus = function() {
+			document.getElementById("tip" + this.id).style.display = "none";
+			if (this.value == this.defaultValue) {
+				this.value = '';
+				this.style.color = '#000';
+			}
+		}
+		inputTxt_2.onblur = function() {
+
+			if (this.value == "") {
+				this.value = this.defaultValue;
+				this.style.color = '#999999';
+			} else {
+				name(this.id, "tip" + this.id);
+			}
+		};
+
+		btn.onclick = function() {
+			this.parentNode.parentNode.removeChild(this.parentNode);
+			var n = addmainDiv.getElementsByTagName("div");
+			for (var k = 0; k < n.length; k++) {
+				n[k].firstChild.nodeValue = "主料" + (k + 1);
+			}
+			count -= 1;
+		}
+
+		div.appendChild(inputTxt);
+		div.appendChild(inputTxt_2);
+		div.appendChild(btn);
+		div.appendChild(tipspan);
+		addmainDiv.appendChild(div);
+	}
+
+	function test(id, tipdivid) {
+		var test = new Array();
+		test = document.getElementsByName('test');
+		var testvalue = document.getElementById(id).value;
+		for (var i = 0; i < test.length; i++) {
+			if (test[i].id != id && test[i].value == testvalue
+					&& test[i].value != '') {
+				document.getElementById(tipdivid).style.display = "inline-block";
+			}
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	var count = 0;
+
+	function Add_aux(num) {
+		count += 1;
+		var addunmainDiv = document.getElementById("addunmainDiv");
+		var div = document.createElement("div");
+		var countTxt = document.createTextNode("主料" + count);
+		var weight = document.createTextNode("weight");
+		var inputTxt = document.createElement("input");
+		var inputTxt_2 = document.createElement("input");
+		var tipspan = document.createElement("span");
+		tipspan.id = "tip" + count;
+		tipspan.innerHTML = "这个元素已经存在";
+		tipspan.style.display = 'none';
+		inputTxt.type = "text";
+		inputTxt.name = "name";
+		inputTxt.style.color = "#999999";
+		inputTxt.style.width = "200px"
+
+		inputTxt.style.fontSize = "smaller";
+		inputTxt.defaultValue = "name of auxiliary material";
+		inputTxt.id = count;
+		inputTxt_2.type = "text";
+		inputTxt_2.name = "weight";
+		inputTxt_2.style.color = "#999999";
+		inputTxt_2.style.width = "200px"
+
+		inputTxt_2.style.fontSize = "smaller";
+		inputTxt_2.defaultValue = "enter the weight such as:250g";
+		inputTxt_2.id = count;
+		var btn = document.createElement("input");
+		btn.type = "button";
+		btn.value = "delete";
+		inputTxt.onfocus = function() {
+			document.getElementById("tip" + this.id).style.display = "none";
+			if (this.value == this.defaultValue) {
+				this.value = '';
+				this.style.color = '#000';
+			}
+		}
+		inputTxt.onblur = function() {
+
+			if (this.value == "") {
+				this.value = this.defaultValue;
+				this.style.color = '#999999';
+			} else {
+				name(this.id, "tip" + this.id);
+			}
+		};
+
+		inputTxt_2.onfocus = function() {
+			document.getElementById("tip" + this.id).style.display = "none";
+			if (this.value == this.defaultValue) {
+				this.value = '';
+				this.style.color = '#000';
+			}
+		}
+		inputTxt_2.onblur = function() {
+
+			if (this.value == "") {
+				this.value = this.defaultValue;
+				this.style.color = '#999999';
+			} else {
+				name(this.id, "tip" + this.id);
+			}
+		};
+
+		btn.onclick = function() {
+			this.parentNode.parentNode.removeChild(this.parentNode);
+			var n = addunmainDiv.getElementsByTagName("div");
+			for (var k = 0; k < n.length; k++) {
+				n[k].firstChild.nodeValue = "主料" + (k + 1);
+			}
+			count -= 1;
+		}
+
+		div.appendChild(inputTxt);
+		div.appendChild(inputTxt_2);
+		div.appendChild(btn);
+		div.appendChild(tipspan);
+		addunmainDiv.appendChild(div);
+	}
+
+	function test(id, tipdivid) {
+		var test = new Array();
+		test = document.getElementsByName('test');
+		var testvalue = document.getElementById(id).value;
+		for (var i = 0; i < test.length; i++) {
+			if (test[i].id != id && test[i].value == testvalue
+					&& test[i].value != '') {
+				document.getElementById(tipdivid).style.display = "inline-block";
+			}
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	var count = 0;
+
+	function Add_step() {
+
+		count += 1;
+		var addstepDiv = document.getElementById("addstepDiv");
+		var div_box = document.createElement("div");
+		var div_picture = document.createElement("div");
+		var div = document.createElement("div");
+		var div_all = document.createElement("div");
+		var div_col_1 = document.createElement("div");
+		var div_col_2 = document.createElement("div");
+		var div_col_3 = document.createElement("div");
+		var countTxt = document.createTextNode("主料" + count);
+		var weight = document.createTextNode("weight");
+		var inputTxt = document.createElement("textarea");
+		var tipspan = document.createElement("span");
+
+		div_picture.id = "test" + count;
+		div_box.id = "box_step" + count;
+		div_col_1.className = "col-md-5";
+		div_col_2.className = "col-md-5";
+		div_col_3.className = "col-md-2";
+
+		tipspan.id = "tip" + count;
+		tipspan.innerHTML = "这个元素已经存在";
+		tipspan.style.display = 'none';
+		inputTxt.type = "text";
+		inputTxt.name = "name";
+		inputTxt.style.color = "#999999";
+		inputTxt.style.width = "100%";
+		inputTxt.style.height = "200px";
+		inputTxt.style.resize = "none";
+		inputTxt.style.fontSize = "smaller";
+		inputTxt.defaultValue = "enter the skill of this step";
+		inputTxt.id = count;
+
+		var btn = document.createElement("input");
+		btn.type = "button";
+		btn.value = "delete";
+
+		inputTxt.onfocus = function() {
+
+			if (this.value == this.defaultValue) {
+				this.value = '';
+				this.style.color = '#000';
+			} else {
+				document.getElementById("tip" + this.id).style.display = "none";
+			}
+		}
+		inputTxt.onblur = function() {
+
+			if (this.value == "") {
+				this.value = this.defaultValue;
+				this.style.color = '#999999';
+			} else {
+				name(this.id, "tip" + this.id);
+			}
+		};
+
+		btn.onclick = function() {
+			var removeId = "box_step" + count;
+			document.getElementById(removeId).remove();
+			count -= 1;
+		}
+
+		div_col_1.appendChild(div_picture);
+		div_box.appendChild(div_col_1);
+		div_col_2.appendChild(inputTxt);
+		div_box.appendChild(div_col_2);
+		div_col_3.appendChild(btn);
+		div_box.appendChild(div_col_3);
+		div_box.appendChild(tipspan);
+		addstepDiv.appendChild(div_box);
+
+		var test_addpicture = "#test" + count;
+		$(test_addpicture).diyUpload({
+			url : 'server/fileupload.php',
+			success : function(data) {
+				console.info(data);
+			},
+			error : function(err) {
+				console.info(err);
+			}
+		});
+
+		$('#as').diyUpload({
+			url : 'server/fileupload.php',
+			success : function(data) {
+				console.info(data);
+			},
+			error : function(err) {
+				console.info(err);
+			},
+			buttonText : '选择文件',
+			chunked : true,
+			// 分片大小
+			chunkSize : 512 * 1024,
+			//最大上传的文件数量, 总文件大小,单个文件大小(单位字节);
+			fileNumLimit : 1,
+			fileSizeLimit : 50000000 * 1024,
+			fileSingleSizeLimit : 1000000 * 1024,
+			accept : {}
+		});
+	}
+
+	function test(id, tipdivid) {
+		var test = new Array();
+		test = document.getElementsByName('test');
+		var testvalue = document.getElementById(id).value;
+		for (var i = 0; i < test.length; i++) {
+			if (test[i].id != id && test[i].value == testvalue
+					&& test[i].value != '') {
+				document.getElementById(tipdivid).style.display = "inline-block";
+			}
+		}
+	}
+</script>
+</html>

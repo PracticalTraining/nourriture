@@ -101,5 +101,5 @@
         android:textSize="16sp"
         android:onClick="register"
         android:textColor="#fff" />
-            
+
 </LinearLayout>

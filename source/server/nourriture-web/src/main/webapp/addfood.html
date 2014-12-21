@@ -1,0 +1,379 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+
+<script src="./js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="./css/diyUpload.css">
+<script type="text/javascript" src="./js/webuploader.html5only.min.js"></script>
+<script type="text/javascript" src="./js/diyUpload.js"></script>
+
+
+<!-- Custom Theme files -->
+<link href="./css/style.css" rel='stylesheet' type='text/css' />
+<!-- Custom Theme files -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="./css/bootstrap.css" rel='stylesheet' type='text/css' />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- Custom Theme files -->
+<link href="./css/style.css" rel='stylesheet' type='text/css' />
+<!-- Custom Theme files -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="application/x-javascript">
+	
+	
+	
+	
+	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
+
+</script>
+<!--webfont-->
+<!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+<link href="./css/css.css" rel='stylesheet' type='text/css' />
+<script type="text/javascript" src="./js/login.js"></script>
+<script src="./js/jquery.easydropdown.js"></script>
+<!--Animation-->
+<script src="./js/wow.min.js"></script>
+<link href="./css/animate.css" rel='stylesheet' type='text/css' />
+<script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="./js/angular.js"></script>
+<script type="text/javascript" src="./js/angular-cookies.js"></script>
+<script type="text/javascript" src="./js/angular/app.js"></script>
+<script type="text/javascript" src="./js/angular/lrCtrl.js"></script>
+<script type="text/javascript" src="./js/login.js"></script>
+<link href="./css/mystyle.css" rel='stylesheet' type='text/css' />
+<script>
+	new WOW().init();
+</script>
+</head>
+
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#box {
+	margin: 0 auto;
+	max-width: 400px;
+	min-height: 300px;
+	background: #e2dee0;
+}
+
+#box_detail {
+	margin-top: 50px;
+	overflow: hidden;
+	background: #FFF
+}
+
+#box_detail div {
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+
+#demo {
+	margin: 50px auto;
+	width: 540px;
+	min-height: 800px;
+	background: #CF9
+}
+</style>
+
+<body>
+	<div class="header">
+		<div class="header-left">
+			<div class="logo">
+				<a href="index.html"><img src="./images/logo.png" alt="" /></a>
+			</div>
+			<div class="menu">
+				<a class="toggleMenu" href="#"><img src="./images/nav.png"
+					alt="" /></a>
+				<ul class="nav" id="nav">
+					<li><a href="index.html">Reality</a></li>
+					<li><a href="living.html">Living</a></li>
+					<li><a href="education.html">Education</a></li>
+					<li><a href="entertain.html">Entertainment</a></li>
+				</ul>
+				<script type="text/javascript" src="./js/responsive-nav.js"></script>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="header_right">
+			<!-- start search-->
+			<div class="search-box">
+				<div id="sb-search" class="sb-search">
+					<form>
+						<input class="sb-search-input"
+							placeholder="Enter your search term..." type="search"
+							name="search" id="search"> <input
+							class="sb-search-submit" type="submit" value=""> <span
+							class="sb-icon-search"> </span>
+					</form>
+				</div>
+			</div>
+			<!----search-scripts---->
+			<script src="./js/classie.js"></script>
+			<script src="./js/uisearch.js"></script>
+			<script>
+				new UISearch(document.getElementById('sb-search'));
+			</script>
+			<!----//search-scripts---->
+			<div id="loginContainer" ng-app="nourriture" ng-controller="lr">
+				<a href="#" id="loginButton"> <img src="./images/login.png">
+					<span>{{ name }}</span>
+				</a> <a href="#" ng-hide="loginBox" ng-click="logout()"> <span>Logout</span>
+				</a> <a href="#" id="registerButton" ng-show="loginBox"> <span>Register</span>
+				</a>
+				<div id="loginBox" ng-show="loginBox">
+					<form id="loginForm">
+						<fieldset id="body">
+							<fieldset ng-show="hintShow">
+								<label for="username" style="color: red">{{ hint }}</label>
+							</fieldset>
+							<fieldset>
+								<label for="username">User name</label> <input type="text"
+									name="username" id="username" ng-model="username">
+							</fieldset>
+							<fieldset>
+								<label for="password">Password</label> <input type="password"
+									name="password" id="password" ng-model="password">
+							</fieldset>
+							<fieldset>
+								<label for="identity">Identity</label> <select
+									ng-model="identity">
+									<option value="customer">customer</option>
+									<option value="manafacture">manafacture</option>
+								</select>
+							</fieldset>
+							<input type="button" ng-click="login()" id="login"
+								value="Sign in">
+						</fieldset>
+					</form>
+				</div>
+
+				<div id="registerBox" ng-show="loginBox">
+					<form id="registerForm">
+						<fieldset id="body">
+							<fieldset ng-show="rhintShow">
+								<label for="username" style="color: red">{{ rhint }}</label>
+							</fieldset>
+							<fieldset>
+								<label for="username">User name</label> <input type="text"
+									name="username" id="username" ng-model="rusername">
+							</fieldset>
+							<fieldset>
+								<label for="password">Password</label> <input type="password"
+									name="password" id="password" ng-model="rpassword">
+							</fieldset>
+							<fieldset>
+								<label for="password">Confirm Password</label> <input
+									type="password" name="password" id="password">
+							</fieldset>
+							<fieldset>
+								<label for="ridentity">Identity</label> <select
+									ng-model="ridentity">
+									<option value="customer">customer</option>
+									<option value="manafacture">manafacture</option>
+								</select>
+							</fieldset>
+							<input type="button" ng-click="register()" id="register"
+								value="Register">
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="content_top wow bounceInRight">
+		<div class="container">
+			<form action="" method="post">
+
+				<div class="col-md-6" style="margin-top: 50px;">
+					<div id="box">
+						<div id="test"></div>
+					</div>
+				</div>
+
+
+				<div class="col-md-6">
+					<div id="box_detail">
+						<!--food name -->
+						<div>
+							<div class="col-md-4">
+								<label>food name</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" style="width: 73%">
+							</div>
+						</div>
+						<!--price -->
+						<div>
+							<div class="col-md-4">
+								<label>price</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" style="width: 73%"> <label>RMB</label>
+							</div>
+						</div>
+						<!--category drop -->
+						<div>
+							<div class="col-md-4">
+								<label>category</label>
+							</div>
+							<div class="col-md-8">
+								<select style="width: 73%">
+									<option value="0">火锅</option>
+									<option value="1">炖菜</option>
+									<option value="2">炒菜</option>
+									<option value="3">Newziland</option>
+									<option value="4">Pakistan</option>
+									<option value="5">United Kingdom</option>
+									<option value="6">United states</option>
+									<option value="7">Russia</option>
+									<option value="8">Mirum</option>
+								</select>
+							</div>
+						</div>
+
+						<!--flavour drop -->
+						<div>
+							<div class="col-md-4">
+								<label>flavour</label>
+							</div>
+							<div class="col-md-8">
+								<select style="width: 73%">
+									<option value="0">甜味</option>
+									<option value="1">辣味</option>
+									<option value="2">酸味</option>
+									<option value="3">苦味</option>
+									<option value="4">Pakistan</option>
+									<option value="5">United Kingdom</option>
+									<option value="6">United states</option>
+									<option value="7">Russia</option>
+									<option value="8">Mirum</option>
+								</select>
+							</div>
+						</div>
+						<!--manufactorer -->
+						<div>
+							<div class="col-md-4">
+								<label>manufacturer</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text">
+							</div>
+						</div>
+						<!--producelocation-->
+						<div>
+							<div class="col-md-4">
+								<label>producelocation</label>
+							</div>
+
+							<div class="col-md-8">
+								<select style="width: 34.5%">
+									<option value="0">北京</option>
+									<option value="1">上海</option>
+									<option value="2">内蒙古</option>
+									<option value="3">广州</option>
+									<option value="4">Pakistan</option>
+									<option value="5">United Kingdom</option>
+									<option value="6">United states</option>
+									<option value="7">Russia</option>
+									<option value="8">Mirum</option>
+								</select> <select style="width: 34.5%">
+									<option value="0">海淀区</option>
+									<option value="1">东城区</option>
+									<option value="2">西城区</option>
+									<option value="3">昌平区</option>
+									<option value="4">Pakistan</option>
+									<option value="5">United Kingdom</option>
+									<option value="6">United states</option>
+									<option value="7">Russia</option>
+									<option value="8">Mirum</option>
+								</select>
+							</div>
+
+						</div>
+
+						<!--buylocation-->
+						<div>
+							<div class="col-md-4">
+								<label>buylocation</label>
+							</div>
+
+							<div class="col-md-8">
+								<select style="width: 34.5%">
+									<option value="0">北京</option>
+									<option value="1">上海</option>
+									<option value="2">内蒙古</option>
+									<option value="3">广州</option>
+									<option value="4">Pakistan</option>
+									<option value="5">United Kingdom</option>
+									<option value="6">United states</option>
+									<option value="7">Russia</option>
+									<option value="8">Mirum</option>
+								</select> <select style="width: 34.5%">
+									<option value="0">海淀区</option>
+									<option value="1">东城区</option>
+									<option value="2">西城区</option>
+									<option value="3">昌平区</option>
+									<option value="4">Pakistan</option>
+									<option value="5">United Kingdom</option>
+									<option value="6">United states</option>
+									<option value="7">Russia</option>
+									<option value="8">Mirum</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+		<input style="float: right; margin-right: 550px;" type="submit"
+			value="submit" />
+		</form>
+	</div>
+</body>
+<script type="text/javascript">
+	/*
+	 * 服务器地址,成功返回,失败返回参数格式依照jquery.ajax习惯;
+	 * 其他参数同WebUploader
+	 */
+
+	$('#test').diyUpload({
+		url : 'server/fileupload.php',
+		success : function(data) {
+			console.info(data);
+		},
+		error : function(err) {
+			console.info(err);
+		}
+	});
+
+	$('#as').diyUpload({
+		url : 'server/fileupload.php',
+		success : function(data) {
+			console.info(data);
+		},
+		error : function(err) {
+			console.info(err);
+		},
+		buttonText : '选择文件',
+		chunked : true,
+		// 分片大小
+		chunkSize : 512 * 1024,
+		//最大上传的文件数量, 总文件大小,单个文件大小(单位字节);
+		fileNumLimit : 50,
+		fileSizeLimit : 500000 * 1024,
+		fileSingleSizeLimit : 50000 * 1024,
+		accept : {}
+	});
+</script>
+
+</html>
