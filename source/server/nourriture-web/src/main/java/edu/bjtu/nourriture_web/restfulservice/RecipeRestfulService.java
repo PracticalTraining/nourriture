@@ -1,5 +1,7 @@
 package edu.bjtu.nourriture_web.restfulservice;
 
+import java.util.List;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -7,11 +9,13 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import edu.bjtu.nourriture_web.bean.Customer;
+import edu.bjtu.nourriture_web.bean.Food;
 import edu.bjtu.nourriture_web.bean.Recipe;
 import edu.bjtu.nourriture_web.bean.RecipeCategory;
 import edu.bjtu.nourriture_web.common.JsonUtil;
@@ -26,6 +30,7 @@ public class RecipeRestfulService {
 	ICustomerDao				CustomerDao;
 	IRecipeCategoryDao			recipeCategoryDao;
 	private JsonArray 			recipeChildrenLinks = new JsonArray();
+	private JsonArray           searchByNameChildrenLinks = new JsonArray();
 	
 	public IRecipeDao getRecipeDao() {
 		return recipeDao;
@@ -199,6 +204,37 @@ public class RecipeRestfulService {
 		ret.addProperty("result", 0);
 		ret.add("links", this.recipeChildrenLinks);
 		
+		return ret.toString();
+	}
+	
+	@GET
+	@Path("searchByName")
+	public String searchByName(@QueryParam("name") String name){
+		JsonObject ret = new JsonObject();
+		//define error code
+		final int ERROR_CODE_BAD_PARAM = -1;
+		
+		if(name == null || name.equals("")){
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", searchByNameChildrenLinks);
+			return ret.toString();
+		}
+		List<Recipe> listResult = recipeDao.search(name);
+		JsonArray recipes = new JsonArray();
+		for(Recipe recipe:listResult){
+			JsonObject jRecipe = new JsonObject();
+			jRecipe.addProperty("id",recipe.getId());
+			jRecipe.addProperty("name", recipe.getName());
+			jRecipe.addProperty("description", recipe.getDescription());
+			jRecipe.addProperty("picture", recipe.getPicture());
+			jRecipe.addProperty("ingredient", recipe.getIngredient());
+			jRecipe.addProperty("catogeryId", recipe.getCatogeryId());
+			jRecipe.addProperty("customerId", recipe.getCustomerId());
+			
+			recipes.add(jRecipe);
+		}
+		ret.add("recipes", recipes);
+		ret.add("links", searchByNameChildrenLinks);
 		return ret.toString();
 	}
 }

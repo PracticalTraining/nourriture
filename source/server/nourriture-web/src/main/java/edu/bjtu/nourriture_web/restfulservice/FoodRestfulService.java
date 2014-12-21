@@ -2,8 +2,6 @@ package edu.bjtu.nourriture_web.restfulservice;
 
 
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -20,8 +18,6 @@ import com.google.gson.JsonObject;
 
 import edu.bjtu.nourriture_web.bean.Customer;
 import edu.bjtu.nourriture_web.bean.Food;
-import edu.bjtu.nourriture_web.bean.FoodCategory;
-import edu.bjtu.nourriture_web.bean.Flavour;
 import edu.bjtu.nourriture_web.common.RestfulServiceUtil;
 import edu.bjtu.nourriture_web.idao.ICustomerDao;
 import edu.bjtu.nourriture_web.idao.IFlavourDao;
@@ -29,8 +25,6 @@ import edu.bjtu.nourriture_web.idao.IFoodCategoryDao;
 import edu.bjtu.nourriture_web.idao.IFoodDao;
 import edu.bjtu.nourriture_web.idao.ILocationDao;
 import edu.bjtu.nourriture_web.idao.IManuFacturerDao;
-
-import javax.imageio.*;
 
 @Path("food")
 public class FoodRestfulService {
@@ -46,6 +40,7 @@ public class FoodRestfulService {
 	private JsonArray idChildrenLinks;
 	private JsonArray searchChildrenLinks;
 	private JsonArray recommendChildrenLinks;
+	private JsonArray searchByNameChildrenLinks;
 	//get set method for spring IOC
 	public IFoodDao getFoodDao() {
 		return foodDao;
@@ -98,6 +93,7 @@ public class FoodRestfulService {
 		idChildrenLinks = new JsonArray();
 		searchChildrenLinks = new JsonArray();
 		recommendChildrenLinks = new JsonArray();
+		searchByNameChildrenLinks = new JsonArray();
 	}
 	/** add a food **/
 	@POST
@@ -367,5 +363,36 @@ public class FoodRestfulService {
 		return ret.toString();
 	}
 	
-
+	@GET
+	@Path("searchByName")
+	public String searchByName(@QueryParam("name") String name){
+		JsonObject ret = new JsonObject();
+		//define error code
+		final int ERROR_CODE_BAD_PARAM = -1;
+		
+		if(name == null || name.equals("")){
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", searchByNameChildrenLinks);
+			return ret.toString();
+		}
+		List<Food> listResult = foodDao.search(name);
+		JsonArray foods = new JsonArray();
+		for(Food food:listResult){
+			JsonObject jFood = new JsonObject();
+			jFood.addProperty("id",food.getId());
+			jFood.addProperty("name", food.getName());
+			jFood.addProperty("price", food.getPrice());
+			jFood.addProperty("picture", food.getPicture());
+			jFood.addProperty("categoryId", food.getCategoryId());
+			jFood.addProperty("flavourId", food.getFlavourId());
+			jFood.addProperty("manufacturerId", food.getManufacturerId());
+			jFood.addProperty("produceLocationId", food.getProduceLocationId());
+			jFood.addProperty("buyLocationId", food.getBuyLocationId());
+			
+			foods.add(jFood);
+		}
+		ret.add("foods", foods);
+		ret.add("links", searchByNameChildrenLinks);
+		return ret.toString();
+	}
 }

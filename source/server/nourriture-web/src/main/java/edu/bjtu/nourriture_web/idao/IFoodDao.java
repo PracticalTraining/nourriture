@@ -18,4 +18,6 @@ public interface IFoodDao {
 	void update(Food food);
 	/** sift the food by price **/
 	List<Food> search(double fromPrice,double toPrice,String[] categoryIds,String[] flavourIds,String[] produceRegionIds,String[] buyRegionIds);
+    /** search food by name **/
+	List<Food> search(String name);
 }
