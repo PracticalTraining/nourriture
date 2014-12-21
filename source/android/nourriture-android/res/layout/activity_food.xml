@@ -29,9 +29,9 @@
 		    android:layout_height="wrap_content"
 		    android:orientation="vertical">
 		    <ImageView 
+		        android:id="@+id/imageview_picture"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:src="@drawable/bigpic"
 		        android:background="@color/bisque"/>
 		    <LinearLayout 
 		        android:layout_width="fill_parent"
@@ -42,10 +42,11 @@
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:src="@drawable/recipe_lable_4_2"/>
-		        <TextView 
+		        <TextView
+		            android:id="@+id/textview_manuName" 
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="贪婪的吃货"
+		            android:text="正在加载中..."
 		            android:layout_gravity="center_vertical"
 		            android:layout_margin="5dp"
 		            android:paddingTop="25dp"
@@ -70,11 +71,12 @@
 	                android:layout_margin="10dp"
 	                android:text="价格："
 	                android:textStyle="bold"/>
-	            <TextView 
+	            <TextView
+	                android:id="@+id/textview_price" 
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="14.04"
+	                android:text="正在加载中..."
 	                android:textColor="#555"/>
 	            <TextView 
 	                android:layout_width="wrap_content"
@@ -82,11 +84,12 @@
 	                android:layout_margin="10dp"
 	                android:text="种类："
 	                android:textStyle="bold"/>
-	            <TextView 
+	            <TextView
+	                android:id="@+id/textview_category"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="主食"
+	                android:text="正在加载中..."
 	                android:textColor="#555"/>
 	        </TableRow>
 	        <TableRow>
@@ -97,10 +100,11 @@
 	                android:text="口味："
 	                android:textStyle="bold"/>
 	            <TextView 
+	                android:id="@+id/textview_flavour"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="香辣"
+	                android:text="正在加载中..."
 	                android:textColor="#555"
 	                android:layout_span="3"/>
 	        </TableRow>
@@ -111,16 +115,18 @@
 	                android:layout_margin="10dp"
 	                android:text="生产地："
 	                android:textStyle="bold"/>
-	            <TextView 
+	            <Button 
+	                android:id="@+id/button_producelc"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="北京市海淀区北京交通大学"
+	                android:text="正在加载中..."
 	                android:textColor="#555"
-	                android:drawableLeft="@drawable/local"
+	                android:drawableLeft="@drawable/ic_pin_merchant"
 	                android:drawablePadding="5dp"
 	                android:gravity="center_vertical"
-	                android:layout_span="3"/>
+	                android:layout_span="3"
+	                android:background="@drawable/bg_search_list"/>
 	        </TableRow>
 	        <TableRow>
 	            <TextView 
@@ -129,16 +135,18 @@
 	                android:layout_margin="10dp"
 	                android:text="销售地："
 	                android:textStyle="bold"/>
-	            <TextView 
+	            <Button
+	                android:id="@+id/button_buylc" 
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="北京市海淀区北京交通大学"
+	                android:text="正在加载中..."
 	                android:textColor="#555"
-	                android:drawableLeft="@drawable/local"
+	                android:drawableLeft="@drawable/ic_pin_merchant"
 	                android:drawablePadding="5dp"
 	                android:gravity="center_vertical"
-	                android:layout_span="3"/>
+	                android:layout_span="3"
+	                android:background="@drawable/bg_search_list"/>
 	        </TableRow>
 	    </TableLayout> 
 	    

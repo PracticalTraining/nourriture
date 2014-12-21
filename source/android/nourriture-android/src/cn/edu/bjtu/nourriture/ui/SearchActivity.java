@@ -8,6 +8,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,6 +43,7 @@ import com.lidroid.xutils.util.LogUtils;
 
 public class SearchActivity extends BaseActivity {
 
+	private Activity activity;
 	private AutoClearEditText mEditText = null;
 	private ImageButton mImageButton = null;
 	private ListView mSearchListView;
@@ -57,6 +59,7 @@ public class SearchActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		activity = this;
 		setContentView(R.layout.activity_search);
 		findViewById();
 		initView();
@@ -212,18 +215,33 @@ public class SearchActivity extends BaseActivity {
 				bundle.putString("recipes", new JSONObject(recipesStr).getJSONArray("recipes").toString());
 				message.setData(bundle);
 				message.sendToTarget();
-			} catch (HttpException e1) {
-				e1.printStackTrace();
-				DisPlay("搜索失败");
-				l.dismiss();
+			} catch (HttpException e) {
+				e.printStackTrace();
+				activity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						DisPlay("搜索失败");
+						l.dismiss();
+					}
+				});
 			} catch (IOException e) {
 				e.printStackTrace();
-				DisPlay("搜索失败");
-				l.dismiss();
+				activity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						DisPlay("搜索失败");
+						l.dismiss();
+					}
+				});
 			} catch (JSONException e) {
 				e.printStackTrace();
-				DisPlay("搜索失败");
-				l.dismiss();
+				activity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						DisPlay("搜索失败");
+						l.dismiss();
+					}
+				});
 			}
 		}
 		

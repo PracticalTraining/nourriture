@@ -113,7 +113,7 @@ public class SearchRecipeListActivity extends BaseActivity {
 				convertView=layoutInflater.inflate(R.layout.item_recipe_list, null);
 				holder.name = (TextView) convertView.findViewById(R.id.textview_name);
 				holder.ingredient = (TextView) convertView.findViewById(R.id.textview_ingredient);
-				holder.icon = (ImageView) findViewById(R.id.imageview_icon);
+				holder.icon = (ImageView) convertView.findViewById(R.id.imageview_icon);
 				//使用tag存储数据
 				convertView.setTag(holder);
 			}else{
@@ -125,7 +125,6 @@ public class SearchRecipeListActivity extends BaseActivity {
 			holder.ingredient.setText(recipe.ingredient);
 			BitmapUtils bitmapUtils = new BitmapUtils(SearchRecipeListActivity.this);
 			bitmapUtils.display(holder.icon, recipe.url);
-			LogUtils.i(recipe.url);
 			
 			return convertView;
 		}

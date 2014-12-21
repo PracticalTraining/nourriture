@@ -63,6 +63,7 @@ public class SearchFoodListActivity extends BaseActivity {
 				food.name = jFood.getString("name");
 				food.price = jFood.getDouble("price");
 				food.flavourId = jFood.getInt("flavourId");
+				food.jsonStr = jFood.toString();
 				data.add(food);
 			}
 		} catch (JSONException e) {
@@ -92,7 +93,9 @@ public class SearchFoodListActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> adapterview, View view, int parent,
 					long id) {
-				startActivity(new Intent(SearchFoodListActivity.this,FoodActivity.class));
+				Intent intent = new Intent(SearchFoodListActivity.this,FoodActivity.class);
+				intent.putExtra("food", data.get((int) id).jsonStr);
+				startActivity(intent);
 			}
 		});
 		pl_refresh.setOnScrollListener(new OnScrollListener() {
@@ -180,7 +183,7 @@ public class SearchFoodListActivity extends BaseActivity {
 
 			ViewHolder holder=new ViewHolder();
 			layoutInflater=LayoutInflater.from(SearchFoodListActivity.this);
-			Food food = data.get(position);
+			final Food food = data.get(position);
 			
 			//组装数据
 			if(convertView==null){
@@ -192,7 +195,7 @@ public class SearchFoodListActivity extends BaseActivity {
 				//使用tag存储数据
 				convertView.setTag(holder);
 			}else{
-				holder=(ViewHolder) convertView.getTag();
+				holder = (ViewHolder) convertView.getTag();
 			}
 			
 			holder.name.setText(food.name);
@@ -218,6 +221,7 @@ public class SearchFoodListActivity extends BaseActivity {
 	}
 	
 	public static class Food{
+		String jsonStr;
 		String url;
 		String name;
 		double price;
