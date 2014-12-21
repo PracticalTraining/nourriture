@@ -116,6 +116,7 @@ public class RegisterManuActivity extends BaseActivity {
 					public void onSuccess(ResponseInfo<String> arg0) {
 						// TODO Auto-generated method stub
 						LogUtils.d("onSuccess");
+						System.out.println(arg0.result);
 						Toast.makeText(RegisterManuActivity.this, "注册成功",
 								Toast.LENGTH_SHORT).show();
 					}

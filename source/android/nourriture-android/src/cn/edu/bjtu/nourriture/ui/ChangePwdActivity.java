@@ -83,8 +83,15 @@ public class ChangePwdActivity extends BaseActivity {
 		} else if (idendity.equals("厂商")) {
 			url = Constants.MOBILE_SERVER_URL + "manuFacturer";
 		}
+		// RequestParams params = new RequestParams();
+		// params.addBodyParameter("name", name);
+		// params.addBodyParameter("password", password);
+		// // params.addQueryStringParameter("sex", sex);
+		// params.addBodyParameter("companyName", companyName);
+		// params.addBodyParameter("description", description);
+		// // params.addQueryStringParameter(nameValuePair)
 
-		httpUtils.send(HttpMethod.POST, url, new RequestCallBack<String>() {
+		httpUtils.send(HttpMethod.PUT, url, new RequestCallBack<String>() {
 
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
