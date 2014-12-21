@@ -13,6 +13,7 @@ import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
 
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
@@ -56,17 +57,18 @@ public class RegisterBormalActivity extends BaseActivity {
 	 * @param view
 	 */
 	public void register(View view) {
-		String username = ed_register_username.getText().toString().trim();
-		String pwd = ed_register_pwd.getText().toString().trim();
+		String name = ed_register_username.getText().toString().trim();
+		String password = ed_register_pwd.getText().toString().trim();
 		String repwd = ed_register_repwd.getText().toString().trim();
-		String age = ed_register_age.getText().toString().trim();
+		String ageStr = ed_register_age.getText().toString().trim();
+		int age = Integer.parseInt(ageStr);
 		int sex = 0;
-		if (TextUtils.isEmpty(username)) {
+		if (TextUtils.isEmpty(name)) {
 			Toast.makeText(RegisterBormalActivity.this, "用户名不能为空",
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (TextUtils.isEmpty(pwd)) {
+		if (TextUtils.isEmpty(password)) {
 			Toast.makeText(RegisterBormalActivity.this, "密码不能为空",
 					Toast.LENGTH_SHORT).show();
 			return;
@@ -76,12 +78,12 @@ public class RegisterBormalActivity extends BaseActivity {
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (TextUtils.isEmpty(age)) {
-			Toast.makeText(RegisterBormalActivity.this, "姓名不能为空",
+		if (age == 0) {
+			Toast.makeText(RegisterBormalActivity.this, "年龄不能为空",
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (!pwd.equals(repwd)) {
+		if (!password.equals(repwd)) {
 			Toast.makeText(RegisterBormalActivity.this, "两次用户名和密码不一致,请重新输入",
 					Toast.LENGTH_SHORT).show();
 			return;
@@ -94,23 +96,43 @@ public class RegisterBormalActivity extends BaseActivity {
 		}
 		HttpUtils httpUtils = new HttpUtils();
 		String url = Constants.MOBILE_SERVER_URL + "customer";
-		httpUtils.send(HttpMethod.POST, url, new RequestCallBack<String>() {
+		RequestParams params = new RequestParams();
+		params.addBodyParameter("username", name);
+		params.addBodyParameter("password", password);
+		params.addBodyParameter("sex", String.valueOf(sex));
+		params.addBodyParameter("age", String.valueOf(age));
+		// params.addHeader("name", name);
+		// params.addHeader("password", password);
+		// params.addHeader("sex", sex + "");
+		// params.addHeader("age", age + "");
+		// List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		// NameValuePair username = new BasicNameValuePair("name", name);
+		// NameValuePair pwd = new BasicNameValuePair("password", password);
+		// NameValuePair sex1 = new BasicNameValuePair("sex", sex + "");
+		// NameValuePair age1 = new BasicNameValuePair("age", age + "");
+		// parameters.add(username);
+		// parameters.add(pwd);
+		// parameters.add(sex1);
+		// parameters.add(age1);
+		httpUtils.send(HttpMethod.POST, url, params,
+				new RequestCallBack<String>() {
 
-			@Override
-			public void onFailure(HttpException arg0, String arg1) {
-				// TODO Auto-generated method stub
-				LogUtils.d("onFailure");
-				Toast.makeText(RegisterBormalActivity.this, "注册失败",
-						Toast.LENGTH_SHORT).show();
-			}
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						// TODO Auto-generated method stub
+						LogUtils.d("onFailure");
+						Toast.makeText(RegisterBormalActivity.this, "注册失败",
+								Toast.LENGTH_SHORT).show();
+					}
 
-			@Override
-			public void onSuccess(ResponseInfo<String> arg0) {
-				// TODO Auto-generated method stub
-				LogUtils.d("onSuccess");
-				Toast.makeText(RegisterBormalActivity.this, "注册成功",
-						Toast.LENGTH_SHORT).show();
-			}
-		});
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						// TODO Auto-generated method stub
+						LogUtils.d("onSuccess");
+						System.out.println(arg0.result);
+						Toast.makeText(RegisterBormalActivity.this, "注册成功",
+								Toast.LENGTH_SHORT).show();
+					}
+				});
 	}
 }

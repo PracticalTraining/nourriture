@@ -140,6 +140,10 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			} else if (EMobileTask.getCookie("idendity").equals("普通用户")) {
 				DisplayToast("普通用户不能添加食物");
 			} else {
+				// 制造商添加食物
+				Intent intent = new Intent(PersonalActivity.this,
+						AddFoodActivity.class);
+				startActivity(intent);
 				// startActivity(new Intent(this,EditBormalInfoActivity.class));
 			}
 			break;
@@ -148,6 +152,9 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 				startActivity(new Intent(this, LoginActivity.class));
 			} else if (EMobileTask.getCookie("idendity").equals("普通用户")) {
 				// startActivity(new Intent(this,EditBormalInfoActivity.class));
+				Intent intent = new Intent(PersonalActivity.this,
+						AddRecipeActivity.class);
+				startActivity(intent);
 			} else {
 				DisplayToast("厂商不能添加食谱");
 			}

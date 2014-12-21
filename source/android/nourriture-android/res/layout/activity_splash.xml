@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
-        android:background="@drawable/splash_logo" />
+        android:background="@drawable/bingjiling" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"

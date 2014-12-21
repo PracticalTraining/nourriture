@@ -40,6 +40,7 @@
             android:id="@+id/ed_register_manu_pwd"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
+            android:inputType="textPassword"
             android:hint="@string/register_manu_password_hint"
             android:background="@drawable/category_selection_gridview_bg"
             android:layout_marginTop="5dp"
@@ -61,7 +62,6 @@
             android:layout_width="fill_parent"
             android:hint="@string/register_manu_company_name_hint"
             android:background="@drawable/category_selection_gridview_bg"
-            android:inputType="textPassword"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"/>
         

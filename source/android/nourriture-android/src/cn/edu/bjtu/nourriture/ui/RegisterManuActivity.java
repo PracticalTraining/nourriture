@@ -12,6 +12,7 @@ import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
 
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
@@ -54,19 +55,19 @@ public class RegisterManuActivity extends BaseActivity {
 	 * @param view
 	 */
 	public void register(View view) {
-		String username = ed_register_manu_username.getText().toString().trim();
-		String pwd = ed_register_manu_pwd.getText().toString().trim();
+		String name = ed_register_manu_username.getText().toString().trim();
+		String password = ed_register_manu_pwd.getText().toString().trim();
 		String repwd = ed_register_manu_repwd.getText().toString().trim();
-		String company_name = ed_register_manu_company_name.getText()
+		String companyName = ed_register_manu_company_name.getText().toString()
+				.trim();
+		String description = ed_register_manu_company_description.getText()
 				.toString().trim();
-		String company_description = ed_register_manu_company_description
-				.getText().toString().trim();
-		if (TextUtils.isEmpty(username)) {
+		if (TextUtils.isEmpty(name)) {
 			Toast.makeText(RegisterManuActivity.this, "用户名不能为空",
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (TextUtils.isEmpty(pwd)) {
+		if (TextUtils.isEmpty(password)) {
 			Toast.makeText(RegisterManuActivity.this, "密码不能为空",
 					Toast.LENGTH_SHORT).show();
 			return;
@@ -76,41 +77,49 @@ public class RegisterManuActivity extends BaseActivity {
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (TextUtils.isEmpty(company_name)) {
+		if (TextUtils.isEmpty(companyName)) {
 			Toast.makeText(RegisterManuActivity.this, "公司名不能为空",
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (TextUtils.isEmpty(company_description)) {
+		if (TextUtils.isEmpty(description)) {
 			Toast.makeText(RegisterManuActivity.this, "公司描述不能为空",
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (!repwd.equals(pwd)) {
+		if (!repwd.equals(password)) {
 			Toast.makeText(RegisterManuActivity.this, "两次输入的密码不一致,请重新输入",
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		HttpUtils httpUtils = new HttpUtils();
 		String url = Constants.MOBILE_SERVER_URL + "manuFacturer";
-		httpUtils.send(HttpMethod.POST, url, new RequestCallBack<String>() {
+		RequestParams params = new RequestParams();
+		params.addBodyParameter("name", name);
+		params.addBodyParameter("password", password);
+		// params.addQueryStringParameter("sex", sex);
+		params.addBodyParameter("companyName", companyName);
+		params.addBodyParameter("description", description);
+		// params.addQueryStringParameter(nameValuePair)
+		httpUtils.send(HttpMethod.POST, url, params,
+				new RequestCallBack<String>() {
 
-			@Override
-			public void onFailure(HttpException arg0, String arg1) {
-				// TODO Auto-generated method stub
-				LogUtils.d("onFailure");
-				Toast.makeText(RegisterManuActivity.this, "注册失败",
-						Toast.LENGTH_SHORT).show();
-			}
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						// TODO Auto-generated method stub
+						LogUtils.d("onFailure");
+						Toast.makeText(RegisterManuActivity.this, "注册失败",
+								Toast.LENGTH_SHORT).show();
+					}
 
-			@Override
-			public void onSuccess(ResponseInfo<String> arg0) {
-				// TODO Auto-generated method stub
-				LogUtils.d("onSuccess");
-				Toast.makeText(RegisterManuActivity.this, "注册成功",
-						Toast.LENGTH_SHORT).show();
-			}
-		});
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						// TODO Auto-generated method stub
+						LogUtils.d("onSuccess");
+						Toast.makeText(RegisterManuActivity.this, "注册成功",
+								Toast.LENGTH_SHORT).show();
+					}
+				});
 	}
 
 }

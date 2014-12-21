@@ -14,6 +14,7 @@ import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
 
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
@@ -65,25 +66,30 @@ public class EditBormalInfoActivity extends BaseActivity {
 		}
 		HttpUtils httpUtils = new HttpUtils();
 		String id = EMobileTask.getCookie("userId");
-		String url = url = Constants.MOBILE_SERVER_URL + "customer/" + id;
-		httpUtils.send(HttpMethod.PUT, url, new RequestCallBack<String>() {
+		String url = Constants.MOBILE_SERVER_URL + "customer/" + id;
+		RequestParams params = new RequestParams();
+		params.addBodyParameter("id", id);
+		params.addBodyParameter("age", age);
+		params.addBodyParameter("sex", sex + "");
+		httpUtils.send(HttpMethod.PUT, url, params,
+				new RequestCallBack<String>() {
 
-			@Override
-			public void onFailure(HttpException arg0, String arg1) {
-				LogUtils.d("onFailure");
-				Toast.makeText(EditBormalInfoActivity.this, "修改失败",
-						Toast.LENGTH_SHORT).show();
-			}
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						LogUtils.d("onFailure");
+						Toast.makeText(EditBormalInfoActivity.this, "修改失败",
+								Toast.LENGTH_SHORT).show();
+					}
 
-			@Override
-			public void onSuccess(ResponseInfo<String> arg0) {
-				LogUtils.d("onSuccess");
-				Toast.makeText(EditBormalInfoActivity.this, "修改成功",
-						Toast.LENGTH_SHORT).show();
-				EditBormalInfoActivity.this.finish();
-			}
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						LogUtils.d("onSuccess");
+						System.out.println(arg0.result.toString());
+						Toast.makeText(EditBormalInfoActivity.this, "修改成功",
+								Toast.LENGTH_SHORT).show();
+						EditBormalInfoActivity.this.finish();
+					}
 
-		});
+				});
 	}
-
 }
