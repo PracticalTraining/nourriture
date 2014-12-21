@@ -19,7 +19,8 @@ import cn.edu.bjtu.nourriture.utils.CommonTools;
 public class SearchResultActivity extends BaseActivity {
 
 	private Button food,recipe;
-	private Intent intent;
+	private String foodsStr;
+	private String recipesStr;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +30,9 @@ public class SearchResultActivity extends BaseActivity {
 		findViewById();
 		initView();
 		
-		intent = getIntent();
-		String foodsStr = intent.getStringExtra("foods");
-		String recipesStr = intent.getStringExtra("recipes");
+		Intent intent = getIntent();
+		foodsStr = intent.getStringExtra("foods");
+		recipesStr = intent.getStringExtra("recipes");
 		try {
 			JSONArray foods = new JSONArray(foodsStr);
 			JSONArray recipes = new JSONArray(recipesStr);
@@ -69,7 +70,9 @@ public class SearchResultActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(SearchResultActivity.this, SearchFoodListActivity.class));
+				Intent intent = new Intent(SearchResultActivity.this, SearchFoodListActivity.class);
+				intent.putExtra("foods", foodsStr);
+				startActivity(intent);
 			}
 		});
 		
@@ -79,7 +82,9 @@ public class SearchResultActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(SearchResultActivity.this, SearchRecipeListActivity.class));
+				Intent intent = new Intent(SearchResultActivity.this, SearchRecipeListActivity.class);
+				intent.putExtra("recipes", recipesStr);
+				startActivity(intent);
 			}
 		});
 
