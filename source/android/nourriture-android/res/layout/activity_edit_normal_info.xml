@@ -28,17 +28,20 @@
         android:orientation="vertical">
         
         <RadioGroup
+            android:id="@+id/rdg_sex"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal">
             <RadioButton 
+                android:id="@+id/rb_boy"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="@string/boy"
                 android:layout_marginRight="10dp"/>
             <RadioButton 
+                android:id="@+id/rb_girl"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="@string/girl"
@@ -46,6 +49,7 @@
         </RadioGroup>
         
         <EditText 
+            android:id="@+id/ed_age"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_normal_age_hint"
@@ -58,6 +62,7 @@
             
     <Button
         android:id="@+id/login"
+        android:onClick="confirmUpdate"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

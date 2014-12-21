@@ -105,7 +105,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.register:
-			Intent mIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+			Intent mIntent = new Intent(LoginActivity.this,
+					RegisterActivity.class);
 			startActivity(mIntent);
 			break;
 
@@ -118,7 +119,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 
 	}
-	
+
 	private void userlogin() {
 		final String username = loginaccount.getText().toString().trim();
 		final String password = loginpassword.getText().toString().trim();
@@ -132,17 +133,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			DisplayToast("密码不能为空!");
 			return;
 		}
-		if (identity == -1){
+		if (identity == -1) {
 			DisplayToast("请选择登陆身份");
 			return;
 		}
-		
+
 		final LoadingWindow l = EMobileTask.createLoaingWindow(this);
 		l.show();
-		
+
 		HttpUtils httpUtils = new HttpUtils();
 		String url = null;
-		if(identity == R.id.radiobutton_customer){
+		if (identity == R.id.radiobutton_customer) {
 			url = Constants.MOBILE_SERVER_URL + "customer/login";
 		} else {
 			url = Constants.MOBILE_SERVER_URL + "manuFacturer/login";
@@ -150,36 +151,42 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("name", username);
 		params.addQueryStringParameter("password", password);
-		httpUtils.send(HttpMethod.GET, url , params , new RequestCallBack<String>() {
+		httpUtils.send(HttpMethod.GET, url, params,
+				new RequestCallBack<String>() {
 
-			@Override
-			public void onFailure(HttpException arg0, String arg1) {
-				LogUtils.d("onFailure");
-				
-				l.dismiss();
-				DisPlay("登陆失败");
-			}
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						LogUtils.d("onFailure");
 
-			@Override
-			public void onSuccess(ResponseInfo<String> arg0) {
-				LogUtils.d("onSuccess");
-				
-				l.dismiss();
-				try {
-					JSONObject json = new JSONObject(arg0.result);
-					int userId = json.getInt("id");
-					EMobileTask.addCookie("userId",String.valueOf(userId));
-					EMobileTask.addCookie("username",username);
-					EMobileTask.addCookie("idendity",identity == R.id.radiobutton_customer ? "普通用户" : "厂商");
-					DisPlay("登陆成功");
-					LoginActivity.this.finish();
-				} catch (JSONException e) {
-					DisPlay("登陆失败");
-					e.printStackTrace();
-				}
-			}
+						l.dismiss();
+						DisPlay("登陆失败");
+					}
 
-		});
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						LogUtils.d("onSuccess");
+
+						l.dismiss();
+						try {
+							JSONObject json = new JSONObject(arg0.result);
+							int userId = json.getInt("id");
+							EMobileTask.addCookie("userId",
+									String.valueOf(userId));
+							EMobileTask.addCookie("username", username);
+							EMobileTask
+									.addCookie(
+											"idendity",
+											identity == R.id.radiobutton_customer ? "普通用户"
+													: "厂商");
+							DisPlay("登陆成功");
+							LoginActivity.this.finish();
+						} catch (JSONException e) {
+							DisPlay("登陆失败");
+							e.printStackTrace();
+						}
+					}
+
+				});
 	}
 
 }
