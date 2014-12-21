@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">京东商城</string>
+    <string name="app_name">Nourriture</string>
     <string name="splash_version_info">京东商城客户端\n\nVersion 1.0.0</string>
     <string name="index_search_edit_hint">搜索食物或食谱</string>
 

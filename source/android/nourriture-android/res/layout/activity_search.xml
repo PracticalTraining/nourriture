@@ -49,10 +49,12 @@
         android:listSelector="@null"
         android:scrollbars="none"
         android:visibility="gone"/>
-    <View 
+    <View
+        android:id="@+id/line1" 
         style="@style/SearchLine"
         android:visibility="gone"/>
-    <RelativeLayout 
+    <RelativeLayout
+        android:id="@+id/relativelayout_clear_history" 
 	    android:layout_width="match_parent"
 	    android:layout_height="50dp"
 	    android:padding="10dp"
@@ -65,7 +67,9 @@
 	        android:drawableLeft="@drawable/ic_clear_search_history"
 	        android:layout_centerInParent="true"/> 
 	</RelativeLayout>
-	<View style="@style/SearchLine"/>	    
+	<View 
+	    android:id="@+id/line2"
+	    style="@style/SearchLine"/>	    
 
     <LinearLayout
         android:id="@+id/layout_login"

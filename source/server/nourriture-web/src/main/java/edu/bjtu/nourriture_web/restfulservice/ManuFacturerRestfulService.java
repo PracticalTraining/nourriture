@@ -334,10 +334,8 @@ public class ManuFacturerRestfulService {
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
 		}
-		if (companyName == null || companyName.equals(""))
-			manuFacturer.setCompanyName(companyName);
-		if (description == null || description.equals(""))
-			manuFacturer.setDescription(description);
+		manuFacturer.setCompanyName(companyName);
+		manuFacturer.setDescription(description);
 		manuFacturerDao.update(manuFacturer);
 		ret.addProperty("result", 0);
 		ret.add("links", idChildrenLinks);
