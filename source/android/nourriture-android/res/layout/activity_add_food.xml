@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#f0f0f0"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/id_title"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:background="@drawable/android_title_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
+            android:text="添加食物"
+            android:textColor="#ffffff"
+            android:textSize="15.0dip" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/ed_food_name"
+            android:layout_width="fill_parent"
+                android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/category_selection_gridview_bg"
+            android:hint="请输入食物名称" />
+
+        <EditText
+            android:id="@+id/ed_food_price"
+            android:layout_width="fill_parent"
+      android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/category_selection_gridview_bg"
+            android:hint="请输入食物价格" />
+
+        <EditText
+            android:id="@+id/ed_food_picture"
+            android:layout_width="fill_parent"
+          android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/category_selection_gridview_bg"
+            android:hint="请输入图片路径" />
+
+        <EditText
+            android:id="@+id/ed_food_categoryId"
+            android:layout_width="fill_parent"
+      android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/category_selection_gridview_bg"
+            android:hint="请输入食物类别的ID" />
+
+        <EditText
+            android:id="@+id/ed_food_flavourId"
+            android:layout_width="fill_parent"
+          android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/category_selection_gridview_bg"
+            android:hint="请输入食物口味的ID" />
+
+        <EditText
+            android:id="@+id/ed_food_manufacturerId"
+            android:layout_width="fill_parent"
+                 android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/category_selection_gridview_bg"
+            android:hint="请输入制造商的ID" />
+
+        <EditText
+            android:id="@+id/ed_food_produceLocationId"
+            android:layout_width="fill_parent"
+              android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/category_selection_gridview_bg"
+            android:hint="请输入产地ID" />
+
+        <EditText
+            android:id="@+id/ed_food_buyLocationId"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/category_selection_gridview_bg"
+            android:hint="请输入购买地ID" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/add_food"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="2dp"
+        android:background="@drawable/btn_style_alert_dialog_special"
+        android:gravity="center"
+        android:onClick="addFood"
+        android:text="确认添加"
+        android:textColor="#fff"
+        android:textSize="16sp" />
+
+</LinearLayout>
