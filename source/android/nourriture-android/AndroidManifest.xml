@@ -169,6 +169,8 @@
            <activity android:name=".ui.SearchRecipeListActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme"></activity>
+           <activity android:name="cn.edu.bjtu.nourriture.ui.AddFoodActivity"></activity>
+           <activity android:name="cn.edu.bjtu.nourriture.ui.AddRecipeActivity"></activity>
     </application>
 
 </manifest>
