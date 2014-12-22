@@ -51,6 +51,7 @@ public class SearchRecipeListActivity extends BaseActivity {
 				recipe.name = jRecipe.getString("name");
 				recipe.ingredient = jRecipe.getString("ingredient");
 				recipe.url = jRecipe.getString("picture");
+				recipe.jsonStr = jRecipe.toString();
 				data.add(recipe);
 			}
 		} catch (JSONException e) {
@@ -79,7 +80,9 @@ public class SearchRecipeListActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> adapterview, View view, int parent,
 					long id) {
-				startActivity(new Intent(SearchRecipeListActivity.this,RecipeActivity.class));
+				Intent intent = new Intent(SearchRecipeListActivity.this,RecipeActivity.class);
+				intent.putExtra("recipe", data.get((int) id).jsonStr);
+				startActivity(intent);
 			}
 		});
 	}
@@ -139,6 +142,7 @@ public class SearchRecipeListActivity extends BaseActivity {
 	}
 	
 	public static class Recipe{
+		String jsonStr;
 		String url;
 		String name;
 		String ingredient;

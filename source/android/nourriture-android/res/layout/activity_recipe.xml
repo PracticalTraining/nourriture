@@ -16,6 +16,7 @@
 	        android:background="@drawable/android_title_bg" >
 	
 	        <TextView
+	            android:id="@+id/textview_title"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_vertical"
@@ -29,7 +30,8 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:orientation="vertical">
-		    <ImageView 
+		    <ImageView
+		        android:id="@+id/imageview_icon" 
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
 		        android:src="@drawable/bigpic"
@@ -43,7 +45,8 @@
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:src="@drawable/recipe_lable_4_2"/>
-		        <TextView 
+		        <TextView
+		            android:id="@+id/textview_cusname" 
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:text="贪婪的吃货"
@@ -59,12 +62,12 @@
 	        style="@style/SearchLine"
 	        android:layout_marginTop="10dp"
 	        android:layout_marginBottom="10dp" />
-	    <TextView 
+	    <TextView
+	        android:id="@+id/textview_des" 
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:padding="10dp"
-	        android:textColor="#555"
-	        android:text="仅售498元！价值600元的储值卡1张，全场通用，可叠加使用，提供免费WiFi。每日清晨空运到餐厅的大连海胆，口感肥腴滑嫩的三文鱼腩，捕捞量极低的蓝鳍金枪鱼，都是在他处难以寻觅的无二美味。温馨提示：名店抢购活动仅限北京区域购买。"/>
+	        android:textColor="#555" />
 	    <View 
 	        style="@style/SearchLine"
 	        android:layout_marginTop="10dp"
@@ -83,12 +86,13 @@
 			        android:layout_height="wrap_content"
 			        android:padding="10dp"
 			        android:text="种类：" />
-		         <TextView 
+		         <TextView
+		            android:id="@+id/textview_category"  
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:padding="10dp"
 			        android:textColor="#555"
-			        android:text="家常菜" />
+			        android:text="正在加载中..." />
 	         </LinearLayout>
 	         <LinearLayout 
 		        android:layout_width="wrap_content"
@@ -99,7 +103,8 @@
 			        android:layout_height="wrap_content"
 			        android:padding="10dp"
 			        android:text="原料：" />
-		         <TextView 
+		         <TextView
+		            android:id="@+id/textview_ingredient" 
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:padding="10dp"

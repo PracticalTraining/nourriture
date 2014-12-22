@@ -1,5 +1,7 @@
 package edu.bjtu.nourriture_web.restfulservice;
 
+import java.util.List;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -7,6 +9,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -169,6 +172,31 @@ public class CookingStepRestfulService {
 		ret.addProperty("result", 0);
 		ret.add("links", this.cookingStepChildrenLinks);
 		
+		return ret.toString();
+	}
+	
+	@GET
+	@Path("getRecipeSteps")
+	public String getRecipeCookingStep(@QueryParam("rId") int rId){
+		JsonObject ret = new JsonObject();
+		
+		final int ERROR_CODE_BAD_PARAM = -1;
+		
+		if(rId <= 0){
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", new JsonArray());
+			return ret.toString();
+		}
+		
+		List<CookingStep> list = cookingStepDao.getByRecipeId(rId);
+		JsonArray jCookingSteps = new JsonArray();
+		for(CookingStep cookingStep : list){
+			JsonObject jCookingStep = JsonUtil.beanToJson(cookingStep);
+			jCookingSteps.add(jCookingStep);
+		}
+		
+		ret.add("cookingSteps", jCookingSteps);
+		ret.add("links", new JsonArray());
 		return ret.toString();
 	}
 }

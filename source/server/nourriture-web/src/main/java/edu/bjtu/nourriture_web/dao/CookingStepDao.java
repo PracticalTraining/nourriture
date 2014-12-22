@@ -1,5 +1,7 @@
 package edu.bjtu.nourriture_web.dao;
 
+import java.util.List;
+
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import edu.bjtu.nourriture_web.bean.CookingStep;
@@ -25,6 +27,10 @@ public class CookingStepDao extends HibernateDaoSupport implements ICookingStepD
 		CookingStep my_cookingstep =	new CookingStep();
 		my_cookingstep.setId(id);
 		getHibernateTemplate().delete(my_cookingstep);
+	}
+
+	public List<CookingStep> getByRecipeId(int rId) {
+		return getHibernateTemplate().find("from CookingStep where recipeId = ? order by stepCount", rId);
 	}
 
 	

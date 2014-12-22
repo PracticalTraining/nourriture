@@ -31,6 +31,7 @@ import com.lidroid.xutils.util.LogUtils;
 public class FoodActivity extends BaseActivity {
 	private Food food;
 	private ImageView iv_picture;
+	private TextView tv_title;
 	private TextView tv_manuName;
 	private TextView tv_price;
 	private TextView tv_category;
@@ -80,10 +81,13 @@ public class FoodActivity extends BaseActivity {
 		tv_flavour = (TextView) findViewById(R.id.textview_flavour);
 		bt_producelc = (Button) findViewById(R.id.button_producelc);
 		bt_buylc = (Button) findViewById(R.id.button_buylc);
+		tv_title = (TextView) findViewById(R.id.textview_title);
 	}
 
 	@Override
 	protected void initView() {
+		tv_title.setText(food.getName());
+		
 		bitmapUtils.display(iv_picture, food.getPicture());
 		
 		String url = Constants.MOBILE_SERVER_URL + "manuFacturer/" + food.getManufacturerId();

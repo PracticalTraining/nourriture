@@ -218,18 +218,36 @@ public class SearchActivity extends BaseActivity {
 						.getJSONArray("recipes").toString());
 				message.setData(bundle);
 				message.sendToTarget();
-			} catch (HttpException e1) {
+			} catch (final HttpException e1) {
 				e1.printStackTrace();
-				DisPlay("搜索失败");
-				l.dismiss();
-			} catch (IOException e) {
+				SearchActivity.this.runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						DisPlay("搜索失败:" + e1.getMessage());
+						l.dismiss();
+					}
+				});
+			} catch (final IOException e) {
 				e.printStackTrace();
-				DisPlay("搜索失败");
-				l.dismiss();
-			} catch (JSONException e) {
+				SearchActivity.this.runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						DisPlay("搜索失败:" + e.getMessage());
+						l.dismiss();
+					}
+				});
+			} catch (final JSONException e) {
 				e.printStackTrace();
-				DisPlay("搜索失败");
-				l.dismiss();
+				SearchActivity.this.runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						DisPlay("搜索失败:" + e.getMessage());
+						l.dismiss();
+					}
+				});
 			}
 		}
 
