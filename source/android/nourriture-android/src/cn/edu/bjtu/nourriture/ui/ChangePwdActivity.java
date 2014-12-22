@@ -13,6 +13,7 @@ import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
 
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
@@ -53,14 +54,14 @@ public class ChangePwdActivity extends BaseActivity {
 	 */
 	public void changePwd(View view) {
 		String old_pwd = ed_old_pwd.getText().toString().trim();
-		String new_pwd = ed_new_pwd.getText().toString().trim();
+		String newpassword = ed_new_pwd.getText().toString().trim();
 		String repwd = ed_repwd.getText().toString().trim();
 		if (TextUtils.isEmpty(old_pwd)) {
 			Toast.makeText(ChangePwdActivity.this, "请输入原始密码",
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (TextUtils.isEmpty(new_pwd)) {
+		if (TextUtils.isEmpty(newpassword)) {
 			Toast.makeText(ChangePwdActivity.this, "请输入新密码", Toast.LENGTH_SHORT)
 					.show();
 			return;
@@ -70,46 +71,48 @@ public class ChangePwdActivity extends BaseActivity {
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (!new_pwd.equals(repwd)) {
+		if (!newpassword.equals(repwd)) {
 			Toast.makeText(ChangePwdActivity.this, "两次输入的密码不一致,请重新输入",
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		HttpUtils httpUtils = new HttpUtils();
 		String idendity = EMobileTask.getCookie("idendity");
+		System.out.println(idendity);
+		String id = EMobileTask.getCookie("userId");
 		String url = null;
 		if (idendity.equals("普通用户")) {
-			url = Constants.MOBILE_SERVER_URL + "customer";
+			url = Constants.MOBILE_SERVER_URL + "customer/password/" + id;
 		} else if (idendity.equals("厂商")) {
-			url = Constants.MOBILE_SERVER_URL + "manuFacturer";
+			url = Constants.MOBILE_SERVER_URL + "manuFacturer/password/" + id;
 		}
-		// RequestParams params = new RequestParams();
+		RequestParams params = new RequestParams();
 		// params.addBodyParameter("name", name);
-		// params.addBodyParameter("password", password);
-		// // params.addQueryStringParameter("sex", sex);
-		// params.addBodyParameter("companyName", companyName);
-		// params.addBodyParameter("description", description);
-		// // params.addQueryStringParameter(nameValuePair)
 
-		httpUtils.send(HttpMethod.PUT, url, new RequestCallBack<String>() {
+		params.addBodyParameter("id", id);
+		params.addBodyParameter("newpassword", newpassword);
 
-			@Override
-			public void onFailure(HttpException arg0, String arg1) {
-				// TODO Auto-generated method stub
-				LogUtils.d("onFailure");
-				Toast.makeText(ChangePwdActivity.this, "密码修改失败",
-						Toast.LENGTH_SHORT).show();
-			}
+		httpUtils.send(HttpMethod.PUT, url, params,
+				new RequestCallBack<String>() {
 
-			@Override
-			public void onSuccess(ResponseInfo<String> arg0) {
-				// TODO Auto-generated method stub
-				LogUtils.d("onSuccess");
-				Toast.makeText(ChangePwdActivity.this, "密码修改成功",
-						Toast.LENGTH_SHORT).show();
-				ChangePwdActivity.this.finish();
-			}
-		});
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						// TODO Auto-generated method stub
+						LogUtils.d("onFailure");
+						Toast.makeText(ChangePwdActivity.this, "密码修改失败",
+								Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						// TODO Auto-generated method stub
+						LogUtils.d("onSuccess");
+						System.out.println(arg0.result);
+						Toast.makeText(ChangePwdActivity.this, "密码修改成功",
+								Toast.LENGTH_SHORT).show();
+						ChangePwdActivity.this.finish();
+					}
+				});
 	}
 
 }
