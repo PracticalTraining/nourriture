@@ -139,7 +139,8 @@ public class ManuFacturerRestfulService {
 		}
 
 		// search in the database
-		List<ManuFacturer> list = manuFacturerDao.searchByCompanyName(companyName);
+		List<ManuFacturer> list = manuFacturerDao
+				.searchByCompanyName(companyName);
 		if (list.isEmpty()) {
 			ret.addProperty("errorCode", ERROR_CODE_NO_RESULT);
 			ret.add("links", searchChildrenLinks);
@@ -229,7 +230,7 @@ public class ManuFacturerRestfulService {
 			ret.add("links", numChildrenLinks);
 			return ret.toString();
 		}
-		
+
 		// select from database
 		List<Food> food = foodDao.getByManufacturerId(id);
 		int foodCount = food.size();
@@ -251,7 +252,7 @@ public class ManuFacturerRestfulService {
 			ret.add("links", numChildrenLinks);
 			return ret.toString();
 		}
-		
+
 		// select from database
 		List<Food> food = foodDao.getByManufacturerId(id);
 
@@ -297,7 +298,7 @@ public class ManuFacturerRestfulService {
 			List<Comments> comments = commentsDao.getByRefId(foodIdList[i]);
 			commentsCount += comments.size();
 		}
-		
+
 		if ((food.equals(null)) || commentsCount < 0) {
 			ret.addProperty("errorCode", ERROR_CODE_MANUFACTURER_NOT_EXIST);
 			ret.add("links", interestingChildrenLinks);
@@ -342,4 +343,35 @@ public class ManuFacturerRestfulService {
 		return ret.toString();
 	}
 
+	/** update manuFacturer password **/
+	@PUT
+	@Path("{id}")
+	public String updateManuFacturerPassword(@PathParam("id") int id,
+			@FormParam("newPassword") @DefaultValue("") String newPassword) {
+		JsonObject ret = new JsonObject();
+
+		// define error code
+		final int ERROR_CODE_MANUFACTURER_NOT_EXIST = -1;
+		final int ERROR_CODE_BAD_PARAM = -2;
+
+		// check request parameters
+		if ((newPassword == null || newPassword.equals(""))) {
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", idChildrenLinks);
+			return ret.toString();
+		}
+
+		// check if manuFacturer exist
+		ManuFacturer manuFacturer = manuFacturerDao.getById(id);
+		if (manuFacturer == null) {
+			ret.addProperty("errorCode", ERROR_CODE_MANUFACTURER_NOT_EXIST);
+			ret.add("links", idChildrenLinks);
+			return ret.toString();
+		}
+		manuFacturer.setPassword(newPassword);
+		manuFacturerDao.update(manuFacturer);
+		ret.addProperty("result", 0);
+		ret.add("links", idChildrenLinks);
+		return ret.toString();
+	}
 }
