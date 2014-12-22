@@ -347,7 +347,7 @@ public class ManuFacturerRestfulService {
 	@PUT
 	@Path("password/{id}")
 	public String updateManuFacturerPassword(@PathParam("id") int id,
-			@FormParam("newPassword") @DefaultValue("") String newPassword) {
+			@FormParam("newpassword") @DefaultValue("") String newpassword) {
 		JsonObject ret = new JsonObject();
 
 		// define error code
@@ -355,7 +355,7 @@ public class ManuFacturerRestfulService {
 		final int ERROR_CODE_BAD_PARAM = -2;
 
 		// check request parameters
-		if ((newPassword == null || newPassword.equals(""))) {
+		if ((newpassword == null || newpassword.equals(""))) {
 			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
@@ -368,7 +368,7 @@ public class ManuFacturerRestfulService {
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
 		}
-		manuFacturer.setPassword(newPassword);
+		manuFacturer.setPassword(newpassword);
 		manuFacturerDao.update(manuFacturer);
 		ret.addProperty("result", 0);
 		ret.add("links", idChildrenLinks);
