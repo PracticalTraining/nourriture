@@ -11,16 +11,17 @@
         android:textSize="20sp"
         android:text="1"
         android:layout_margin="5dp"/>
-    <ImageView 
+    <ImageView
+        android:id="@+id/imageview_icon" 
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/pai_defult_img"/>
 
     <TextView 
+        android:id="@+id/textview_des"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_margin="5dp"
-        android:text="放少量油放少量油放少量油放少量油放少量油放少量油放少量油放少量油放少量油"/>
+        android:layout_margin="5dp"/>
 
 </LinearLayout>

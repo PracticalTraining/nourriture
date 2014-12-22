@@ -16,6 +16,7 @@ import javax.ws.rs.QueryParam;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import edu.bjtu.nourriture_web.bean.FoodCategory;
 import edu.bjtu.nourriture_web.bean.RecipeCategory;
 import edu.bjtu.nourriture_web.common.JsonUtil;
 import edu.bjtu.nourriture_web.common.RestfulServiceUtil;
@@ -264,6 +265,30 @@ public class RecipeCategoryRestfulService {
 		ret.add("links", recipecategoryChildrenLinks);
 		return ret.toString();
 
+	}
+	
+	@GET
+	@Path("getChildren")
+	public String getChildren(@QueryParam("id") int id){
+		JsonObject ret = new JsonObject();
+		// define errorCode
+		final int ERROR_CODE_BAD_PARAM = -1;
+		// check request parameters
+		if (id < 0) {
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", new JsonArray());
+			return ret.toString();
+		}
+		
+		List<RecipeCategory> list = recipeCategoryDao.getChildren(id);
+		JsonArray jRecipeCategorys = new JsonArray();
+		for(RecipeCategory recipeCategory : list){
+			JsonObject jRecipeCategory = JsonUtil.beanToJson(recipeCategory);
+			jRecipeCategorys.add(jRecipeCategory);
+		}
+		ret.add("recipeCategorys", jRecipeCategorys);
+		ret.add("links", new JsonArray());
+		return ret.toString();
 	}
 
 	/**

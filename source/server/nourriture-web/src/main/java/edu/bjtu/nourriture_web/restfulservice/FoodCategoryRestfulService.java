@@ -273,6 +273,30 @@ public class FoodCategoryRestfulService {
 		return ret.toString();
 
 	}
+	
+	@GET
+	@Path("getChildren")
+	public String getChildren(@QueryParam("id") int id){
+		JsonObject ret = new JsonObject();
+		// define errorCode
+		final int ERROR_CODE_BAD_PARAM = -1;
+		// check request parameters
+		if (id < 0) {
+			ret.addProperty("errorCode", ERROR_CODE_BAD_PARAM);
+			ret.add("links", new JsonArray());
+			return ret.toString();
+		}
+		
+		List<FoodCategory> list = foodCategoryDao.getChildren(id);
+		JsonArray jFoodCategorys = new JsonArray();
+		for(FoodCategory foodCategory : list){
+			JsonObject jFoodCategory = JsonUtil.beanToJson(foodCategory);
+			jFoodCategorys.add(jFoodCategory);
+		}
+		ret.add("foodCategorys", jFoodCategorys);
+		ret.add("links", new JsonArray());
+		return ret.toString();
+	}
 
 	/**
 	 * transform foodCategory from bean to json

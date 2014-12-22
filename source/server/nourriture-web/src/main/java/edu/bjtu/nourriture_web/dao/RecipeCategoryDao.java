@@ -81,4 +81,8 @@ public class RecipeCategoryDao extends HibernateDaoSupport implements
 		// TODO Auto-generated method stub
 		return getHibernateTemplate().find("from RecipeCategory");
 	}
+
+	public List<RecipeCategory> getChildren(int id) {
+		return getHibernateTemplate().find("from RecipeCategory where superiorCategoryId = ?",id);
+	}
 }

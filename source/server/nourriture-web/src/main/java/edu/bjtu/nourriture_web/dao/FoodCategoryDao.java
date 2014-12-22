@@ -80,6 +80,10 @@ IFoodCategoryDao {
 		return getHibernateTemplate().find("from FoodCategory");
 	}
 
+	public List<FoodCategory> getChildren(int id) {
+		return getHibernateTemplate().find("from FoodCategory where superiorCategoryId = ?", id);
+	}
+
 
 	
 }

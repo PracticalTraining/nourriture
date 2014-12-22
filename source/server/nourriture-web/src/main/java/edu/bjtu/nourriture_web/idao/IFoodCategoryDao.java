@@ -1,8 +1,8 @@
 package edu.bjtu.nourriture_web.idao;
 
-import edu.bjtu.nourriture_web.bean.Customer;
+import java.util.List;
+
 import edu.bjtu.nourriture_web.bean.FoodCategory;
-import edu.bjtu.nourriture_web.bean.RecipeCategory;
 
 public interface IFoodCategoryDao {
 	/** get detail information of the FoodCategory by id **/
@@ -28,5 +28,7 @@ public interface IFoodCategoryDao {
 
 	/** update the FoodCategory **/
 	void update(FoodCategory updateFoodCategory);
+	
+	List<FoodCategory> getChildren(int id);
 }
 

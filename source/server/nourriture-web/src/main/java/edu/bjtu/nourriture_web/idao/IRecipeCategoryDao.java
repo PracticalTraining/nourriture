@@ -1,5 +1,7 @@
 package edu.bjtu.nourriture_web.idao;
 
+import java.util.List;
+
 import edu.bjtu.nourriture_web.bean.RecipeCategory;
 
 public interface IRecipeCategoryDao {
@@ -26,5 +28,7 @@ public interface IRecipeCategoryDao {
 
 	/** update the recipecategory **/
 	void update(RecipeCategory updateRecipeCategory);
+	
+	List<RecipeCategory> getChildren(int id);
 
 }

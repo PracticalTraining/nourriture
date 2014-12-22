@@ -1,14 +1,11 @@
 package cn.edu.bjtu.nourriture.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.lidroid.xutils.BitmapUtils;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +21,14 @@ import cn.edu.bjtu.nourriture.bean.Constants;
 import cn.edu.bjtu.nourriture.bean.Recipe;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
 
+import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+
 public class RecipeActivity extends BaseActivity {
 	private LinearLayout lvCookingStep;
 	private CookingStepAdapter cookingStepAdapter;
@@ -36,6 +41,7 @@ public class RecipeActivity extends BaseActivity {
 	private TextView tv_des;
 	private TextView tv_category;
 	private TextView tv_ingredient;
+	private TextView tv_step_loading;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +82,7 @@ public class RecipeActivity extends BaseActivity {
 		tv_des = (TextView) findViewById(R.id.textview_des);
 		tv_category = (TextView) findViewById(R.id.textview_category);
 		tv_ingredient = (TextView) findViewById(R.id.textview_ingredient);
+		tv_step_loading = (TextView) findViewById(R.id.textview_step_loading);
 	}
 
 	@Override
@@ -128,10 +135,35 @@ public class RecipeActivity extends BaseActivity {
 		
 		tv_ingredient.setText(recipe.getIngredient());
 		
-		cookingStepAdapter = new CookingStepAdapter();
-		for(int i = 0;i < cookingStepAdapter.getCount();i++){
-			lvCookingStep.addView(cookingStepAdapter.getView(i, null, null));
-		}
+		url = Constants.MOBILE_SERVER_URL + "cookingStep/getRecipeSteps";
+		RequestParams params = new RequestParams();
+		params.addQueryStringParameter("rId", String.valueOf(recipe.getId()));
+		httpUtils.send(HttpMethod.GET, url, params, new RequestCallBack<String>() {
+
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				JSONArray jCookingSteps;
+				List<JSONObject> data = new ArrayList<JSONObject>();
+				try {
+					jCookingSteps = new JSONObject(arg0.result).getJSONArray("cookingSteps");
+					for(int i = 0;i < jCookingSteps.length();i++){
+						data.add(jCookingSteps.getJSONObject(i));
+					}
+					tv_step_loading.setVisibility(View.GONE);
+					cookingStepAdapter = new CookingStepAdapter(data);
+					for(int i = 0;i < cookingStepAdapter.getCount();i++){
+						lvCookingStep.addView(cookingStepAdapter.getView(i, null, null));
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	private void setListeners(){
@@ -140,32 +172,47 @@ public class RecipeActivity extends BaseActivity {
 	
 	
 	private class CookingStepAdapter extends BaseAdapter{
+		private List<JSONObject> data;
+		
+		public CookingStepAdapter(List<JSONObject> data) {
+			super();
+			this.data = data;
+		}
 
 		@Override
 		public int getCount() {
-			return 3;
+			return data.size();
 		}
 
 		@Override
 		public Object getItem(int arg0) {
-			return 0;
+			return data.get(arg0);
 		}
 
 		@Override
 		public long getItemId(int arg0) {
-			return 0;
+			return arg0;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater layoutInflater = LayoutInflater.from(RecipeActivity.this);
 			
+			JSONObject jCookingStep = data.get(position);
 			//组装数据
 			convertView = layoutInflater.inflate(R.layout.item_cooking_step, null);
 			
 			TextView label = (TextView) convertView.findViewById(R.id.textview_label);
+			ImageView icon = (ImageView) convertView.findViewById(R.id.imageview_icon);
+			TextView des = (TextView) convertView.findViewById(R.id.textview_des);
 			
 			label.setText(String.valueOf(position + 1));
+			try {
+				bitmapUtils.display(icon,jCookingStep.getString("picture"));
+				des.setText(jCookingStep.getString("description"));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			return convertView;
 		}
 		

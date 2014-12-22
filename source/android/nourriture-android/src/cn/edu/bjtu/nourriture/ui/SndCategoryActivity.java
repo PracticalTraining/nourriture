@@ -1,5 +1,17 @@
 package cn.edu.bjtu.nourriture.ui;
 
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +23,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import cn.edu.bjtu.nourriture.R;
+import cn.edu.bjtu.nourriture.bean.Constants;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
 
 
@@ -18,11 +31,20 @@ public class SndCategoryActivity extends BaseActivity {
 
 	private ListView catergory_listview;
 	private LayoutInflater layoutInflater;
+	private int type;
+	private int superiorCategoryId;
+	private HttpUtils httpUtils;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
+		Intent intent = getIntent();
+		type = intent.getIntExtra("type", -1);
+		superiorCategoryId = intent.getIntExtra("superiorCategoryId", 0);
+		
+		httpUtils = new HttpUtils();
 		
 		setContentView(R.layout.activity_snd_category);
 		findViewById();
@@ -33,7 +55,6 @@ public class SndCategoryActivity extends BaseActivity {
 	protected void findViewById() {
 		catergory_listview=(ListView)this.findViewById(R.id.catergory_listview);
 
-		catergory_listview.setAdapter(new CatergorAdapter());
 		catergory_listview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -47,27 +68,50 @@ public class SndCategoryActivity extends BaseActivity {
 
 	@Override
 	protected void initView() {
-		// TODO Auto-generated method stub
+		String url = Constants.MOBILE_SERVER_URL;
+		url = type == 1 ? url + "foodCategory/getChilren" : url + "recipeCategory/getChilren";
+		RequestParams params = new RequestParams();
+		params.addQueryStringParameter("id", String.valueOf(superiorCategoryId));
+		httpUtils.send(HttpMethod.GET, url, params, new RequestCallBack<String>() {
 
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				
+			}
+		});
+		catergory_listview.setAdapter(new CatergorAdapter(null));
 	}
 	
 	private class CatergorAdapter extends BaseAdapter{
+		private List<JSONObject> data;
+		
+		public CatergorAdapter(List<JSONObject> data) {
+			super();
+			this.data = data;
+		}
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
-			return mTitleValues.length;
+			return data.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-			return 0;
+			return data.get(position);
 		}
 
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
+			try {
+				return data.get(position).getInt("id");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			return 0;
 		}
 
@@ -76,6 +120,8 @@ public class SndCategoryActivity extends BaseActivity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 
 			ViewHolder holder=new ViewHolder();
+			JSONObject jCategory = data.get(position);
+			
 			layoutInflater=LayoutInflater.from(SndCategoryActivity.this);
 			
 			//组装数据
@@ -87,7 +133,11 @@ public class SndCategoryActivity extends BaseActivity {
 			}else{
 				holder=(ViewHolder) convertView.getTag();
 			}
-			holder.title.setText(mTitleValues[position]);
+			try {
+				holder.title.setText(jCategory.getString("name"));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			
 			return convertView;
 		
@@ -95,11 +145,7 @@ public class SndCategoryActivity extends BaseActivity {
 		
 		
 		
-	}
-	
-	//给照片添加文字显示(Title)
-	private String[] mTitleValues = { "川菜", "鲁菜"};			
-			
+	}				
 
 	public static class ViewHolder {
 	    TextView title;

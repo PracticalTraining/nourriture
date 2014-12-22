@@ -123,7 +123,12 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:orientation="vertical">
-	        
+	        <TextView
+	            android:id="@+id/textview_step_loading" 
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:text="正在努力加载步骤..."
+	            android:gravity="center"/>
 	    </LinearLayout>
 	    
 	    <View 

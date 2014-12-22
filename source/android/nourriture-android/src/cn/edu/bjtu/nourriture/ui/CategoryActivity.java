@@ -21,7 +21,6 @@ public class CategoryActivity extends BaseActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_category);
@@ -39,14 +38,16 @@ public class CategoryActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> adapterview, View view, int parent,
 					long id) {
-				startActivity(new Intent(CategoryActivity.this,SndCategoryActivity.class));
+				Intent intent = new Intent(CategoryActivity.this,SndCategoryActivity.class);
+				intent.putExtra("type", id);
+				intent.putExtra("superiorCategoryId", 0);
+				startActivity(intent);
 			}
 		});
 	}
 
 	@Override
 	protected void initView() {
-		// TODO Auto-generated method stub
 
 	}
 	
@@ -67,7 +68,7 @@ public class CategoryActivity extends BaseActivity {
 		@Override
 		public long getItemId(int position) {
 			// TODO Auto-generated method stub
-			return 0;
+			return position;
 		}
 
 		@SuppressWarnings("null")
