@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 
 import edu.bjtu.nourriture_web.bean.Customer;
 import edu.bjtu.nourriture_web.bean.Food;
+import edu.bjtu.nourriture_web.common.JsonUtil;
 import edu.bjtu.nourriture_web.common.RestfulServiceUtil;
 import edu.bjtu.nourriture_web.idao.ICustomerDao;
 import edu.bjtu.nourriture_web.idao.IFlavourDao;
@@ -393,6 +394,21 @@ public class FoodRestfulService {
 		}
 		ret.add("foods", foods);
 		ret.add("links", searchByNameChildrenLinks);
+		return ret.toString();
+	}
+	
+	@GET
+	@Path("getPage")
+	public String getPage(@QueryParam("categoryId") int categoryId,@QueryParam("page") int page){
+		JsonObject ret = new JsonObject();
+		List<Food> list = foodDao.getPageFoods(categoryId, page);
+		JsonArray jFoods = new JsonArray();
+		for(Food food : list){
+			JsonObject jFood = JsonUtil.beanToJson(food);
+			jFoods.add(jFood);
+		}
+		ret.add("foods", jFoods);
+		ret.add("links", new JsonArray());
 		return ret.toString();
 	}
 }

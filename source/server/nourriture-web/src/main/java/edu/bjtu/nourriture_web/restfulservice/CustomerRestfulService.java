@@ -585,7 +585,7 @@ public class CustomerRestfulService {
 
 	/** update customer's password **/
 	@PUT
-	@Path("/password")
+	@Path("/password/{id}")
 	public String updateCustomerPassword(@PathParam("id") int id,
 			@FormParam("newpassword") @DefaultValue("-1") String newpassword) {
 		JsonObject ret = new JsonObject();

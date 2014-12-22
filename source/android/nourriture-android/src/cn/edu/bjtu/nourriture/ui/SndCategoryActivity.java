@@ -1,16 +1,11 @@
 package cn.edu.bjtu.nourriture.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +21,14 @@ import cn.edu.bjtu.nourriture.R;
 import cn.edu.bjtu.nourriture.bean.Constants;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
 
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.lidroid.xutils.util.LogUtils;
+
 
 public class SndCategoryActivity extends BaseActivity {
 
@@ -34,6 +37,7 @@ public class SndCategoryActivity extends BaseActivity {
 	private int type;
 	private int superiorCategoryId;
 	private HttpUtils httpUtils;
+	private TextView tv_title;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +58,55 @@ public class SndCategoryActivity extends BaseActivity {
 	@Override
 	protected void findViewById() {
 		catergory_listview=(ListView)this.findViewById(R.id.catergory_listview);
+		tv_title = (TextView) findViewById(R.id.textview_title);
 
 		catergory_listview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> adapterview, View view, int parent,
-					long id) {
-				//startActivity(new Intent(SndCategoryActivity.this,FoodListActivity.class));
-				startActivity(new Intent(SndCategoryActivity.this,RecipeListActivity.class));
+					final long id) {
+				LogUtils.i(id + "");
+				String url = Constants.MOBILE_SERVER_URL;
+				url = type == 0 ? url + "foodCategory/getChildren" : url + "recipeCategory/getChildren";
+				RequestParams params = new RequestParams();
+				params.addQueryStringParameter("id", String.valueOf(id));
+				httpUtils.send(HttpMethod.GET, url, params, new RequestCallBack<String>() {
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						try {
+							JSONArray jCategorys = null;
+							if(type == 0)
+							{
+								jCategorys = new JSONObject(arg0.result).getJSONArray("foodCategorys");
+							} else if(type == 1){
+								jCategorys = new JSONObject(arg0.result).getJSONArray("recipeCategorys");
+							}
+							if(jCategorys.length() == 0){
+								Intent intent = new Intent();
+								intent.putExtra("categoryId", (int) id);
+								if(type == 0){
+									intent.setClass(SndCategoryActivity.this.getApplicationContext(), FoodListActivity.class);
+								} else if(type == 1){
+									intent.setClass(SndCategoryActivity.this.getApplicationContext(), RecipeListActivity.class);
+								}
+								startActivity(intent);
+							} else {
+								Intent intent = new Intent(SndCategoryActivity.this,SndCategoryActivity.class);
+								intent.putExtra("type", type);
+								intent.putExtra("superiorCategoryId", (int) id);
+								startActivity(intent);
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 	}
@@ -69,7 +114,7 @@ public class SndCategoryActivity extends BaseActivity {
 	@Override
 	protected void initView() {
 		String url = Constants.MOBILE_SERVER_URL;
-		url = type == 1 ? url + "foodCategory/getChilren" : url + "recipeCategory/getChilren";
+		url = type == 0 ? url + "foodCategory/getChildren" : url + "recipeCategory/getChildren";
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("id", String.valueOf(superiorCategoryId));
 		httpUtils.send(HttpMethod.GET, url, params, new RequestCallBack<String>() {
@@ -81,10 +126,57 @@ public class SndCategoryActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess(ResponseInfo<String> arg0) {
-				
+				try {
+					JSONArray jCategorys = null;
+					if(type == 0)
+					{
+						jCategorys = new JSONObject(arg0.result).getJSONArray("foodCategorys");
+					} else if(type == 1){
+						jCategorys = new JSONObject(arg0.result).getJSONArray("recipeCategorys");
+					}
+					List<JSONObject> list = new ArrayList<JSONObject>();
+					for(int i = 0;i < jCategorys.length();i++){
+						list.add(jCategorys.getJSONObject(i));
+					}
+					catergory_listview.setAdapter(new CatergorAdapter(list));
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 			}
 		});
-		catergory_listview.setAdapter(new CatergorAdapter(null));
+		
+		if(superiorCategoryId == 0){
+			if(type == 0){
+				tv_title.setText("食物");
+			} else {
+				tv_title.setText("菜谱");
+			}
+		} else {
+			url = Constants.MOBILE_SERVER_URL;
+			url = type == 0 ? url + "foodCategory/" : url + "recipeCategory/";
+			url += superiorCategoryId;
+			httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
+
+				@Override
+				public void onFailure(HttpException arg0, String arg1) {
+					
+				}
+
+				@Override
+				public void onSuccess(ResponseInfo<String> arg0) {
+					try {
+						JSONObject jCategory = null;
+						if(type ==0)
+							jCategory = new JSONObject(arg0.result).getJSONObject("superiorFood");
+						else 
+							jCategory = new JSONObject(arg0.result).getJSONObject("superiorRecipe");
+						tv_title.setText(jCategory.getString("name"));
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
 	}
 	
 	private class CatergorAdapter extends BaseAdapter{
@@ -122,7 +214,7 @@ public class SndCategoryActivity extends BaseActivity {
 			ViewHolder holder=new ViewHolder();
 			JSONObject jCategory = data.get(position);
 			
-			layoutInflater=LayoutInflater.from(SndCategoryActivity.this);
+			layoutInflater = LayoutInflater.from(SndCategoryActivity.this);
 			
 			//组装数据
 			if(convertView==null){

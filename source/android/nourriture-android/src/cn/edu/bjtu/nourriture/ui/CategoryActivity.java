@@ -39,7 +39,7 @@ public class CategoryActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> adapterview, View view, int parent,
 					long id) {
 				Intent intent = new Intent(CategoryActivity.this,SndCategoryActivity.class);
-				intent.putExtra("type", id);
+				intent.putExtra("type", (int) id);
 				intent.putExtra("superiorCategoryId", 0);
 				startActivity(intent);
 			}

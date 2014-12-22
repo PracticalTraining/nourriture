@@ -345,7 +345,7 @@ public class ManuFacturerRestfulService {
 
 	/** update manuFacturer password **/
 	@PUT
-	@Path("{id}")
+	@Path("password/{id}")
 	public String updateManuFacturerPassword(@PathParam("id") int id,
 			@FormParam("newPassword") @DefaultValue("") String newPassword) {
 		JsonObject ret = new JsonObject();

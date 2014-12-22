@@ -36,7 +36,7 @@ public class FoodListActivity extends BaseActivity {
 
 	@Override
 	protected void findViewById() {
-		pl_refresh=(PullToRefreshListView) this.findViewById(R.id.pl_refresh);
+		pl_refresh = (PullToRefreshListView) this.findViewById(R.id.pl_refresh);
 	}
 
 	@Override

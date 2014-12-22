@@ -1,13 +1,15 @@
 package edu.bjtu.nourriture_web.dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import edu.bjtu.nourriture_web.bean.Food;
-import edu.bjtu.nourriture_web.bean.Customer;
 import edu.bjtu.nourriture_web.bean.Food;
 import edu.bjtu.nourriture_web.idao.IFoodDao;
 
@@ -115,10 +117,27 @@ public class FoodDao extends HibernateDaoSupport implements IFoodDao {
 		}
 		return list;
 	}
+	
 	public List<Food> search(String name) {
 		List<Food> list = null;
 		list = getHibernateTemplate().find("from Food where name like ?","%" + name + "%");
 		return list;
 	}
+	public List<Food> getPageFoods(final int categoryId, final int page) {
+		return getHibernateTemplate().executeFind(new HibernateCallback<List<Food>>() {
+
+			public List<Food> doInHibernate(Session session) throws HibernateException,
+					SQLException {
+				Query query = session.createQuery("from Food where categoryId = ?"); 
+				query.setParameter(0, categoryId);
+				query.setFirstResult(page * 10); 
+				query.setMaxResults(10); 
+				List<Food> list = query.list();
+				return list; 
+			}
+		});
+	}
+	
+	
 	
 }

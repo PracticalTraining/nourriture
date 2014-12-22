@@ -237,4 +237,19 @@ public class RecipeRestfulService {
 		ret.add("links", searchByNameChildrenLinks);
 		return ret.toString();
 	}
+	
+	@GET
+	@Path("getPage")
+	public String getPage(@QueryParam("categoryId") int categoryId,@QueryParam("page") int page){
+		JsonObject ret = new JsonObject();
+		List<Recipe> list = recipeDao.getPageRecipes(categoryId, page);
+		JsonArray jRecipes = new JsonArray();
+		for(Recipe recipe : list){
+			JsonObject jRecipe = JsonUtil.beanToJson(recipe);
+			jRecipes.add(jRecipe);
+		}
+		ret.add("recipes", jRecipes);
+		ret.add("links", new JsonArray());
+		return ret.toString();
+	}
 }
