@@ -39,8 +39,9 @@
         <EditText
             android:id="@+id/ed_food_price"
             android:layout_width="fill_parent"
-      android:layout_height="45dp"
+      		android:layout_height="45dp"
             android:layout_marginTop="5dp"
+            android:inputType="numberDecimal"
             android:background="@drawable/category_selection_gridview_bg"
             android:hint="请输入食物价格" />
 

@@ -135,16 +135,21 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			}
 			break;
 		case R.id.relativelayout_add_food:
-			if (EMobileTask.getCookie("userId") == null) {
-				startActivity(new Intent(this, LoginActivity.class));
-			} else if (EMobileTask.getCookie("idendity").equals("普通用户")) {
-				DisplayToast("普通用户不能添加食物");
-			} else {
-				// 制造商添加食物
+//			if (EMobileTask.getCookie("userId") == null) {
+//				startActivity(new Intent(this, LoginActivity.class));
+//			} else if (EMobileTask.getCookie("idendity").equals("普通用户")) {
+//				DisplayToast("普通用户不能添加食物");
+//			} else {
+//				// 制造商添加食物
+//				Intent intent = new Intent(PersonalActivity.this,
+//						AddFoodActivity.class);
+//				startActivity(intent);
+//				// startActivity(new Intent(this,EditBormalInfoActivity.class));
+//			}
+			{
 				Intent intent = new Intent(PersonalActivity.this,
 						AddFoodActivity.class);
 				startActivity(intent);
-				// startActivity(new Intent(this,EditBormalInfoActivity.class));
 			}
 			break;
 		case R.id.relativelayout_add_recipe:
