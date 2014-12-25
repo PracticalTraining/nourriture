@@ -37,20 +37,45 @@
             android:src="@drawable/android_search_button_icon" />
     </LinearLayout>
 
-    <RadioGroup 
+    <RadioGroup
+        android:id="@+id/radiogroup_rmd" 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="horizontal">
-        <RadioButton 
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+        <RadioButton
+            android:id="@+id/radiobutton_food" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
-            android:text="推荐食物"/>
-        <RadioButton 
+            android:background="@drawable/btn_left_tab"
+            android:text="推荐食物"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:checked="true"
+            android:textColor="#fff"
+            android:textSize="14sp"/>
+        <RadioButton
+            android:id="@+id/radiobutton_recipe" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="推荐菜谱"
             android:button="@null"
-            android:text="推荐菜谱"/>
+            android:background="@drawable/btn_right_tab"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:textSize="14sp"/>
     </RadioGroup>
+    <FrameLayout
+        android:id="@+id/framelayout_rmd" 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        
+    </FrameLayout>
 </LinearLayout>
