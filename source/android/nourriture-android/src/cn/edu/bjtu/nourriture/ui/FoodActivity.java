@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ public class FoodActivity extends BaseActivity {
 	private TextView tv_flavour;
 	private Button bt_producelc;
 	private Button bt_buylc;
+	private Button bt_qr_code;
+	private Button bt_cmt;
 	private HttpUtils HttpUtils;
 	private BitmapUtils bitmapUtils;
 	
@@ -82,6 +85,8 @@ public class FoodActivity extends BaseActivity {
 		bt_producelc = (Button) findViewById(R.id.button_producelc);
 		bt_buylc = (Button) findViewById(R.id.button_buylc);
 		tv_title = (TextView) findViewById(R.id.textview_title);
+		bt_qr_code = (Button) findViewById(R.id.qr_code);
+		bt_cmt = (Button) findViewById(R.id.button_cmt);
 	}
 
 	@Override
@@ -157,8 +162,25 @@ public class FoodActivity extends BaseActivity {
 	}
 	
 	private void setListeners(){
+		bt_qr_code.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Dialog dialog = new Dialog(FoodActivity.this, R.style.Transparent);
+				dialog.setContentView(R.layout.dialog_qr_code);
+				ImageView qr_code = (ImageView) dialog.findViewById(R.id.imageview_qr_code);
+				dialog.show();
+			}
+		});
 		
-		
+		bt_cmt.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(FoodActivity.this,CmtActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 	
 	private String loadRegion(int id){

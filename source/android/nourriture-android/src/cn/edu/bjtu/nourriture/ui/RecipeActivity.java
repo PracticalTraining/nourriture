@@ -11,8 +11,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +44,7 @@ public class RecipeActivity extends BaseActivity {
 	private TextView tv_category;
 	private TextView tv_ingredient;
 	private TextView tv_step_loading;
+	private Button bt_cmt;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,7 @@ public class RecipeActivity extends BaseActivity {
 		tv_category = (TextView) findViewById(R.id.textview_category);
 		tv_ingredient = (TextView) findViewById(R.id.textview_ingredient);
 		tv_step_loading = (TextView) findViewById(R.id.textview_step_loading);
+		bt_cmt = (Button) findViewById(R.id.button_cmt);
 	}
 
 	@Override
@@ -167,7 +171,14 @@ public class RecipeActivity extends BaseActivity {
 	}
 	
 	private void setListeners(){
+		bt_cmt.setOnClickListener(new OnClickListener() {
 			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(RecipeActivity.this,CmtActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 	
 	
