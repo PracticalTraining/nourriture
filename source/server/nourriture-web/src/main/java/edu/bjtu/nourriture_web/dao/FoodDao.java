@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import edu.bjtu.nourriture_web.bean.Food;
 import edu.bjtu.nourriture_web.idao.IFoodDao;
 
+@SuppressWarnings("unchecked")
 public class FoodDao extends HibernateDaoSupport implements IFoodDao {
 	public int add(Food food) {
 		getHibernateTemplate().save(food);
@@ -123,6 +124,7 @@ public class FoodDao extends HibernateDaoSupport implements IFoodDao {
 		list = getHibernateTemplate().find("from Food where name like ?","%" + name + "%");
 		return list;
 	}
+	
 	public List<Food> getPageFoods(final int categoryId, final int page) {
 		return getHibernateTemplate().executeFind(new HibernateCallback<List<Food>>() {
 
@@ -130,6 +132,50 @@ public class FoodDao extends HibernateDaoSupport implements IFoodDao {
 					SQLException {
 				Query query = session.createQuery("from Food where categoryId = ?"); 
 				query.setParameter(0, categoryId);
+				query.setFirstResult(page * 10); 
+				query.setMaxResults(10); 
+				List<Food> list = query.list();
+				return list; 
+			}
+		});
+	}
+	
+	public List<Food> getPageFoods(final int[] categoryIds, final int[] flavourIds, final int page) {
+		return getHibernateTemplate().executeFind(new HibernateCallback<List<Food>>() {
+
+			public List<Food> doInHibernate(Session session) throws HibernateException,
+					SQLException {
+				List<Integer> categoryList = new ArrayList<Integer>();
+				if(categoryIds != null)
+					for(int categoryId :categoryIds){
+						categoryList.add(categoryId);
+					}
+				List<Integer> flavourList = new ArrayList<Integer>();
+				if(flavourIds != null)
+					for(int flavourId :flavourIds){
+						flavourList.add(flavourId);
+					}
+				Query query = null;
+				if(categoryIds != null && flavourIds != null)
+				{
+					query = session.createQuery("from Food where categoryId in (:categoryIds) or flavourId in (:flavourIds)");
+					query.setParameterList("categoryIds", categoryList);
+					query.setParameterList("flavourIds", flavourList);
+				}
+				else if(categoryIds != null && flavourIds == null)
+				{
+					query = session.createQuery("from Food where categoryId in (:categoryIds)");
+					query.setParameterList("categoryIds", categoryList);
+				}
+				else if(categoryIds == null && flavourIds != null)
+				{
+					query = session.createQuery("from Food where flavourId in (:flavourIds)");
+					query.setParameterList("flavourIds", flavourList);
+				}
+				else
+				{
+					return new ArrayList<Food>();
+				}
 				query.setFirstResult(page * 10); 
 				query.setMaxResults(10); 
 				List<Food> list = query.list();

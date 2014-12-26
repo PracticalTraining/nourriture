@@ -328,7 +328,7 @@ public class FoodRestfulService {
 	/** recommend the food **/
 	@GET
 	@Path("recommend")
-	public String recommendByInterest(@QueryParam("customerId") int customerId){
+	public String recommendByInterest(@QueryParam("customerId") int customerId,@QueryParam("page") int page){
 		JsonObject ret = new JsonObject();
 		//define error code
 		final int ERROR_CODE_CUSTOMER_NOT_EXIST=-1;
@@ -341,9 +341,23 @@ public class FoodRestfulService {
 		}
 		String interestFlavourIds = customer.getInterestFlavourIds();
 		String interestFoodCategoryIds = customer.getInterestFoodCategoryIds();
-		String[] interestflavourids = interestFlavourIds.split(",");
-		String[] interestfoodcategoryids = interestFoodCategoryIds.split(",");
-		List<Food> listResult = foodDao.search(-1, -1, interestfoodcategoryids, interestflavourids, null, null);
+		int[] categoryIds = null;
+		if(interestFoodCategoryIds != null && !interestFoodCategoryIds.equals("")){
+			String[] categoryStrIds = interestFoodCategoryIds.split(",");
+			categoryIds = new int[categoryStrIds.length];
+			for(int i = 0;i < categoryIds.length;i++){
+				categoryIds[i] = Integer.parseInt(categoryStrIds[i]);
+			}
+		}
+		int[] flavourIds = null;
+		if(interestFlavourIds != null && !interestFlavourIds.equals("")){
+			String[] flavourStrIds = interestFlavourIds.split(",");
+			flavourIds = new int[flavourStrIds.length];
+			for(int i = 0;i < flavourIds.length;i++){
+				flavourIds[i] = Integer.parseInt(flavourStrIds[i]);
+			}
+		}
+		List<Food> listResult = foodDao.getPageFoods(categoryIds, flavourIds, page);
 		JsonArray foods = new JsonArray();
 		for(Food food:listResult){
 			JsonObject jFood = new JsonObject();

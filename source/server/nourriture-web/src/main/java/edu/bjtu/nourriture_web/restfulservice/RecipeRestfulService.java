@@ -27,7 +27,7 @@ import edu.bjtu.nourriture_web.idao.IRecipeDao;
 @Path("recipe")
 public class RecipeRestfulService {
 	IRecipeDao					recipeDao;
-	ICustomerDao				CustomerDao;
+	ICustomerDao				customerDao;
 	IRecipeCategoryDao			recipeCategoryDao;
 	private JsonArray 			recipeChildrenLinks = new JsonArray();
 	private JsonArray           searchByNameChildrenLinks = new JsonArray();
@@ -41,11 +41,11 @@ public class RecipeRestfulService {
 	}
 	
 	public ICustomerDao getCustomerDao() {
-		return CustomerDao;
+		return customerDao;
 	}
 
 	public void setCustomerDao(ICustomerDao customerDao) {
-		CustomerDao = customerDao;
+		this.customerDao = customerDao;
 	}
 
 	public IRecipeCategoryDao getRecipeCategoryDao() {
@@ -78,7 +78,7 @@ public class RecipeRestfulService {
 		final int 	ERROR_CODE_CUSTOMER_DOES_NOT_EXISTS 	= -3;
 
 		Recipe 		my_recipe 								= this.recipeDao.getById(id);
-		Customer	my_customer								= this.CustomerDao.getById(my_recipe.getCustomerId());
+		Customer	my_customer								= this.customerDao.getById(my_recipe.getCustomerId());
 		JsonObject	ret 										= new JsonObject();	
 		
 		if(id <= 0 || name.equals("") || name == null || description.equals("") || description == null
@@ -125,7 +125,7 @@ public class RecipeRestfulService {
 		final int		ERROR_CODE_CUSTOMER_DOES_NOT_EXISTS				= -3;
 		JsonObject		ret 											= new JsonObject();
 		Recipe 			my_recipe 										= new Recipe();
-		Customer		my_customer										= this.CustomerDao.getById(customerId);
+		Customer		my_customer										= this.customerDao.getById(customerId);
 		RecipeCategory	my_recipeCategory								= this.recipeCategoryDao.getById(catogeryId);
 		
 		if(name.equals("") || name == null || description.equals("") || description == null
@@ -245,6 +245,40 @@ public class RecipeRestfulService {
 		List<Recipe> list = recipeDao.getPageRecipes(categoryId, page);
 		JsonArray jRecipes = new JsonArray();
 		for(Recipe recipe : list){
+			JsonObject jRecipe = JsonUtil.beanToJson(recipe);
+			jRecipes.add(jRecipe);
+		}
+		ret.add("recipes", jRecipes);
+		ret.add("links", new JsonArray());
+		return ret.toString();
+	}
+	
+	/** recommend the recipe **/
+	@GET
+	@Path("recommend")
+	public String recommendByInterest(@QueryParam("customerId") int customerId,@QueryParam("page") int page){
+		JsonObject ret = new JsonObject();
+		//define error code
+		final int ERROR_CODE_CUSTOMER_NOT_EXIST=-1;
+		//select from database
+		Customer customer = customerDao.getById(customerId);
+		if(customer == null){
+			ret.addProperty("errorCode", ERROR_CODE_CUSTOMER_NOT_EXIST);
+			ret.add("links", new JsonArray());
+			return ret.toString();
+		}
+		String interestRecipeCategoryIds = customer.getInterestRecipeCategoryIds();
+		int[] categoryIds = null;
+		if(interestRecipeCategoryIds != null && !interestRecipeCategoryIds.equals("")){
+			String[] categoryStrIds = interestRecipeCategoryIds.split(",");
+			categoryIds = new int[categoryStrIds.length];
+			for(int i = 0;i < categoryIds.length;i++){
+				categoryIds[i] = Integer.parseInt(categoryStrIds[i]);
+			}
+		}
+		List<Recipe> listResult = recipeDao.getPageRecipes(categoryIds, page);
+		JsonArray jRecipes = new JsonArray();
+		for(Recipe recipe : listResult){
 			JsonObject jRecipe = JsonUtil.beanToJson(recipe);
 			jRecipes.add(jRecipe);
 		}

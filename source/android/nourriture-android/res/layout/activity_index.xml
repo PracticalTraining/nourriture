@@ -20,7 +20,6 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/search_box"
-            android:drawableRight="@drawable/app_icon_voice"
             android:hint="@string/index_search_edit_hint"
             android:padding="6dp"
             android:textColor="@color/darkgray"
@@ -34,7 +33,7 @@
             android:background="@drawable/app_home_title_r_button_selector"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:src="@drawable/android_search_button_icon" />
+            android:src="@drawable/android_search_button_icon"/>
     </LinearLayout>
 
     <RadioGroup

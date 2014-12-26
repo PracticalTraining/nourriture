@@ -13,5 +13,6 @@ public interface IRecipeDao {
 	 void 		update(Recipe recipe);
 	 List<Recipe> search(String name);
 	 List<Recipe> getPageRecipes(int categoryId,int page);
+	 List<Recipe> getPageRecipes(int[] categoryIds,int page);
 
 }

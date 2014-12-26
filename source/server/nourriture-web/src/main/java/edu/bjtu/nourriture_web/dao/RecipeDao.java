@@ -1,6 +1,7 @@
 package edu.bjtu.nourriture_web.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -13,7 +14,7 @@ import edu.bjtu.nourriture_web.idao.IRecipeDao;
 import edu.bjtu.nourriture_web.bean.Food;
 import edu.bjtu.nourriture_web.bean.Recipe;
 
-
+@SuppressWarnings("unchecked")
 public class RecipeDao extends HibernateDaoSupport implements IRecipeDao {
 
 	 public int add(Recipe recipe) {
@@ -49,6 +50,35 @@ public class RecipeDao extends HibernateDaoSupport implements IRecipeDao {
 					throws HibernateException, SQLException {
 				Query query = session.createQuery("from Recipe where catogeryId = ?"); 
 				query.setParameter(0, categoryId);
+				query.setFirstResult(page * 10); 
+				query.setMaxResults(10); 
+				List<Recipe> list = query.list();
+				return list; 
+			}
+		});
+	}
+
+	public List<Recipe> getPageRecipes(final int[] categoryIds,
+			final int page) {
+		return getHibernateTemplate().executeFind(new HibernateCallback<List<Recipe>>() {
+
+			public List<Recipe> doInHibernate(Session session) throws HibernateException,
+					SQLException {
+				List<Integer> categoryList = new ArrayList<Integer>();
+				if(categoryIds != null)
+					for(int categoryId :categoryIds){
+						categoryList.add(categoryId);
+					}
+				Query query = null;
+				if(categoryIds != null)
+				{
+					query = session.createQuery("from Recipe where catogeryId in (:categoryIds)");
+					query.setParameterList("categoryIds", categoryList);
+				}
+				else
+				{
+					return new ArrayList<Recipe>();
+				}
 				query.setFirstResult(page * 10); 
 				query.setMaxResults(10); 
 				List<Recipe> list = query.list();
