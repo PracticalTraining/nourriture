@@ -22,4 +22,5 @@ public interface IFoodDao {
 	List<Food> search(String name);
 	
 	List<Food> getPageFoods(int categoryId,int page);
+	List<Food> getPageFoods(int[] categoryIds,int[] flavourIds,int page);
 }

@@ -55,7 +55,8 @@
             android:hint="@string/register_normal_age_hint"
             android:background="@drawable/category_selection_gridview_bg"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp"
+            android:inputType="number"/>
         
     </LinearLayout>
    

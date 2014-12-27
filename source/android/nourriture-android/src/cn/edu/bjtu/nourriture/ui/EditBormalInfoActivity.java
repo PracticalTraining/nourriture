@@ -1,10 +1,14 @@
 package cn.edu.bjtu.nourriture.ui;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import cn.edu.bjtu.nourriture.R;
@@ -23,6 +27,8 @@ import com.lidroid.xutils.util.LogUtils;
 public class EditBormalInfoActivity extends BaseActivity {
 	private RadioGroup rdg_sex;
 	private EditText ed_age;
+	private RadioButton rb_boy;
+	private RadioButton rb_girl;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +37,45 @@ public class EditBormalInfoActivity extends BaseActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_edit_normal_info);
 		findViewById();
+		
+		HttpUtils httpUtils = new HttpUtils();
+		httpUtils.configCurrentHttpCacheExpiry(0L);
+		String url = Constants.MOBILE_SERVER_URL + "customer/" + EMobileTask.getCookie("userId");		
+		httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
+
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				LogUtils.d("onFailure");
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				try {
+					LogUtils.d(arg0.result);
+					JSONObject jCustomer = new JSONObject(arg0.result).getJSONObject("customer");
+					
+					int sex = jCustomer.getInt("sex");
+					if(sex == 0){
+						rb_boy.setChecked(true);
+					} else {
+						rb_girl.setChecked(true);
+					}
+					
+					int age = jCustomer.getInt("age");
+					ed_age.setText(String.valueOf(age));
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	@Override
 	protected void findViewById() {
 		rdg_sex = (RadioGroup) findViewById(R.id.rdg_sex);
 		ed_age = (EditText) findViewById(R.id.ed_age);
+		rb_boy = (RadioButton) findViewById(R.id.rb_boy);
+		rb_girl = (RadioButton) findViewById(R.id.rb_girl);
 	}
 
 	@Override

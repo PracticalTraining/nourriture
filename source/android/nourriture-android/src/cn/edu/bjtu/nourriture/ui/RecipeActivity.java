@@ -7,12 +7,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +45,8 @@ public class RecipeActivity extends BaseActivity {
 	private TextView tv_category;
 	private TextView tv_ingredient;
 	private TextView tv_step_loading;
+	private Button bt_cmt;
+	private Button bt_qr_code;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +88,8 @@ public class RecipeActivity extends BaseActivity {
 		tv_category = (TextView) findViewById(R.id.textview_category);
 		tv_ingredient = (TextView) findViewById(R.id.textview_ingredient);
 		tv_step_loading = (TextView) findViewById(R.id.textview_step_loading);
+		bt_cmt = (Button) findViewById(R.id.button_cmt);
+		bt_qr_code = (Button) findViewById(R.id.qr_code);
 	}
 
 	@Override
@@ -167,7 +174,24 @@ public class RecipeActivity extends BaseActivity {
 	}
 	
 	private void setListeners(){
+		bt_cmt.setOnClickListener(new OnClickListener() {
 			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(RecipeActivity.this,CmtActivity.class);
+				startActivity(intent);
+			}
+		});
+		bt_qr_code.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Dialog dialog = new Dialog(RecipeActivity.this, R.style.Transparent);
+				dialog.setContentView(R.layout.dialog_qr_code);
+				ImageView qr_code = (ImageView) dialog.findViewById(R.id.imageview_qr_code);
+				dialog.show();
+			}
+		});
 	}
 	
 	

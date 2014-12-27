@@ -180,6 +180,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 													: "厂商");
 							DisPlay("登陆成功");
 							LoginActivity.this.finish();
+							startActivity(new Intent(LoginActivity.this,PersonalActivity.class));
 						} catch (JSONException e) {
 							DisPlay("登陆失败");
 							e.printStackTrace();

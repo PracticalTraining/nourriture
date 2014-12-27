@@ -1,5 +1,6 @@
 package cn.edu.bjtu.nourriture.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -129,9 +130,10 @@ public class RegisterBormalActivity extends BaseActivity {
 					public void onSuccess(ResponseInfo<String> arg0) {
 						// TODO Auto-generated method stub
 						LogUtils.d("onSuccess");
-						System.out.println(arg0.result);
 						Toast.makeText(RegisterBormalActivity.this, "注册成功",
 								Toast.LENGTH_SHORT).show();
+						RegisterBormalActivity.this.finish();
+						startActivity(new Intent(RegisterBormalActivity.this,LoginActivity.class));
 					}
 				});
 	}

@@ -1,5 +1,8 @@
 package cn.edu.bjtu.nourriture.ui;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,6 +33,29 @@ public class EditManuInfoActivity extends BaseActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_edit_manu_info);
 		findViewById();
+		
+		HttpUtils httpUtils = new HttpUtils();
+		httpUtils.configCurrentHttpCacheExpiry(0L);
+		String url = Constants.MOBILE_SERVER_URL + "manuFacturer/" + EMobileTask.getCookie("userId");		
+		httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
+
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				LogUtils.d("onFailure");
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				try {
+					LogUtils.d(arg0.result);
+					JSONObject jManuFacturer = new JSONObject(arg0.result).getJSONObject("manuFacturer");
+					ed_manu_company_name.setText(jManuFacturer.getString("companyName"));
+					ed_manu_company_description.setText(jManuFacturer.getString("description"));
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	@Override
