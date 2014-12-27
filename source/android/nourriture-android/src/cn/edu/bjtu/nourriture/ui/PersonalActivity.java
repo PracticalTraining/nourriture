@@ -53,7 +53,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			Ly_login.setVisibility(View.GONE);
 			mExitButton.setVisibility(View.VISIBLE);
 			username.setText(EMobileTask.getCookie("username"));
-			jobtitle.setText(EMobileTask.getCookie("idendity"));
+			jobtitle.setText(EMobileTask.getCookie("idendity").equals("customer") ? "普通用户" : "厂商");
 		}
 	}
 
@@ -128,7 +128,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			String id = EMobileTask.getCookie("userId");
 			if (id == null) {
 				startActivity(new Intent(this, LoginActivity.class));
-			} else if (EMobileTask.getCookie("idendity").equals("普通用户")) {
+			} else if (EMobileTask.getCookie("idendity").equals("customer")) {
 				startActivity(new Intent(this, EditBormalInfoActivity.class));
 			} else {
 				startActivity(new Intent(this, EditManuInfoActivity.class));
@@ -146,23 +146,23 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 //				startActivity(intent);
 //				// startActivity(new Intent(this,EditBormalInfoActivity.class));
 //			}
-			{
-				Intent intent = new Intent(PersonalActivity.this,
-						AddFoodActivity.class);
-				startActivity(intent);
-			}
+//			{
+//				Intent intent = new Intent(PersonalActivity.this,
+//						AddFoodActivity.class);
+//				startActivity(intent);
+//			}
 			break;
 		case R.id.relativelayout_add_recipe:
-			if (EMobileTask.getCookie("userId") == null) {
-				startActivity(new Intent(this, LoginActivity.class));
-			} else if (EMobileTask.getCookie("idendity").equals("普通用户")) {
-				// startActivity(new Intent(this,EditBormalInfoActivity.class));
-				Intent intent = new Intent(PersonalActivity.this,
-						AddRecipeActivity.class);
-				startActivity(intent);
-			} else {
-				DisplayToast("厂商不能添加食谱");
-			}
+//			if (EMobileTask.getCookie("userId") == null) {
+//				startActivity(new Intent(this, LoginActivity.class));
+//			} else if (EMobileTask.getCookie("idendity").equals("普通用户")) {
+//				// startActivity(new Intent(this,EditBormalInfoActivity.class));
+//				Intent intent = new Intent(PersonalActivity.this,
+//						AddRecipeActivity.class);
+//				startActivity(intent);
+//			} else {
+//				DisplayToast("厂商不能添加食谱");
+//			}
 			break;
 		default:
 			break;

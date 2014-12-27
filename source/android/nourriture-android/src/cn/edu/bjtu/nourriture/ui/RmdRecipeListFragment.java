@@ -75,7 +75,7 @@ public class RmdRecipeListFragment extends Fragment {
 			ly_login.setVisibility(View.VISIBLE);
 			tv_info.setText("您还没有登陆");
 			lv_rmd_recipe_list.setVisibility(View.GONE);
-		} else if(EMobileTask.getCookie("idendity").equals("厂商")){
+		} else if(EMobileTask.getCookie("idendity").equals("manu")){
 			ly_login.setVisibility(View.VISIBLE);
 			tv_info.setText("厂商暂时不支持推荐");
 			lv_rmd_recipe_list.setVisibility(View.GONE);
@@ -85,7 +85,7 @@ public class RmdRecipeListFragment extends Fragment {
 			lv_rmd_recipe_list.getRefreshableView().setVisibility(View.VISIBLE);
 		}
 		
-		if(!TextUtils.isEmpty(EMobileTask.getCookie("userId")) && EMobileTask.getCookie("idendity").equals("普通用户")){
+		if(!TextUtils.isEmpty(EMobileTask.getCookie("userId")) && EMobileTask.getCookie("idendity").equals("customer")){
 			page = 0;
 			new InitDataTask().execute();
 		}

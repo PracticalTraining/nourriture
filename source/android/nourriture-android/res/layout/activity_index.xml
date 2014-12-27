@@ -20,7 +20,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/search_box"
-            android:hint="@string/index_search_edit_hint"
+            android:hint="@string/search_edit_hint"
             android:padding="6dp"
             android:textColor="@color/darkgray"
             android:textSize="@dimen/micro_text_size" />
