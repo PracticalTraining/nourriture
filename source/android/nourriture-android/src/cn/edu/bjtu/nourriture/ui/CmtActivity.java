@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,19 +17,27 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.edu.bjtu.nourriture.R;
 import cn.edu.bjtu.nourriture.bean.Constants;
+import cn.edu.bjtu.nourriture.task.EMobileTask;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
+import cn.edu.bjtu.nourriture.widgets.LoadingWindow;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
-
+import com.lidroid.xutils.util.LogUtils;
 
 public class CmtActivity extends BaseActivity {
 	private PullToRefreshListView lv_cmt_list;
@@ -37,9 +47,12 @@ public class CmtActivity extends BaseActivity {
 	private int type;
 	private int id;
 	private int page;
-	public static final int TYPE_FOOD = 1;
-	public static final int TYPE_RECIPE = 2;
+	public static final int TYPE_FOOD = 0;
+	public static final int TYPE_RECIPE = 1;
 	private HttpUtils httpUtils;
+	private LinearLayout ly_no_cmt;
+	private Button bt_cmt;
+	private EditText et_cmt;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +60,11 @@ public class CmtActivity extends BaseActivity {
 		setContentView(R.layout.activity_cmt);
 		
 		httpUtils = new HttpUtils();
+		httpUtils.configCurrentHttpCacheExpiry(0L);
+		
+		Intent intent = getIntent();
+		type = intent.getIntExtra("type", -1);
+		id = intent.getIntExtra("id", -1);
 		
 		findViewById();
 		setListeners();
@@ -66,6 +84,9 @@ public class CmtActivity extends BaseActivity {
 		score3 = (Button) findViewById(R.id.button_score3);
 		score4 = (Button) findViewById(R.id.button_score4);
 		score5 = (Button) findViewById(R.id.button_score5);
+		ly_no_cmt = (LinearLayout) findViewById(R.id.layout_login);
+		bt_cmt = (Button) findViewById(R.id.button_cmt);
+		et_cmt = (EditText) findViewById(R.id.edittext_cmt);
 	}
 	
 	private void setListeners(){
@@ -129,6 +150,79 @@ public class CmtActivity extends BaseActivity {
 				score = 5;
 			}
 		});
+		lv_cmt_list.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2() {
+
+			@Override
+			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+				LogUtils.i("onPullDownToRefresh");
+				new RefreshDataTask().execute();
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+				LogUtils.i("onPullUpToRefresh");
+				new MoreDataTask().execute();
+			}
+
+		});
+		bt_cmt.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String userId = EMobileTask.getCookie("userId");
+				String idendity = EMobileTask.getCookie("idendity");
+				if(userId == null){
+					Toast.makeText(CmtActivity.this, R.string.activity_no_login, Toast.LENGTH_SHORT).show();
+					return;
+				}
+				if(idendity.equals("manu")){
+					Toast.makeText(CmtActivity.this, R.string.activity_manu_not_support, Toast.LENGTH_SHORT).show();
+					return;
+				}
+				if(et_cmt.getText() == null){
+					Toast.makeText(CmtActivity.this, R.string.activity_manu_cmt_not_empty, Toast.LENGTH_SHORT).show();
+					return;
+				}
+				
+				final String cmt = et_cmt.getText().toString();
+				et_cmt.setText("");
+				String url = Constants.MOBILE_SERVER_URL + "comments";
+				RequestParams params = new RequestParams();
+				params.addBodyParameter("score", String.valueOf(score));
+				params.addBodyParameter("description", cmt);
+				params.addBodyParameter("customerId", String.valueOf(userId));
+				params.addBodyParameter("commentON", String.valueOf(type));
+				params.addBodyParameter("refId", String.valueOf(id));
+				final LoadingWindow l = EMobileTask.createLoaingWindow(CmtActivity.this);
+				l.show();
+				httpUtils.send(HttpMethod.POST, url, params, new RequestCallBack<String>() {
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						l.dismiss();
+						Toast.makeText(CmtActivity.this, R.string.activity_cmt_fail, Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						l.dismiss();
+						JSONObject jCmt = new JSONObject();
+						try {
+							jCmt.put("score", String.valueOf(score));
+							jCmt.put("description", cmt);
+							jCmt.put("customerName", EMobileTask.getCookie("username"));
+							if(lv_cmt_list.getVisibility() == View.GONE){
+								lv_cmt_list.setVisibility(View.VISIBLE);
+								ly_no_cmt.setVisibility(View.GONE);
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						adapter.addData(jCmt);
+					}
+				});
+			}
+		});
 	}
 
 	@Override
@@ -144,6 +238,8 @@ public class CmtActivity extends BaseActivity {
 		lv_cmt_list.getLoadingLayoutProxy(true, false).setPullLabel(rs.getString(R.string.pull_down_refresh));
 		lv_cmt_list.getLoadingLayoutProxy(true, false).setRefreshingLabel(rs.getString(R.string.refreshing));
 		lv_cmt_list.getLoadingLayoutProxy(true, false).setReleaseLabel(rs.getString(R.string.loosen_refreshing));
+		
+		new InitDataTask().execute();
 	}
 	
 	private List<JSONObject> getData(){
@@ -160,7 +256,7 @@ public class CmtActivity extends BaseActivity {
 		} else if(type == TYPE_RECIPE){
 			params.addQueryStringParameter("recipeId", String.valueOf(id));
 		}
-		params.addQueryStringParameter("page", String.valueOf(page));
+		params.addQueryStringParameter("page", String.valueOf(page + 1));
 		params.addQueryStringParameter("pageSize", String.valueOf(5));
 		try {
 			String cmtsStr = httpUtils.sendSync(HttpMethod.GET, url, params).readString();
@@ -194,6 +290,14 @@ public class CmtActivity extends BaseActivity {
 			this.data = data;
 		}
 
+		public void setData(List<JSONObject> data) {
+			this.data = data;
+		}
+		
+		public void addData(JSONObject jsonObject){
+			data.add(jsonObject);
+		}
+
 		@Override
 		public int getCount() {
 			return data.size();
@@ -218,11 +322,11 @@ public class CmtActivity extends BaseActivity {
 				convertView = LayoutInflater.from(CmtActivity.this).inflate(R.layout.item_cmt, null);
 				holder.name = (TextView) convertView.findViewById(R.id.textview_name);
 				holder.des = (TextView) convertView.findViewById(R.id.textview_des);
-				holder.score_1 = (ImageView) findViewById(R.id.imageview_score1);
-				holder.score_2 = (ImageView) findViewById(R.id.imageview_score2);
-				holder.score_3 = (ImageView) findViewById(R.id.imageview_score3);
-				holder.score_4 = (ImageView) findViewById(R.id.imageview_score4);
-				holder.score_5 = (ImageView) findViewById(R.id.imageview_score5);
+				holder.score_1 = (ImageView) convertView.findViewById(R.id.imageview_score1);
+				holder.score_2 = (ImageView) convertView.findViewById(R.id.imageview_score2);
+				holder.score_3 = (ImageView) convertView.findViewById(R.id.imageview_score3);
+				holder.score_4 = (ImageView) convertView.findViewById(R.id.imageview_score4);
+				holder.score_5 = (ImageView) convertView.findViewById(R.id.imageview_score5);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
@@ -294,5 +398,69 @@ public class CmtActivity extends BaseActivity {
 		ImageView score_3;
 		ImageView score_4;
 		ImageView score_5;
+	}
+	
+	private class InitDataTask extends AsyncTask<Void, Void, List<JSONObject>> {
+	    @Override
+	    protected void onPostExecute(List<JSONObject> result) {
+	       if(result.size() == 0){
+	    	   ly_no_cmt.setVisibility(View.VISIBLE);
+	    	   lv_cmt_list.setVisibility(View.GONE);
+	       } else {
+	    	   ly_no_cmt.setVisibility(View.GONE);
+	    	   lv_cmt_list.setVisibility(View.VISIBLE);
+		       adapter.setData(result);
+		       adapter.notifyDataSetChanged();
+	       }
+	    }
+
+		@Override
+		protected List<JSONObject> doInBackground(Void... p) {
+			page = 0;
+			return getData();
+		}
+	}
+
+	private class RefreshDataTask extends AsyncTask<Void, Void, List<JSONObject>> {
+	    @Override
+	    protected void onPostExecute(List<JSONObject> result) {
+	    	if(result.size() == 0){
+	    	   ly_no_cmt.setVisibility(View.VISIBLE);
+	    	   lv_cmt_list.setVisibility(View.GONE);
+		    } else {
+		       adapter.setData(result);
+		       adapter.notifyDataSetChanged();
+		       ly_no_cmt.setVisibility(View.GONE);
+	    	   lv_cmt_list.setVisibility(View.VISIBLE);
+		       lv_cmt_list.onRefreshComplete();
+		    }
+	    }
+
+		@Override
+		protected List<JSONObject> doInBackground(Void... p) {
+			page = 0;
+			return getData();
+		}
+	}
+	
+	private class MoreDataTask extends AsyncTask<Void, Void, List<JSONObject>> {
+	    @Override
+	    protected void onPostExecute(List<JSONObject> result) {
+	    	if(result.size() == 0){
+	    		DisPlay(rs.getString(R.string.no_more));
+	    		page--;
+	    	}
+	        for(JSONObject jObject : result){
+	    	    adapter.addData(jObject);
+	        }
+	        adapter.notifyDataSetChanged();
+	        lv_cmt_list.onRefreshComplete();
+	    }
+
+		@Override
+		protected List<JSONObject> doInBackground(Void... p) {
+			page++;
+			return getData();
+		}
 	}
 }

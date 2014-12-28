@@ -170,4 +170,7 @@
     <string name="exit_view_hint">退出后不会删除任何历史数据，下次\n登录依然可以使用本帐号</string>
     <string name="exit_view_logout">退出登录</string>
     <string name="exit_view_cancel">取消</string>
+    
+    <!-- CmtActivity -->
+    <string name="activity_cmt_no_cmt">暂时还没有评论哦</string>
 </resources>

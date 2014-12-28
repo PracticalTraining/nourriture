@@ -182,6 +182,9 @@ public class RecipeActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(RecipeActivity.this,CmtActivity.class);
+				intent.putExtra("type", CmtActivity.TYPE_RECIPE);
+				intent.putExtra("id", recipe.getId());
+				startActivity(intent);
 				startActivity(intent);
 			}
 		});

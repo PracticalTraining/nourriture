@@ -191,6 +191,8 @@ public class FoodActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(FoodActivity.this,CmtActivity.class);
+				intent.putExtra("type", CmtActivity.TYPE_FOOD);
+				intent.putExtra("id", food.getId());
 				startActivity(intent);
 			}
 		});

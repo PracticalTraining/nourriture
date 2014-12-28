@@ -5,13 +5,37 @@
     android:layout_height="match_parent"
     android:background="@drawable/android_layout_bg"
     android:orientation="vertical" >
-
+	<LinearLayout
+        android:id="@+id/layout_login"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_marginTop="20dp">
+	    <ImageView
+	        android:id="@+id/logo"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="35dp"
+	        android:layout_gravity="center"
+	        android:background="@drawable/joy_icon" />
+        
+        <TextView 
+            android:id="@+id/textview_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingTop="20dp"
+            android:layout_gravity="center"
+            android:text="@string/activity_cmt_no_cmt"/>
+        
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/personal_top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@drawable/android_title_bg" >
+        android:background="@drawable/android_title_bg">
 
         <TextView
             android:layout_width="wrap_content"
@@ -88,7 +112,8 @@
 		 	android:layout_height="wrap_content"
 		 	android:padding="5dp">
  	        
- 	        <EditText 
+ 	        <EditText
+ 	            android:id="@+id/edittext_cmt" 
  	            android:layout_width="fill_parent"
  	            android:layout_height="40dp"
  	            android:hint="@string/activity_cmt_input_cmt"

@@ -170,4 +170,10 @@
     <string name="exit_view_hint">no history data will be remove after logout</string>
     <string name="exit_view_logout">logout</string>
     <string name="exit_view_cancel">cancel</string>
+    
+    <!-- CmtActivity -->
+    <string name="activity_cmt_no_cmt">no comment now</string>
+    <string name="activity_no_login">login please</string>
+    <string name="activity_manu_not_support">manufacturer is not surpport now</string>
+    <string name="activity_manu_cmt_not_empty">comment can not be empty</string>
 </resources>
