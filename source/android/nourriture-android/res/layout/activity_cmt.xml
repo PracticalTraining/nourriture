@@ -25,7 +25,7 @@
         
     </RelativeLayout>
     
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/listview_cmt_list" 
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -33,7 +33,7 @@
         android:layout_above="@+id/linearlayout_bar"
         android:dividerHeight="1dp">
         
-    </ListView>
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
  	<LinearLayout
  	    android:id="@+id/linearlayout_bar"

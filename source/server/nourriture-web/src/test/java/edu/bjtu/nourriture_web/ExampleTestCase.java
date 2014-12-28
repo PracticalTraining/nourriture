@@ -8,6 +8,6 @@ public class ExampleTestCase {
 
 	@Test
 	public void test() {
-		assertEquals("employee_info", "employee_info");
+//		assertEquals("employee_info", "employee_info");
 	}
 }

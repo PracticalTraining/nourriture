@@ -1,5 +1,13 @@
 package cn.edu.bjtu.nourriture.ui;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,21 +15,39 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import cn.edu.bjtu.nourriture.R;
+import cn.edu.bjtu.nourriture.bean.Constants;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 
 
 public class CmtActivity extends BaseActivity {
-	private ListView lv_cmt_list;
+	private PullToRefreshListView lv_cmt_list;
 	private CmtAdapater adapter;
 	private Button score1,score2,score3,score4,score5;
 	private int score;
+	private int type;
+	private int id;
+	private int page;
+	public static final int TYPE_FOOD = 1;
+	public static final int TYPE_RECIPE = 2;
+	private HttpUtils httpUtils;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cmt);
+		
+		httpUtils = new HttpUtils();
+		
 		findViewById();
 		setListeners();
 		initView();
@@ -34,7 +60,7 @@ public class CmtActivity extends BaseActivity {
 
 	@Override
 	protected void findViewById() {
-		lv_cmt_list = (ListView) findViewById(R.id.listview_cmt_list);
+		lv_cmt_list = (PullToRefreshListView) findViewById(R.id.listview_cmt_list);
 		score1 = (Button) findViewById(R.id.button_score1);
 		score2 = (Button) findViewById(R.id.button_score2);
 		score3 = (Button) findViewById(R.id.button_score3);
@@ -107,36 +133,153 @@ public class CmtActivity extends BaseActivity {
 
 	@Override
 	protected void initView() {
-		adapter = new CmtAdapater();
+		adapter = new CmtAdapater(new ArrayList<JSONObject>());
 		lv_cmt_list.setAdapter(adapter);
+		//设置PullRefreshListView上提加载时的加载提示
+		lv_cmt_list.setMode(Mode.BOTH);
+		lv_cmt_list.getLoadingLayoutProxy(false, true).setPullLabel(rs.getString(R.string.pull_up_load));
+		lv_cmt_list.getLoadingLayoutProxy(false, true).setRefreshingLabel(rs.getString(R.string.loading));
+		lv_cmt_list.getLoadingLayoutProxy(false, true).setReleaseLabel(rs.getString(R.string.loosen_load_more));
+		// 设置PullRefreshListView下拉加载时的加载提示
+		lv_cmt_list.getLoadingLayoutProxy(true, false).setPullLabel(rs.getString(R.string.pull_down_refresh));
+		lv_cmt_list.getLoadingLayoutProxy(true, false).setRefreshingLabel(rs.getString(R.string.refreshing));
+		lv_cmt_list.getLoadingLayoutProxy(true, false).setReleaseLabel(rs.getString(R.string.loosen_refreshing));
+	}
+	
+	private List<JSONObject> getData(){
+		List<JSONObject> data = new ArrayList<JSONObject>();
+		String url = Constants.MOBILE_SERVER_URL;
+		if(type == TYPE_FOOD){
+			url += "comments/getFoodCmt";
+		} else if(type == TYPE_RECIPE){
+			url += "comments/getRecipeCmt";
+		}
+		RequestParams params = new RequestParams();
+		if(type == TYPE_FOOD){
+			params.addQueryStringParameter("foodId", String.valueOf(id));
+		} else if(type == TYPE_RECIPE){
+			params.addQueryStringParameter("recipeId", String.valueOf(id));
+		}
+		params.addQueryStringParameter("page", String.valueOf(page));
+		params.addQueryStringParameter("pageSize", String.valueOf(5));
+		try {
+			String cmtsStr = httpUtils.sendSync(HttpMethod.GET, url, params).readString();
+			JSONArray jCmts = new JSONObject(cmtsStr).getJSONArray("comments");
+			for(int i = 0;i < jCmts.length();i++){
+				JSONObject jCmt = jCmts.getJSONObject(i);
+				int customerId = jCmt.getInt("customerId");
+				url = Constants.MOBILE_SERVER_URL + "customer/" + customerId;
+				String customerStr = httpUtils.sendSync(HttpMethod.GET, url).readString();
+				JSONObject jCustomer = new JSONObject(customerStr).getJSONObject("customer");
+				String name = jCustomer.getString("name");
+				jCmt.put("customerName", name);
+				data.add(jCmt);
+			}
+		} catch (HttpException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} finally {
+			return data;
+		}
 	}
 
 	private class CmtAdapater extends BaseAdapter{
+		private List<JSONObject> data;
+		
+		public CmtAdapater(List<JSONObject> data) {
+			super();
+			this.data = data;
+		}
 
 		@Override
 		public int getCount() {
-			return 3;
+			return data.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			return null;
+			return data.get(position);
 		}
 
 		@Override
 		public long getItemId(int position) {
-			return 0;
+			return position;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
+			JSONObject jCmt = data.get(position);
 			if(convertView == null){
 				holder = new ViewHolder();
 				convertView = LayoutInflater.from(CmtActivity.this).inflate(R.layout.item_cmt, null);
+				holder.name = (TextView) convertView.findViewById(R.id.textview_name);
+				holder.des = (TextView) convertView.findViewById(R.id.textview_des);
+				holder.score_1 = (ImageView) findViewById(R.id.imageview_score1);
+				holder.score_2 = (ImageView) findViewById(R.id.imageview_score2);
+				holder.score_3 = (ImageView) findViewById(R.id.imageview_score3);
+				holder.score_4 = (ImageView) findViewById(R.id.imageview_score4);
+				holder.score_5 = (ImageView) findViewById(R.id.imageview_score5);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
+			}
+			
+			try {
+				holder.name.setText(jCmt.getString("customerName"));
+				holder.des.setText(jCmt.getString("description"));
+				switch (jCmt.getInt("score")) {
+				case 0:
+					holder.score_1.setImageResource(R.drawable.collection_grey);
+					holder.score_2.setImageResource(R.drawable.collection_grey);
+					holder.score_3.setImageResource(R.drawable.collection_grey);
+					holder.score_4.setImageResource(R.drawable.collection_grey);
+					holder.score_5.setImageResource(R.drawable.collection_grey);
+					break;
+				case 1:
+					holder.score_1.setImageResource(R.drawable.collection_red_small);
+					holder.score_2.setImageResource(R.drawable.collection_grey);
+					holder.score_3.setImageResource(R.drawable.collection_grey);
+					holder.score_4.setImageResource(R.drawable.collection_grey);
+					holder.score_5.setImageResource(R.drawable.collection_grey);
+					break;
+				case 2:
+					holder.score_1.setImageResource(R.drawable.collection_red_small);
+					holder.score_2.setImageResource(R.drawable.collection_red_small);
+					holder.score_3.setImageResource(R.drawable.collection_grey);
+					holder.score_4.setImageResource(R.drawable.collection_grey);
+					holder.score_5.setImageResource(R.drawable.collection_grey);	
+					break;
+				case 3:
+					holder.score_1.setImageResource(R.drawable.collection_red_small);
+					holder.score_2.setImageResource(R.drawable.collection_red_small);
+					holder.score_3.setImageResource(R.drawable.collection_red_small);
+					holder.score_4.setImageResource(R.drawable.collection_grey);
+					holder.score_5.setImageResource(R.drawable.collection_grey);
+					break;
+				case 4:
+					holder.score_1.setImageResource(R.drawable.collection_red_small);
+					holder.score_2.setImageResource(R.drawable.collection_red_small);
+					holder.score_3.setImageResource(R.drawable.collection_red_small);
+					holder.score_4.setImageResource(R.drawable.collection_red_small);
+					holder.score_5.setImageResource(R.drawable.collection_grey);
+					break;
+				case 5:
+					holder.score_1.setImageResource(R.drawable.collection_red_small);
+					holder.score_2.setImageResource(R.drawable.collection_red_small);
+					holder.score_3.setImageResource(R.drawable.collection_red_small);
+					holder.score_4.setImageResource(R.drawable.collection_red_small);
+					holder.score_5.setImageResource(R.drawable.collection_red_small);
+					break;
+
+				default:
+					break;
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
 			return convertView;
 		}
@@ -144,6 +287,12 @@ public class CmtActivity extends BaseActivity {
 	}
 	
 	private class ViewHolder{
-		
+		TextView name;
+		TextView des;
+		ImageView score_1;
+		ImageView score_2;
+		ImageView score_3;
+		ImageView score_4;
+		ImageView score_5;
 	}
 }

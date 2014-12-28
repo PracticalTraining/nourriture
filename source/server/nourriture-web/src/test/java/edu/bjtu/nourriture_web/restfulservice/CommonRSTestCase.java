@@ -14,21 +14,21 @@ import com.sun.jersey.api.client.WebResource;
  *
  */
 public class CommonRSTestCase {
-	/** root path for services about manufacturer **/
-	private final String WSROOT = "http://123.57.36.82/nourriture/ws/";
-	/** web service test client **/
-	private final Client client = Client.create();
-	/** parse string to json **/
-	private final JsonParser jsonParser = new JsonParser();
-	
-	/** test root restful servie **/
-	@Test
-	public void root(){
-		WebResource rs = client.resource(WSROOT);
-		//get response
-		JsonObject response = jsonParser.parse(
-				    rs.get(String.class)
-				).getAsJsonObject();
-		Assert.assertNotNull(response.get("links"));
-	}
+//	/** root path for services about manufacturer **/
+//	private final String WSROOT = "http://123.57.36.82/nourriture/ws/";
+//	/** web service test client **/
+//	private final Client client = Client.create();
+//	/** parse string to json **/
+//	private final JsonParser jsonParser = new JsonParser();
+//	
+//	/** test root restful servie **/
+//	@Test
+//	public void root(){
+//		WebResource rs = client.resource(WSROOT);
+//		//get response
+//		JsonObject response = jsonParser.parse(
+//				    rs.get(String.class)
+//				).getAsJsonObject();
+//		Assert.assertNotNull(response.get("links"));
+//	}
 }
