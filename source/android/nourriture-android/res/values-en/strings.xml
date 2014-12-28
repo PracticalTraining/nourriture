@@ -157,7 +157,7 @@
     <string name="activity_rmd_list_user_info_part">user information lack</string>
     
     <!-- SearchActivity -->
-    <string name="activity_search_no_keyword">you have not login</string>
+    <string name="activity_search_no_keyword">keyword must not empty</string>
     <string name="activity_search_fail">search fail:</string>
     <string name="activity_search_clear">clear history</string>
     <string name="activity_search_rs">search result</string>

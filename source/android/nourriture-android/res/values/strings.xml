@@ -157,7 +157,7 @@
     <string name="activity_rmd_list_user_info_part">用户信息不完整，暂时没有推荐</string>
     
     <!-- SearchActivity -->
-    <string name="activity_search_no_keyword">您还没有登陆</string>
+    <string name="activity_search_no_keyword">关键字不能为空</string>
     <string name="activity_search_fail">搜索失败:</string>
     <string name="activity_search_clear">清空历史记录</string>
     <string name="activity_search_rs">搜索结果</string>
