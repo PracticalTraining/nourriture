@@ -217,4 +217,11 @@
 		<property name="recipeCategoryDao" ref="recipeCategoryDao"></property>
 		
 	</bean>
+		<bean id="commentsRestfulService"
+		class="edu.bjtu.nourriture_web.restfulservice.CommentsRestfulService">
+		<property name="recipeDao" ref="recipeDao"></property>
+		<property name="customerDao" ref="customerDao"></property>
+		<property name="commentsDao" ref="commentsDao"></property>
+		<property name="foodDao" ref="foodDao"></property>		
+	</bean>
 </beans>
