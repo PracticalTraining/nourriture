@@ -176,4 +176,5 @@
     <string name="activity_no_login">login please</string>
     <string name="activity_manu_not_support">manufacturer is not surpport now</string>
     <string name="activity_manu_cmt_not_empty">comment can not be empty</string>
+    <string name="activity_cmt_fail">comment fail</string>
 </resources>
