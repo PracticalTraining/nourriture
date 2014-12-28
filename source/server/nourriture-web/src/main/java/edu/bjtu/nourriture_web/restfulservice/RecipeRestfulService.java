@@ -179,7 +179,7 @@ public class RecipeRestfulService {
 		
 		JsonObject 	jRecipe 								= JsonUtil.beanToJson(my_recipe);
 
-		ret.add("Recipe", jRecipe);
+		ret.add("recipe", jRecipe);
 		ret.add("links", this.recipeChildrenLinks);
 		
 		return ret.toString();

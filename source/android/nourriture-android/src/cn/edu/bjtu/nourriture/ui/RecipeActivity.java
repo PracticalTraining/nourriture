@@ -23,7 +23,9 @@ import cn.edu.bjtu.nourriture.R;
 import cn.edu.bjtu.nourriture.bean.Constants;
 import cn.edu.bjtu.nourriture.bean.Recipe;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
+import cn.edu.bjtu.nourriture.zxing.encoding.EncodeManager;
 
+import com.google.zxing.WriterException;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -33,6 +35,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 
 public class RecipeActivity extends BaseActivity {
+	private Intent mIntent;
 	private LinearLayout lvCookingStep;
 	private CookingStepAdapter cookingStepAdapter;
 	private HttpUtils httpUtils;
@@ -57,10 +60,10 @@ public class RecipeActivity extends BaseActivity {
 		httpUtils = new HttpUtils();
 		bitmapUtils = new BitmapUtils(this);
 		
-		Intent intent = getIntent();
+		mIntent = getIntent();
 		recipe = new Recipe();
 		try {
-			JSONObject jRecipe = new JSONObject(intent.getStringExtra("recipe"));
+			JSONObject jRecipe = new JSONObject(mIntent.getStringExtra("recipe"));
 			recipe.setId(jRecipe.getInt("id"));
 			recipe.setName(jRecipe.getString("name"));
 			recipe.setPicture(jRecipe.getString("picture"));
@@ -189,6 +192,16 @@ public class RecipeActivity extends BaseActivity {
 				Dialog dialog = new Dialog(RecipeActivity.this, R.style.Transparent);
 				dialog.setContentView(R.layout.dialog_qr_code);
 				ImageView qr_code = (ImageView) dialog.findViewById(R.id.imageview_qr_code);
+				try {
+					JSONObject jObject = new JSONObject();
+					jObject.put("type", "recipe");
+					jObject.put("id", recipe.getId());
+					qr_code.setImageBitmap(EncodeManager.Create2DCode(jObject.toString()));
+				} catch (WriterException e) {
+					e.printStackTrace();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 				dialog.show();
 			}
 		});
