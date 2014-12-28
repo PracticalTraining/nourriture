@@ -28,8 +28,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import cn.edu.bjtu.nourriture.R;
 import cn.edu.bjtu.nourriture.bean.Constants;
+import cn.edu.bjtu.nourriture.task.EMobileTask;
 import cn.edu.bjtu.nourriture.ui.FoodActivity;
 import cn.edu.bjtu.nourriture.ui.RecipeActivity;
+import cn.edu.bjtu.nourriture.widgets.LoadingWindow;
 import cn.edu.bjtu.nourriture.zxing.camera.CameraManager;
 import cn.edu.bjtu.nourriture.zxing.decoding.CaptureActivityHandler;
 import cn.edu.bjtu.nourriture.zxing.decoding.InactivityTimer;
@@ -151,31 +153,58 @@ public class CaptureActivity extends Activity implements Callback {
 				JSONObject jObj = new JSONObject(resultString);
 				final Intent resultIntent;
 				LogUtils.i(resultString);
+				CaptureActivity.this.finish();
+				final LoadingWindow l = EMobileTask.createLoaingWindow(CaptureActivity.this);
+				l.show();
 				if(jObj.getString("type").equals("food")){
 					resultIntent = new Intent(CaptureActivity.this,FoodActivity.class);
-					httpUtils.send(HttpMethod.GET, Constants.MOBILE_SERVER_URL + "food" + jObj.getInt("id"), new RequestCallBack<String>() {
+					httpUtils.send(HttpMethod.GET, Constants.MOBILE_SERVER_URL + "food/" + jObj.getInt("id"), new RequestCallBack<String>() {
 
 						@Override
 						public void onFailure(HttpException arg0, String arg1) {
-							
+							l.dismiss();
+							Toast.makeText(CaptureActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
 						}
 
 						@Override
 						public void onSuccess(ResponseInfo<String> arg0) {
-							
+							try {
+								resultIntent.putExtra("food", new JSONObject(arg0.result).getJSONObject("food").toString());
+								startActivity(resultIntent);
+								l.dismiss();
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
 						}
 					});
 					
 				} else {
 					resultIntent = new Intent(CaptureActivity.this,RecipeActivity.class);
-					resultIntent.putExtra("recipe", resultString);
+					httpUtils.send(HttpMethod.GET, Constants.MOBILE_SERVER_URL + "recipe/" + jObj.getInt("id"), new RequestCallBack<String>() {
+
+						@Override
+						public void onFailure(HttpException arg0, String arg1) {
+							l.dismiss();
+							Toast.makeText(CaptureActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
+						}
+
+						@Override
+						public void onSuccess(ResponseInfo<String> arg0) {
+							try {
+								resultIntent.putExtra("recipe", new JSONObject(arg0.result).getJSONObject("recipe").toString());
+								startActivity(resultIntent);
+								l.dismiss();
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+						}
+					});
 				}
-				startActivity(resultIntent);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
-		CaptureActivity.this.finish();
+		
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {
