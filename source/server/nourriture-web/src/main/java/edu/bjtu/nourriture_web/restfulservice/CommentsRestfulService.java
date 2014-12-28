@@ -149,7 +149,7 @@ public class CommentsRestfulService {
 		JsonObject	ret 									= new JsonObject();
 		final int	ERROR_CODE_BAD_PARAM					= -1;
 		final int 	ERROR_CODE_FOOD_DOES_NOT_EXIST			= -2;
-		List<Comments>	comments							= this.commentsDao.getByRefId(foodId);;
+		List<Comments>	comments							= this.commentsDao.getByRefIdFood(foodId);;
 		Food 			my_food								= this.foodDao.getById(foodId);
 		JsonArray	commentsArray							= new JsonArray();
 		int 		i										= pageSize * page - pageSize;
@@ -191,7 +191,7 @@ public class CommentsRestfulService {
 		Recipe			my_recipe								= this.recipeDao.getById(recipeId);
 		final int	ERROR_CODE_BAD_PARAM						= -1;
 		final int 	ERROR_CODE_RECIPE_DOES_NOT_EXIST			= -2;
-		List<Comments>	comments		= this.commentsDao.getByRefId(recipeId);	
+		List<Comments>	comments		= this.commentsDao.getByRefIdRecipe(recipeId);	
 		JsonArray	commentsArray		= new JsonArray();
 		int 		i					= pageSize * page - pageSize;
 		int			iterator			= 0;
