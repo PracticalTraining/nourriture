@@ -176,15 +176,17 @@ public class FoodRestfulService {
 			ret.add("links", idChildrenLinks);
 			return ret.toString();
 		}
-		ret.addProperty("id", id);
-		ret.addProperty("name", food.getName());
-		ret.addProperty("price", food.getPrice());
-		ret.addProperty("categoryId", food.getCategoryId());
-		ret.addProperty("flavourId", food.getFlavourId());
-		ret.addProperty("manufacturerId", food.getManufacturerId());
-		ret.addProperty("produceLocationId", food.getProduceLocationId());
-		ret.addProperty("buyLocationId", food.getBuyLocationId());
-		ret.addProperty("picture", food.getPicture());
+		JsonObject jFood = new JsonObject();
+		jFood.addProperty("id", id);
+		jFood.addProperty("name", food.getName());
+		jFood.addProperty("price", food.getPrice());
+		jFood.addProperty("categoryId", food.getCategoryId());
+		jFood.addProperty("flavourId", food.getFlavourId());
+		jFood.addProperty("manufacturerId", food.getManufacturerId());
+		jFood.addProperty("produceLocationId", food.getProduceLocationId());
+		jFood.addProperty("buyLocationId", food.getBuyLocationId());
+		jFood.addProperty("picture", food.getPicture());
+		ret.add("food", jFood);
 		ret.add("links", idChildrenLinks);
 		return ret.toString();
 

@@ -25,7 +25,7 @@
             android:background="@drawable/search_box"
             android:drawableRight="@drawable/app_icon_voice"
             android:focusable="true"
-            android:hint="@string/index_search_edit_hint"
+            android:hint="@string/search_edit_hint"
             android:padding="6dp"
             android:singleLine="true"
             android:textColor="@color/darkgray"

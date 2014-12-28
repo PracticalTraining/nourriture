@@ -4,6 +4,9 @@ package cn.edu.bjtu.nourriture.zxing;
 import java.io.IOException;
 import java.util.Vector;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -24,6 +27,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.edu.bjtu.nourriture.R;
+import cn.edu.bjtu.nourriture.bean.Constants;
+import cn.edu.bjtu.nourriture.task.EMobileTask;
+import cn.edu.bjtu.nourriture.ui.FoodActivity;
+import cn.edu.bjtu.nourriture.ui.RecipeActivity;
+import cn.edu.bjtu.nourriture.widgets.LoadingWindow;
 import cn.edu.bjtu.nourriture.zxing.camera.CameraManager;
 import cn.edu.bjtu.nourriture.zxing.decoding.CaptureActivityHandler;
 import cn.edu.bjtu.nourriture.zxing.decoding.InactivityTimer;
@@ -31,6 +39,12 @@ import cn.edu.bjtu.nourriture.zxing.view.ViewfinderView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.lidroid.xutils.util.LogUtils;
 
 /**
  * Initial the camera
@@ -128,21 +142,69 @@ public class CaptureActivity extends Activity implements Callback {
     public void handleDecode(Result result, Bitmap barcode) {
         inactivityTimer.onActivity();
         playBeepSoundAndVibrate();
+        HttpUtils httpUtils = new HttpUtils();
+        httpUtils.configCurrentHttpCacheExpiry(0L);
 
         String resultString = result.getText();
 		if (resultString.equals("")) {
 			Toast.makeText(CaptureActivity.this, "Scan failed,Please have a try!", Toast.LENGTH_SHORT).show();
 		}else {
-			Intent resultIntent = new Intent(CaptureActivity.this,CaptureResultActivity.class);
-			Bundle bundle = new Bundle();
-			bundle.putString("result", resultString);
-			bundle.putParcelable("bitmap", barcode);
-			resultIntent.putExtras(bundle);
-			//this.setResult(RESULT_OK, resultIntent); 
-			
-			startActivity(resultIntent);
+			try {
+				JSONObject jObj = new JSONObject(resultString);
+				final Intent resultIntent;
+				LogUtils.i(resultString);
+				CaptureActivity.this.finish();
+				final LoadingWindow l = EMobileTask.createLoaingWindow(CaptureActivity.this);
+				l.show();
+				if(jObj.getString("type").equals("food")){
+					resultIntent = new Intent(CaptureActivity.this,FoodActivity.class);
+					httpUtils.send(HttpMethod.GET, Constants.MOBILE_SERVER_URL + "food/" + jObj.getInt("id"), new RequestCallBack<String>() {
+
+						@Override
+						public void onFailure(HttpException arg0, String arg1) {
+							l.dismiss();
+							Toast.makeText(CaptureActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
+						}
+
+						@Override
+						public void onSuccess(ResponseInfo<String> arg0) {
+							try {
+								resultIntent.putExtra("food", new JSONObject(arg0.result).getJSONObject("food").toString());
+								startActivity(resultIntent);
+								l.dismiss();
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else {
+					resultIntent = new Intent(CaptureActivity.this,RecipeActivity.class);
+					httpUtils.send(HttpMethod.GET, Constants.MOBILE_SERVER_URL + "recipe/" + jObj.getInt("id"), new RequestCallBack<String>() {
+
+						@Override
+						public void onFailure(HttpException arg0, String arg1) {
+							l.dismiss();
+							Toast.makeText(CaptureActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
+						}
+
+						@Override
+						public void onSuccess(ResponseInfo<String> arg0) {
+							try {
+								resultIntent.putExtra("recipe", new JSONObject(arg0.result).getJSONObject("recipe").toString());
+								startActivity(resultIntent);
+								l.dismiss();
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
-		CaptureActivity.this.finish();
+		
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {

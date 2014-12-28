@@ -20,7 +20,9 @@ import cn.edu.bjtu.nourriture.R;
 import cn.edu.bjtu.nourriture.bean.Constants;
 import cn.edu.bjtu.nourriture.bean.Food;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
+import cn.edu.bjtu.nourriture.zxing.encoding.EncodeManager;
 
+import com.google.zxing.WriterException;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -31,6 +33,7 @@ import com.lidroid.xutils.util.LogUtils;
 
 public class FoodActivity extends BaseActivity {
 	private Food food;
+	private Intent mIntent;
 	private ImageView iv_picture;
 	private TextView tv_title;
 	private TextView tv_manuName;
@@ -53,10 +56,10 @@ public class FoodActivity extends BaseActivity {
 		HttpUtils = new HttpUtils();
 		bitmapUtils = new BitmapUtils(this);
 		
-		Intent intent = getIntent();
+		mIntent = getIntent();
 		food = new Food();
 		try {
-			JSONObject jFood = new JSONObject(intent.getStringExtra("food"));
+			JSONObject jFood = new JSONObject(mIntent.getStringExtra("food"));
 			food.setId(jFood.getInt("id"));
 			food.setName(jFood.getString("name"));
 			food.setPicture(jFood.getString("picture"));
@@ -169,6 +172,16 @@ public class FoodActivity extends BaseActivity {
 				Dialog dialog = new Dialog(FoodActivity.this, R.style.Transparent);
 				dialog.setContentView(R.layout.dialog_qr_code);
 				ImageView qr_code = (ImageView) dialog.findViewById(R.id.imageview_qr_code);
+				try {
+					JSONObject jObject = new JSONObject();
+					jObject.put("type", "food");
+					jObject.put("id", food.getId());
+					qr_code.setImageBitmap(EncodeManager.Create2DCode(jObject.toString()));
+				} catch (WriterException e) {
+					e.printStackTrace();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 				dialog.show();
 			}
 		});

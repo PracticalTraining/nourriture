@@ -26,7 +26,6 @@ public class HomeActivity extends TabActivity {
 	public static final String TAB_MAIN = "MAIN_ACTIVITY";
 	public static final String TAB_SEARCH = "SEARCH_ACTIVITY";
 	public static final String TAB_CATEGORY = "CATEGORY_ACTIVITY";
-//	public static final String TAB_CART = "CART_ACTIVITY";
 	public static final String TAB_PERSONAL = "PERSONAL_ACTIVITY";
 
 	@Override
@@ -35,10 +34,6 @@ public class HomeActivity extends TabActivity {
 		super.onCreate(savedInstanceState);
 		AppManager.getInstance().addActivity(this);
 		setContentView(R.layout.activity_home);
-		
-		
-
-		
 		findViewById();
 		initView();
 	}
@@ -54,7 +49,6 @@ public class HomeActivity extends TabActivity {
 		Intent i_main = new Intent(this, IndexActivity.class);
 		Intent i_search = new Intent(this, SearchActivity.class);
 		Intent i_category = new Intent(this, CategoryActivity.class);
-		Intent i_cart = new Intent(this, CartActivity.class);
 		Intent i_personal = new Intent(this, PersonalActivity.class);
 
 		mTabHost.addTab(mTabHost.newTabSpec(TAB_MAIN).setIndicator(TAB_MAIN)
@@ -63,8 +57,6 @@ public class HomeActivity extends TabActivity {
 				.setIndicator(TAB_SEARCH).setContent(i_search));
 		mTabHost.addTab(mTabHost.newTabSpec(TAB_CATEGORY)
 				.setIndicator(TAB_CATEGORY).setContent(i_category));
-//		mTabHost.addTab(mTabHost.newTabSpec(TAB_CART).setIndicator(TAB_CART)
-//				.setContent(i_cart));
 		mTabHost.addTab(mTabHost.newTabSpec(TAB_PERSONAL)
 				.setIndicator(TAB_PERSONAL).setContent(i_personal));
 
@@ -85,10 +77,6 @@ public class HomeActivity extends TabActivity {
 						case R.id.home_tab_category:
 							mTabHost.setCurrentTabByTag(TAB_CATEGORY);
 							break;
-
-//						case R.id.home_tab_cart:
-//							mTabHost.setCurrentTabByTag(TAB_CART);
-//							break;
 
 						case R.id.home_tab_personal:
 							mTabHost.setCurrentTabByTag(TAB_PERSONAL);
@@ -112,22 +100,6 @@ public class HomeActivity extends TabActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
-//		case R.id.menu_about:
-//
-//			break;
-//
-//		case R.id.menu_setting:
-//
-//			break;
-//
-//		case R.id.menu_history:
-//
-//			break;
-//
-//		case R.id.menu_feedback:
-//
-//			break;
-
 		case R.id.menu_exit:
 
 			showAlertDialog("退出程序", "确定退出Nourriture？", "确定", new OnClickListener() {
@@ -148,10 +120,6 @@ public class HomeActivity extends TabActivity {
 			});
 
 			break;
-
-//		case R.id.menu_help:
-//
-//			break;
 
 		default:
 			break;

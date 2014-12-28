@@ -99,7 +99,7 @@ public class CategoryActivity extends BaseActivity {
 	
 	
 	//给照片添加文字显示(Title)
-	private String[] mTitleValues = { "食物", "菜谱"};
+	private String[] mTitleValues = {"食物", "菜谱"};
 	
 	
 			

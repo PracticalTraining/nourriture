@@ -176,8 +176,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 							EMobileTask
 									.addCookie(
 											"idendity",
-											identity == R.id.radiobutton_customer ? "普通用户"
-													: "厂商");
+											identity == R.id.radiobutton_customer ? "customer"
+													: "manu");
 							DisPlay("登陆成功");
 							LoginActivity.this.finish();
 							startActivity(new Intent(LoginActivity.this,PersonalActivity.class));

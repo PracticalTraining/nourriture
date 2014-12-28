@@ -78,12 +78,11 @@ public class ChangePwdActivity extends BaseActivity {
 		}
 		HttpUtils httpUtils = new HttpUtils();
 		String idendity = EMobileTask.getCookie("idendity");
-		System.out.println(idendity);
 		String id = EMobileTask.getCookie("userId");
 		String url = null;
-		if (idendity.equals("普通用户")) {
+		if (idendity.equals("customer")) {
 			url = Constants.MOBILE_SERVER_URL + "customer/password/" + id;
-		} else if (idendity.equals("厂商")) {
+		} else if (idendity.equals("manu")) {
 			url = Constants.MOBILE_SERVER_URL + "manuFacturer/password/" + id;
 		}
 		RequestParams params = new RequestParams();
