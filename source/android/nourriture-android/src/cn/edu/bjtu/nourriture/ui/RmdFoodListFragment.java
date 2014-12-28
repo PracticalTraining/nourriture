@@ -74,11 +74,11 @@ public class RmdFoodListFragment extends Fragment {
 		super.onResume();
 		if(TextUtils.isEmpty(EMobileTask.getCookie("userId"))){
 			ly_login.setVisibility(View.VISIBLE);
-			tv_info.setText("您还没有登陆");
+			tv_info.setText(R.string.activity_rmd_list_no_login);
 			lv_rmd_food_list.setVisibility(View.GONE);
 		} else if(EMobileTask.getCookie("idendity").equals("manu")){
 			ly_login.setVisibility(View.VISIBLE);
-			tv_info.setText("厂商暂时不支持推荐");
+			tv_info.setText(R.string.activity_rmd_list_manu_not_support);
 			lv_rmd_food_list.setVisibility(View.GONE);
 		} else {
 			ly_login.setVisibility(View.GONE);
@@ -131,13 +131,14 @@ public class RmdFoodListFragment extends Fragment {
 		lv_rmd_food_list.setAdapter(adapter);
 		//设置PullRefreshListView上提加载时的加载提示
 		lv_rmd_food_list.setMode(Mode.BOTH);
-		lv_rmd_food_list.getLoadingLayoutProxy(false, true).setPullLabel("上拉加载...");
-		lv_rmd_food_list.getLoadingLayoutProxy(false, true).setRefreshingLabel("正在加载...");
-		lv_rmd_food_list.getLoadingLayoutProxy(false, true).setReleaseLabel("松开加载更多...");
+		lv_rmd_food_list.getLoadingLayoutProxy(false, true).setPullLabel(getResources().getString(R.string.pull_up_load));
+		lv_rmd_food_list.getLoadingLayoutProxy(false, true).setRefreshingLabel(getResources().getString(R.string.loading));
+		lv_rmd_food_list.getLoadingLayoutProxy(false, true).setReleaseLabel(getResources().getString(R.string.loosen_load_more));
+
 		// 设置PullRefreshListView下拉加载时的加载提示
-		lv_rmd_food_list.getLoadingLayoutProxy(true, false).setPullLabel("下拉刷新...");
-		lv_rmd_food_list.getLoadingLayoutProxy(true, false).setRefreshingLabel("正在刷新...");
-		lv_rmd_food_list.getLoadingLayoutProxy(true, false).setReleaseLabel("松开刷新...");
+		lv_rmd_food_list.getLoadingLayoutProxy(true, false).setPullLabel(getResources().getString(R.string.pull_down_refresh));
+		lv_rmd_food_list.getLoadingLayoutProxy(true, false).setRefreshingLabel(getResources().getString(R.string.refreshing));
+		lv_rmd_food_list.getLoadingLayoutProxy(true, false).setReleaseLabel(getResources().getString(R.string.loosen_refreshing));
 	}
 	
 	private List<JSONObject> getData(){
@@ -270,7 +271,7 @@ public class RmdFoodListFragment extends Fragment {
 	    protected void onPostExecute(List<JSONObject> result) {
 	       if(result.size() == 0){
 	    	    ly_login.setVisibility(View.VISIBLE);
-				tv_info.setText("用户信息不完整，暂时没有推荐");
+				tv_info.setText(R.string.activity_rmd_list_user_info_part);
 				lv_rmd_food_list.setVisibility(View.GONE);
 	       } else {
 		        adapter.setData(result);
@@ -290,7 +291,7 @@ public class RmdFoodListFragment extends Fragment {
 	    protected void onPostExecute(List<JSONObject> result) {
 	    	if(result.size() == 0){
 	    		ly_login.setVisibility(View.VISIBLE);
-				tv_info.setText("用户信息不完整，暂时没有推荐");
+				tv_info.setText(R.string.activity_rmd_list_user_info_part);
 				lv_rmd_food_list.setVisibility(View.GONE);
 	    	} else {
 		        adapter.setData(result);
@@ -310,7 +311,7 @@ public class RmdFoodListFragment extends Fragment {
 	    @Override
 	    protected void onPostExecute(List<JSONObject> result) {
 	    	if(result.size() == 0){
-	    		Toast.makeText(context, "没有更多了", Toast.LENGTH_SHORT).show();
+	    		Toast.makeText(context, R.string.no_more, Toast.LENGTH_SHORT).show();
 	    		page--;
 	    	}
 	        for(JSONObject jObject : result){

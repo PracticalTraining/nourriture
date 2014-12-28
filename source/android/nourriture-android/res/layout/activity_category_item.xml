@@ -11,7 +11,6 @@
             android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_marginLeft="20dp"
-            android:text="手机"
             android:textColor="#555"
             android:textSize="20sp"
             android:layout_toLeftOf="@+id/imageview_next"/>

@@ -139,7 +139,6 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme"></activity>
         <activity android:name=".ui.SetLangActivity"
-            android:launchMode="singleTop"
             android:theme="@style/AppTheme"></activity>
          <activity android:name=".ui.EditBormalInfoActivity"
             android:launchMode="singleTop"

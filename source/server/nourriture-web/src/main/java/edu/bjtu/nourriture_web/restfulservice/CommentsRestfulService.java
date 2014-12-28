@@ -184,7 +184,7 @@ public class CommentsRestfulService {
 	
 	@GET
 	@Path("getRecipeCmt")
-	public	String getRecipeCommentsByPages(@QueryParam("recipeId") int recipeId, @QueryParam("pageSize") int pageSize, 
+	public String getRecipeCommentsByPages(@QueryParam("recipeId") int recipeId, @QueryParam("pageSize") int pageSize, 
 			@QueryParam("page") int page) {
 		
 		JsonObject	ret 										= new JsonObject();

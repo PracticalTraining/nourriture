@@ -17,7 +17,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
-            android:text="搜索结果"
+            android:text="@string/activity_search_rs"
             android:textColor="@color/white"
             android:textSize="@dimen/medium_text_size" />
     </RelativeLayout>
@@ -36,7 +36,6 @@
         android:paddingLeft="15dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="食物 0个搜索结果"
         android:textSize="16sp" />
     <Button
         android:id="@+id/recipe"
@@ -52,7 +51,6 @@
         android:paddingLeft="15dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="食谱 0个搜索结果"
         android:textSize="16sp" />
     
 </LinearLayout>

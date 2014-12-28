@@ -156,7 +156,7 @@ public class SearchActivity extends BaseActivity {
 			return;
 		}
 		if (TextUtils.isEmpty(keyword)) {
-			DisPlay("关键词不能为空");
+			DisPlay(rs.getString(R.string.activity_search_no_keyword));
 			return;
 		}
 
@@ -224,7 +224,7 @@ public class SearchActivity extends BaseActivity {
 					
 					@Override
 					public void run() {
-						DisPlay("搜索失败:" + e1.getMessage());
+						DisPlay(rs.getString(R.string.activity_search_fail) + e1.getMessage());
 						l.dismiss();
 					}
 				});
@@ -234,7 +234,7 @@ public class SearchActivity extends BaseActivity {
 					
 					@Override
 					public void run() {
-						DisPlay("搜索失败:" + e.getMessage());
+						DisPlay(rs.getString(R.string.activity_search_fail) + e.getMessage());
 						l.dismiss();
 					}
 				});
@@ -244,7 +244,7 @@ public class SearchActivity extends BaseActivity {
 					
 					@Override
 					public void run() {
-						DisPlay("搜索失败:" + e.getMessage());
+						DisPlay(rs.getString(R.string.activity_search_fail) + e.getMessage());
 						l.dismiss();
 					}
 				});

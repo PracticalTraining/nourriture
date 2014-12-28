@@ -27,7 +27,7 @@
             android:gravity="center"
             android:textColor="#fff"
             android:textSize="16sp"
-            android:text="退出后不会删除任何历史数据，下次\n登录依然可以使用本帐号" />           
+            android:text="@string/exit_view_hint" />           
 
     <Button
         android:id="@+id/btn_exit"
@@ -36,7 +36,7 @@
         android:layout_marginTop="5dip" 
          android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="退出登录"
+        android:text="@string/exit_view_logout"
          android:background="@drawable/btn_style_alert_dialog_special"
          android:textStyle="bold"
          />
@@ -49,7 +49,7 @@
 	   android:layout_marginBottom="15dip"
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
-       android:text="取消"
+       android:text="@string/exit_view_cancel"
        android:background="@drawable/btn_style_alert_dialog_cancel"
        android:textColor="#ffffff"
        android:textStyle="bold"

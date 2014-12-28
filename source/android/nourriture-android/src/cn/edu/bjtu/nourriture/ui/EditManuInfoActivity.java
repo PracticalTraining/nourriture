@@ -80,12 +80,12 @@ public class EditManuInfoActivity extends BaseActivity {
 		String description = ed_manu_company_description.getText().toString()
 				.trim();
 		if (TextUtils.isEmpty(companyName)) {
-			Toast.makeText(EditManuInfoActivity.this, "请输入公司名称!",
+			Toast.makeText(EditManuInfoActivity.this, R.string.activity_edit_manu_info_input_company_name,
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (TextUtils.isEmpty(description)) {
-			Toast.makeText(EditManuInfoActivity.this, "请输入公司简介!",
+			Toast.makeText(EditManuInfoActivity.this, R.string.activity_edit_manu_info_input_company_des,
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
@@ -102,15 +102,14 @@ public class EditManuInfoActivity extends BaseActivity {
 					@Override
 					public void onFailure(HttpException arg0, String arg1) {
 						LogUtils.d("onFailure");
-						Toast.makeText(EditManuInfoActivity.this, "修改失败",
+						Toast.makeText(EditManuInfoActivity.this, R.string.activity_edit_manu_info_fail,
 								Toast.LENGTH_SHORT).show();
 					}
 
 					@Override
 					public void onSuccess(ResponseInfo<String> arg0) {
 						LogUtils.d("onSuccess");
-						System.out.println(arg0.result);
-						Toast.makeText(EditManuInfoActivity.this, "修改成功",
+						Toast.makeText(EditManuInfoActivity.this, R.string.activity_edit_manu_info_success,
 								Toast.LENGTH_SHORT).show();
 						EditManuInfoActivity.this.finish();
 					}

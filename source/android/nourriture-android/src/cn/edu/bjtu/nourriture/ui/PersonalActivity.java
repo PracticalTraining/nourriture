@@ -53,7 +53,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			Ly_login.setVisibility(View.GONE);
 			mExitButton.setVisibility(View.VISIBLE);
 			username.setText(EMobileTask.getCookie("username"));
-			jobtitle.setText(EMobileTask.getCookie("idendity").equals("customer") ? "普通用户" : "厂商");
+			jobtitle.setText(EMobileTask.getCookie("idendity").equals("customer") ? 
+					rs.getString(R.string.customer) : rs.getString(R.string.manu));
 		}
 	}
 

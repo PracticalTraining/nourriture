@@ -92,7 +92,7 @@ public class EditBormalInfoActivity extends BaseActivity {
 	public void confirmUpdate(View view) {
 		String age = ed_age.getText().toString().trim();
 		if (TextUtils.isEmpty(age)) {
-			Toast.makeText(EditBormalInfoActivity.this, "请输入年龄!",
+			Toast.makeText(EditBormalInfoActivity.this, R.string.activity_edit_bormal_info_input_age,
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
@@ -116,7 +116,7 @@ public class EditBormalInfoActivity extends BaseActivity {
 					@Override
 					public void onFailure(HttpException arg0, String arg1) {
 						LogUtils.d("onFailure");
-						Toast.makeText(EditBormalInfoActivity.this, "修改失败",
+						Toast.makeText(EditBormalInfoActivity.this, rs.getString(R.string.activity_edit_bormal_info_fail),
 								Toast.LENGTH_SHORT).show();
 					}
 
@@ -124,7 +124,7 @@ public class EditBormalInfoActivity extends BaseActivity {
 					public void onSuccess(ResponseInfo<String> arg0) {
 						LogUtils.d("onSuccess");
 						System.out.println(arg0.result.toString());
-						Toast.makeText(EditBormalInfoActivity.this, "修改成功",
+						Toast.makeText(EditBormalInfoActivity.this, rs.getString(R.string.activity_edit_bormal_info_success),
 								Toast.LENGTH_SHORT).show();
 						EditBormalInfoActivity.this.finish();
 					}

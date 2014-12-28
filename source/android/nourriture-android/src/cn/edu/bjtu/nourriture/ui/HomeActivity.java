@@ -27,12 +27,14 @@ public class HomeActivity extends TabActivity {
 	public static final String TAB_SEARCH = "SEARCH_ACTIVITY";
 	public static final String TAB_CATEGORY = "CATEGORY_ACTIVITY";
 	public static final String TAB_PERSONAL = "PERSONAL_ACTIVITY";
+	private String current_tab;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		AppManager.getInstance().addActivity(this);
+		current_tab = getIntent().getStringExtra("currenttab");
 		setContentView(R.layout.activity_home);
 		findViewById();
 		initView();
@@ -60,7 +62,18 @@ public class HomeActivity extends TabActivity {
 		mTabHost.addTab(mTabHost.newTabSpec(TAB_PERSONAL)
 				.setIndicator(TAB_PERSONAL).setContent(i_personal));
 
-		mTabHost.setCurrentTabByTag(TAB_MAIN);
+		mTabHost.setCurrentTabByTag(current_tab == null ? TAB_MAIN : current_tab);
+		if(current_tab == null){
+			mTabButtonGroup.check(R.id.home_tab_main);
+		} else if(current_tab.equals(TAB_MAIN)){
+			mTabButtonGroup.check(R.id.home_tab_main);
+		} else if(current_tab.equals(TAB_SEARCH)){
+			mTabButtonGroup.check(R.id.home_tab_search);
+		} else if(current_tab.equals(TAB_CATEGORY)){
+			mTabButtonGroup.check(R.id.home_tab_category);
+		} else if(current_tab.equals(TAB_PERSONAL)){
+			mTabButtonGroup.check(R.id.home_tab_personal);
+		}
 
 		mTabButtonGroup
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -102,7 +115,7 @@ public class HomeActivity extends TabActivity {
 		switch (item.getItemId()) {
 		case R.id.menu_exit:
 
-			showAlertDialog("退出程序", "确定退出Nourriture？", "确定", new OnClickListener() {
+			showAlertDialog(getResources().getString(R.string.exit_app), getResources().getString(R.string.activity_home_is_exit_app), getResources().getString(R.string.ok), new OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -110,7 +123,7 @@ public class HomeActivity extends TabActivity {
 					AppManager.getInstance().AppExit(getApplicationContext());
 					ImageLoader.getInstance().clearMemoryCache();
 				}
-			}, "取消", new OnClickListener() {
+			}, getResources().getString(R.string.cancel), new OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {

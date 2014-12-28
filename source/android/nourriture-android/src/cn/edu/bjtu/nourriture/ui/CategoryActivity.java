@@ -23,6 +23,9 @@ public class CategoryActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		mTitleValues[0] = rs.getString(R.string.food);
+		mTitleValues[1] = rs.getString(R.string.recipe);
+		
 		setContentView(R.layout.activity_category);
 		findViewById();
 		initView();
@@ -99,14 +102,11 @@ public class CategoryActivity extends BaseActivity {
 	
 	
 	//给照片添加文字显示(Title)
-	private String[] mTitleValues = {"食物", "菜谱"};
-	
-	
-			
+	private String[] mTitleValues = new String[2];		
 
-	 public static class ViewHolder {
-			TextView title;
-	 }
+	public static class ViewHolder {
+		TextView title;
+	}
 	
 	
 

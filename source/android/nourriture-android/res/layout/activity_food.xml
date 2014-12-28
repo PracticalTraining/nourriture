@@ -21,9 +21,8 @@
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_vertical"
 	            android:layout_marginLeft="10dip"
-	            android:text="红烧肉"
 	            android:textColor="#ffffff"
-	             android:textSize="@dimen/medium_text_size"  />
+	            android:textSize="@dimen/medium_text_size"  />
 	    </LinearLayout>
 		<LinearLayout
 		    android:layout_width="fill_parent"
@@ -47,7 +46,7 @@
 		            android:id="@+id/textview_manuName" 
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="正在加载中..."
+		            android:text="@string/loading"
 		            android:layout_gravity="center_vertical"
 		            android:layout_margin="5dp"
 		            android:paddingTop="25dp"
@@ -70,27 +69,27 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="价格："
+	                android:text="@string/activity_food_price"
 	                android:textStyle="bold"/>
 	            <TextView
 	                android:id="@+id/textview_price" 
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="正在加载中..."
+	                android:text="@string/loading"
 	                android:textColor="#555"/>
 	            <TextView 
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="种类："
+	                android:text="@string/category"
 	                android:textStyle="bold"/>
 	            <TextView
 	                android:id="@+id/textview_category"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="正在加载中..."
+	                android:text="@string/ok"
 	                android:textColor="#555"/>
 	        </TableRow>
 	        <TableRow>
@@ -98,14 +97,14 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="口味："
+	                android:text="@string/activity_food_flavour"
 	                android:textStyle="bold"/>
 	            <TextView 
 	                android:id="@+id/textview_flavour"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="正在加载中..."
+	                android:text="@string/ok"
 	                android:textColor="#555"
 	                android:layout_span="3"/>
 	        </TableRow>
@@ -114,14 +113,14 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="生产地："
+	                android:text="@string/activity_food_produce_location"
 	                android:textStyle="bold"/>
 	            <Button 
 	                android:id="@+id/button_producelc"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="正在加载中..."
+	                android:text="@string/ok"
 	                android:textColor="#555"
 	                android:drawableLeft="@drawable/ic_pin_merchant"
 	                android:drawablePadding="5dp"
@@ -134,14 +133,14 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="销售地："
+	                android:text="@string/activity_food_buy_location"
 	                android:textStyle="bold"/>
 	            <Button
 	                android:id="@+id/button_buylc" 
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="10dp"
-	                android:text="正在加载中..."
+	                android:text="@string/ok"
 	                android:textColor="#555"
 	                android:drawableLeft="@drawable/ic_pin_merchant"
 	                android:drawablePadding="5dp"
@@ -169,7 +168,7 @@
 		        android:layout_margin="10dp"
 		        android:background="@drawable/btn_style_alert_dialog_special"
 		        android:gravity="center"
-		        android:text="评论"
+		        android:text="@string/cmt"
 		        android:textSize="16sp"
 		        android:textColor="#fff" />
 	        
@@ -181,7 +180,7 @@
 		        android:layout_margin="10dp"
 		        android:background="@drawable/btn_style_alert_dialog_special"
 		        android:gravity="center"
-		        android:text="二维码"
+		        android:text="@string/qr_code"
 		        android:textSize="16sp"
 		        android:textColor="#fff" />
 	        

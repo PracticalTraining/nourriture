@@ -80,14 +80,14 @@ public class RecipeListActivity extends BaseActivity {
 
 		// 设置PullRefreshListView上提加载时的加载提示
 		pl_refresh.setMode(Mode.BOTH);
-		pl_refresh.getLoadingLayoutProxy(false, true).setPullLabel("上拉加载...");
-		pl_refresh.getLoadingLayoutProxy(false, true).setRefreshingLabel("正在加载...");
-		pl_refresh.getLoadingLayoutProxy(false, true).setReleaseLabel("松开加载更多...");
+		pl_refresh.getLoadingLayoutProxy(false, true).setPullLabel(rs.getString(R.string.pull_up_load));
+		pl_refresh.getLoadingLayoutProxy(false, true).setRefreshingLabel(rs.getString(R.string.loading));
+		pl_refresh.getLoadingLayoutProxy(false, true).setReleaseLabel(rs.getString(R.string.loosen_load_more));
 
 		// 设置PullRefreshListView下拉加载时的加载提示
-		pl_refresh.getLoadingLayoutProxy(true, false).setPullLabel("下拉刷新...");
-		pl_refresh.getLoadingLayoutProxy(true, false).setRefreshingLabel("正在刷新...");
-		pl_refresh.getLoadingLayoutProxy(true, false).setReleaseLabel("松开刷新...");
+		pl_refresh.getLoadingLayoutProxy(true, false).setPullLabel(rs.getString(R.string.pull_down_refresh));
+		pl_refresh.getLoadingLayoutProxy(true, false).setRefreshingLabel(rs.getString(R.string.refreshing));
+		pl_refresh.getLoadingLayoutProxy(true, false).setReleaseLabel(rs.getString(R.string.loosen_refreshing));
 		
 		String url = Constants.MOBILE_SERVER_URL + "recipeCategory/" + categoryId;
 		httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
@@ -274,7 +274,7 @@ public class RecipeListActivity extends BaseActivity {
 	    @Override
 	    protected void onPostExecute(List<JSONObject> result) {
 	    	if(result.size() == 0){
-	    		DisPlay("没有更多了");
+	    		DisPlay(rs.getString(R.string.no_more));
 	    		page--;
 	    	}
 	        for(JSONObject jObject : result){

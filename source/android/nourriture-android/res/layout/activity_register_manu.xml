@@ -86,7 +86,7 @@
         android:background="@drawable/btn_style_alert_dialog_special"
         android:gravity="center"
         android:onClick="register"
-        android:text="注册"
+        android:text="@string/activity_register_btn"
         android:textSize="16sp"
         android:textColor="#fff" />
 </LinearLayout>

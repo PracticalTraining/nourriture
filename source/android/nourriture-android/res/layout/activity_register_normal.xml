@@ -47,7 +47,7 @@
             android:layout_marginBottom="5dp"/>
        
         <EditText 
-                       android:id="@+id/ed_register_repwd"
+            android:id="@+id/ed_register_repwd"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_normal_repassword_hint"
@@ -98,7 +98,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/btn_style_alert_dialog_special"
         android:gravity="center"
-        android:text="注册"
+        android:text="@string/activity_register_btn"
         android:textSize="16sp"
         android:onClick="register"
         android:textColor="#fff" />

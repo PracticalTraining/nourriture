@@ -64,32 +64,32 @@ public class RegisterManuActivity extends BaseActivity {
 		String description = ed_register_manu_company_description.getText()
 				.toString().trim();
 		if (TextUtils.isEmpty(name)) {
-			Toast.makeText(RegisterManuActivity.this, "用户名不能为空",
+			Toast.makeText(RegisterManuActivity.this, rs.getString(R.string.activity_register_manu_name_no_empty),
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (TextUtils.isEmpty(password)) {
-			Toast.makeText(RegisterManuActivity.this, "密码不能为空",
+			Toast.makeText(RegisterManuActivity.this, rs.getString(R.string.activity_register_manu_pwd_no_empty),
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (TextUtils.isEmpty(repwd)) {
-			Toast.makeText(RegisterManuActivity.this, "确认密码不能为空",
+			Toast.makeText(RegisterManuActivity.this, rs.getString(R.string.activity_register_manu_cfm_pwd_no_empty),
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (TextUtils.isEmpty(companyName)) {
-			Toast.makeText(RegisterManuActivity.this, "公司名不能为空",
+			Toast.makeText(RegisterManuActivity.this, rs.getString(R.string.activity_register_manu_company_name_no_empty),
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (TextUtils.isEmpty(description)) {
-			Toast.makeText(RegisterManuActivity.this, "公司描述不能为空",
+			Toast.makeText(RegisterManuActivity.this, rs.getString(R.string.activity_register_manu_company_des_no_empty),
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (!repwd.equals(password)) {
-			Toast.makeText(RegisterManuActivity.this, "两次输入的密码不一致,请重新输入",
+			Toast.makeText(RegisterManuActivity.this, rs.getString(R.string.activity_register_manu_pwd_not_same),
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
@@ -109,7 +109,7 @@ public class RegisterManuActivity extends BaseActivity {
 					public void onFailure(HttpException arg0, String arg1) {
 						// TODO Auto-generated method stub
 						LogUtils.d("onFailure");
-						Toast.makeText(RegisterManuActivity.this, "注册失败",
+						Toast.makeText(RegisterManuActivity.this, R.string.activity_register_bornal_fail,
 								Toast.LENGTH_SHORT).show();
 					}
 
@@ -117,7 +117,7 @@ public class RegisterManuActivity extends BaseActivity {
 					public void onSuccess(ResponseInfo<String> arg0) {
 						// TODO Auto-generated method stub
 						LogUtils.d("onSuccess");
-						Toast.makeText(RegisterManuActivity.this, "注册成功",
+						Toast.makeText(RegisterManuActivity.this, R.string.activity_register_bornal_success,
 								Toast.LENGTH_SHORT).show();
 						RegisterManuActivity.this.finish();
 						startActivity(new Intent(RegisterManuActivity.this,LoginActivity.class));

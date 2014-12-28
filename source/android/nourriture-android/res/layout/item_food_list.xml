@@ -19,7 +19,6 @@
             android:id="@+id/textview_name" 
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="食物名"
             android:textStyle="bold"
             android:textSize="17sp"
             android:gravity="center_vertical"/>
@@ -31,7 +30,7 @@
                  android:layout_width="wrap_content"
                  android:layout_height="fill_parent"
                  android:gravity="center_vertical"
-                 android:text="价格："/>
+                 android:text="@string/activity_food_price"/>
              <TextView
                  android:id="@+id/textview_price" 
                  android:layout_width="wrap_content"
@@ -42,14 +41,14 @@
                  android:layout_width="wrap_content"
                  android:layout_height="fill_parent"
                  android:gravity="center_vertical"
-                 android:text="口味："
+                 android:text="@string/activity_food_flavour"
                  android:layout_marginLeft="10dp"/>
              <TextView
                  android:id="@+id/textview_flavour" 
                  android:layout_width="wrap_content"
                  android:layout_height="fill_parent"
                  android:gravity="center_vertical"
-                 android:text="正在加载..."/>
+                 android:text="@string/loading"/>
         </LinearLayout>
     </LinearLayout>
 

@@ -19,7 +19,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
-            android:text="评论"
+            android:text="@string/activity_cmt_title"
             android:textColor="@color/white"
             android:textSize="@dimen/medium_text_size" />
         
@@ -91,14 +91,14 @@
  	        <EditText 
  	            android:layout_width="fill_parent"
  	            android:layout_height="40dp"
- 	            android:hint="请输入评论"
+ 	            android:hint="@string/activity_cmt_input_cmt"
  	            android:layout_toLeftOf="@+id/button_cmt"
  	            android:background="@drawable/category_selection_gridview_bg"/>
  	        <Button
  	            android:id="@+id/button_cmt"
  	            android:layout_width="wrap_content"
  	            android:layout_height="wrap_content"
- 	            android:text="评论"
+ 	            android:text="@string/activity_cmt_title"
  	            android:background="@drawable/btn_style_red" 
  	            android:layout_alignParentRight="true"
  	            android:layout_centerVertical="true"

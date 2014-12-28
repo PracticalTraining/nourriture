@@ -65,27 +65,27 @@ public class RegisterBormalActivity extends BaseActivity {
 		int age = Integer.parseInt(ageStr);
 		int sex = 0;
 		if (TextUtils.isEmpty(name)) {
-			Toast.makeText(RegisterBormalActivity.this, "用户名不能为空",
+			Toast.makeText(RegisterBormalActivity.this, R.string.activity_register_bornal_name_no_empty,
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (TextUtils.isEmpty(password)) {
-			Toast.makeText(RegisterBormalActivity.this, "密码不能为空",
+			Toast.makeText(RegisterBormalActivity.this, R.string.activity_register_bornal_pwd_no_empty,
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (TextUtils.isEmpty(repwd)) {
-			Toast.makeText(RegisterBormalActivity.this, "确认密码不能为空",
+			Toast.makeText(RegisterBormalActivity.this, R.string.activity_register_bornal_cfm_pwd_no_empty,
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (age == 0) {
-			Toast.makeText(RegisterBormalActivity.this, "年龄不能为空",
+			Toast.makeText(RegisterBormalActivity.this, R.string.activity_register_bornal_age_no_empty,
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (!password.equals(repwd)) {
-			Toast.makeText(RegisterBormalActivity.this, "两次用户名和密码不一致,请重新输入",
+			Toast.makeText(RegisterBormalActivity.this, R.string.activity_register_bornal_pwd_not_same,
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
@@ -122,7 +122,7 @@ public class RegisterBormalActivity extends BaseActivity {
 					public void onFailure(HttpException arg0, String arg1) {
 						// TODO Auto-generated method stub
 						LogUtils.d("onFailure");
-						Toast.makeText(RegisterBormalActivity.this, "注册失败",
+						Toast.makeText(RegisterBormalActivity.this, R.string.activity_register_bornal_fail,
 								Toast.LENGTH_SHORT).show();
 					}
 
@@ -130,7 +130,7 @@ public class RegisterBormalActivity extends BaseActivity {
 					public void onSuccess(ResponseInfo<String> arg0) {
 						// TODO Auto-generated method stub
 						LogUtils.d("onSuccess");
-						Toast.makeText(RegisterBormalActivity.this, "注册成功",
+						Toast.makeText(RegisterBormalActivity.this, R.string.activity_register_bornal_success,
 								Toast.LENGTH_SHORT).show();
 						RegisterBormalActivity.this.finish();
 						startActivity(new Intent(RegisterBormalActivity.this,LoginActivity.class));

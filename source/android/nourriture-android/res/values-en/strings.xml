@@ -1,0 +1,173 @@
+<resources>
+
+    <string name="app_name">Nourriture</string>
+    <string name="food">food</string>
+    <string name="recipe">recipe</string>
+    <string name="ok">OK</string>
+    <string name="loading">loading...</string>
+    <string name="cmt">comment</string>
+    <string name="qr_code">QR Code</string>
+    <string name="pull_up_load">pull up to load...</string>
+    <string name="loosen_load_more">release to load more...</string>
+    <string name="pull_down_refresh">pull down to refresh...</string>
+    <string name="refreshing">refreshing...</string>
+    <string name="loosen_refreshing">release to refresh...</string>
+    <string name="no_more">no more data</string>
+    <string name="exit_app">exit application</string>
+    <string name="cancel">cancel</string>
+    <string name="customer">customer</string>
+    <string name="manu">manufacturer</string>
+    <string name="add">add</string>
+    <string name="numres">search results</string>
+    
+    <string name="search_edit_hint">search food or reipe</string>
+
+    <!-- 菜单 -->
+    <string name="menu_exit">exit</string>
+
+	<!-- 商品分类 -->
+	<string name="category">all categories</string>
+	<!-- 二维码 -->
+	<string name="scan_tip">put qr code into camera aperture</string>
+	<string name="scan_retry">error happens while scan</string>
+    <string name="scan_title">scan</string>
+    <!-- 个人中心 -->
+    <string name="personal_title">my nourriture</string>
+    <string name="personal_more">more</string>
+    <string name="personal_welcome">welcome to nourriture</string>
+    <string name="personal_login">login</string>
+    <string name="personal_language">language</string>
+    <string name="personal_account">password</string>
+    <string name="personal_setting_center">set</string>
+    <string name="personal_account_center">account</string>
+    <string name="personal_edit_info">other informations</string>
+    <string name="personal_quit">logout</string>
+
+	<!-- 登陆界面 -->
+    <string name="login">login</string>
+    <string name="loginacount">username:</string>
+    <string name="loginpassword">password:</string>
+    <string name="inputpassword">please input password</string>
+    <string name="inputaccount">please input username</string>
+    <string name="register">quick register</string>
+    <string name="search_info">no search history now</string>
+    <string name="login_btn">login</string>
+    <string name="registerfree">register for free</string>
+   
+	<!--   更多 -->
+	<string name="more">more</string>
+	
+	<!-- 注册 -->
+	<string name="register_in_normal">customer register come in</string>
+	<string name="register_in_manu">manufacturer register come in</string>
+	<string name="register_normal_useraccount">username:</string>
+	<string name="register_normal_useraccount_hint">please input username</string>
+	<string name="register_normal_password">password:</string>
+	<string name="register_normal_password_hint">please input password</string>
+	<string name="register_normal_repassword">confirm password:</string>
+	<string name="register_normal_repassword_hint">please confirm password</string>
+	<string name="boy">male</string>
+	<string name="girl">female</string>
+	<string name="register_normal_age_hint">please input age</string>
+	<string name="register_manu_useraccount_hint">please input username</string>
+	<string name="register_manu_password_hint">please input password</string>
+	<string name="register_manu_repassword_hint">please confirm password</string>
+	<string name="register_manu_company_name_hint">please input company name</string>
+	<string name="register_manu_company_description_hint">please input company description</string>
+	
+    <string name="input_old_password">input old password</string>
+    <string name="input_new_password">input new password</string>
+    <string name="confirm_old_password">confirm new password</string>
+    
+    <!-- ChangePwdActivity -->
+    <string name="activity_change_pwd_title">change password</string>
+    <string name="activity_change_pwd_input_old_pwd">please input old password</string>
+    <string name="activity_change_pwd_input_new_pwd">please input new password</string>
+    <string name="activity_change_pwd_confirm_pwd">please confirm new password</string>
+    <string name="activity_change_pwd_not_same">old password and new password are not the same one</string>
+    <string name="activity_change_pwd_fail">change password failed</string>
+    <string name="activity_change_pwd_success">change password successfully</string>
+    
+    <!-- CmtActivity -->
+    <string name="activity_cmt_title">comment</string>
+    <string name="activity_cmt_input_cmt">please input comment</string>
+    
+    <!-- EditBormalInfoActivity -->
+    <string name="activity_edit_bormal_info_title">edit other informations</string>
+    <string name="activity_edit_bormal_info_input_age">please input age!</string>
+    <string name="activity_edit_bormal_info_fail">change failed</string>
+    <string name="activity_edit_bormal_info_success">change successfully</string>
+    
+    <!-- EditManuInfoActivity -->
+    <string name="activity_edit_manu_info_title">edit other informations</string>
+    <string name="activity_edit_manu_info_input_company_name">please input company name!</string>
+    <string name="activity_edit_manu_info_input_company_des">please input company description!</string>
+    <string name="activity_edit_manu_info_fail">change failed</string>
+    <string name="activity_edit_manu_info_success">change successfully</string>
+    
+    <!-- FoodActivity -->
+    <string name="activity_food_price">price:</string>
+    <string name="activity_food_category">category:</string>
+    <string name="activity_food_flavour">flavour:</string>
+    <string name="activity_food_produce_location">produce location:</string>
+    <string name="activity_food_buy_location">buy location:</string>
+    
+    <!-- HomeActivity -->
+    <string name="activity_home_is_exit_app">Are you sure to exit nourriture？</string>
+    
+    <!-- IndexActivity -->
+    <string name="activity_index_rmd_food">recommed food</string>
+    <string name="activity_index_rmd_recipe">recommed recipe</string>
+    
+    <!-- LoginActivity -->
+    <string name="activity_login_name_no_empty">user name can not be empty</string>
+    <string name="activity_login_pwd_no_empty">password can not be empty!</string>
+    <string name="activity_login_choose_identity">please choose idendity</string>
+    <string name="activity_login_fail">login failed</string>
+    <string name="activity_login_success">login successfully</string>
+    
+    <!-- RecipeActivity -->
+    <string name="activity_recipe_ing">ingredients:</string>
+    
+    <!-- RegisterActivity -->
+    <string name="activity_register_customer">customer register come in</string>
+    <string name="activity_register_manu">manufacturer register come in</string>
+    
+    <!-- RegisterBormalActivity -->
+    <string name="activity_register_bornal_name_no_empty">user name can not be empty</string>
+    <string name="activity_register_bornal_pwd_no_empty">password can not be empty!</string>
+    <string name="activity_register_bornal_cfm_pwd_no_empty">please confirm password</string>
+    <string name="activity_register_bornal_age_no_empty">age can not be empty!</string>
+    <string name="activity_register_bornal_pwd_not_same">password and confirm password are not the same one</string>
+    <string name="activity_register_bornal_fail">register failed</string>
+    <string name="activity_register_bornal_success">register successfully</string>
+    <string name="activity_register_btn">register</string>
+    
+    <!-- RegisterManuActivity -->
+    <string name="activity_register_manu_name_no_empty">user name can not be empty</string>
+    <string name="activity_register_manu_pwd_no_empty">password can not be empty!</string>
+    <string name="activity_register_manu_cfm_pwd_no_empty">please confirm password</string>
+    <string name="activity_register_manu_pwd_not_same">password and confirm password are not the same one</string>
+    <string name="activity_register_manu_company_name_no_empty">company name can not be empty</string>
+    <string name="activity_register_manu_company_des_no_empty">company description can not be empty</string>
+    
+    <!-- Rmd Activity -->
+    <string name="activity_rmd_list_no_login">you have not login</string>
+    <string name="activity_rmd_list_manu_not_support">manufacturer is not support now</string>
+    <string name="activity_rmd_list_user_info_part">user information lack</string>
+    
+    <!-- SearchActivity -->
+    <string name="activity_search_no_keyword">you have not login</string>
+    <string name="activity_search_fail">search fail:</string>
+    <string name="activity_search_clear">clear history</string>
+    <string name="activity_search_rs">search result</string>
+    
+    <!-- SetLangActivity -->
+    <string name="activity_set_lang_title">change language</string>
+    <string name="activity_set_lang_sys">system language</string>
+    
+    <!-- ExitView -->
+    <string name="exit_view_hint">no history data will be remove after logout</string>
+    <string name="exit_view_logout">logout</string>
+    <string name="exit_view_cancel">cancel</string>
+</resources>

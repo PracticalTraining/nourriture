@@ -139,13 +139,13 @@
                         android:id="@+id/radiobutton_customer" 
                         android:layout_width="wrap_content"
                     	android:layout_height="wrap_content"
-                    	android:text="普通用户"
+                    	android:text="@string/customer"
                     	android:textColor="@android:color/black"/>
                     <RadioButton 
                         android:id="@+id/radiobutton_manu"
                         android:layout_width="wrap_content"
                     	android:layout_height="wrap_content"
-                    	android:text="厂商"
+                    	android:text="@string/manu"
                     	android:textColor="@android:color/black"
                     	android:layout_marginLeft="20dp"/>
                 </RadioGroup>

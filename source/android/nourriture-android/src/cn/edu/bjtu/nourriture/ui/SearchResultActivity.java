@@ -38,8 +38,8 @@ public class SearchResultActivity extends BaseActivity {
 			JSONArray recipes = new JSONArray(recipesStr);
 			int foodNum = foods.length();
 			int recipeNum = recipes.length();
-			food.setText("食物 " + foodNum +"个搜索结果");
-			recipe.setText("食谱 " + recipeNum +"个搜索结果");
+			food.setText(rs.getString(R.string.food) + " " + foodNum + rs.getString(R.string.numres));
+			recipe.setText(rs.getString(R.string.recipe) + " " + recipeNum + rs.getString(R.string.numres));
 			if(foodNum == 0){
 				food.setEnabled(false);
 			}
@@ -48,8 +48,8 @@ public class SearchResultActivity extends BaseActivity {
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
-			food.setText("食物 0个搜索结果");
-			recipe.setText("食谱 0个搜索结果");
+			food.setText(rs.getString(R.string.food) + " " + 0 + rs.getString(R.string.numres));
+			recipe.setText(rs.getString(R.string.recipe) + " " + 0 + rs.getString(R.string.numres));
 			food.setEnabled(false);
 			recipe.setEnabled(false);
 		}

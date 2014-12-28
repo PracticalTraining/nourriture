@@ -147,9 +147,9 @@ public class SndCategoryActivity extends BaseActivity {
 		
 		if(superiorCategoryId == 0){
 			if(type == 0){
-				tv_title.setText("食物");
+				tv_title.setText(R.string.food);
 			} else {
-				tv_title.setText("菜谱");
+				tv_title.setText(R.string.recipe);
 			}
 		} else {
 			url = Constants.MOBILE_SERVER_URL;

@@ -298,7 +298,7 @@
                     
                      <TextView
                         style="@style/PersonalCenterText"
-                        android:text="食物" />
+                        android:text="@string/food" />
                      
                       <LinearLayout
                         style="@style/PersonalMainLayoutStyle" >
@@ -317,7 +317,7 @@
                             <TextView
                                 style="@style/PersonalTextStyle"
                                 android:layout_toRightOf="@id/personal_icon_11"
-                                android:text="添加" />
+                                android:text="@string/add" />
 
                             <ImageView
                                 style="@style/PersonalRightIconStyle"
@@ -327,7 +327,7 @@
                     
                       <TextView
                         style="@style/PersonalCenterText"
-                        android:text="菜谱" />
+                        android:text="@string/recipe" />
                      
                       <LinearLayout
                         style="@style/PersonalMainLayoutStyle" >
@@ -346,7 +346,7 @@
                             <TextView
                                 style="@style/PersonalTextStyle"
                                 android:layout_toRightOf="@id/personal_icon_12"
-                                android:text="添加" />
+                                android:text="@string/add" />
 
                             <ImageView
                                 style="@style/PersonalRightIconStyle"

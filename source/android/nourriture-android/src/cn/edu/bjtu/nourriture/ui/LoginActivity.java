@@ -126,15 +126,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		final int identity = mRG_Indendity.getCheckedRadioButtonId();
 
 		if (username.equals("")) {
-			DisplayToast("用户名不能为空!");
+			DisplayToast(rs.getString(R.string.activity_login_name_no_empty));
 			return;
 		}
 		if (password.equals("")) {
-			DisplayToast("密码不能为空!");
+			DisplayToast(rs.getString(R.string.activity_login_pwd_no_empty));
 			return;
 		}
 		if (identity == -1) {
-			DisplayToast("请选择登陆身份");
+			DisplayToast(rs.getString(R.string.activity_login_choose_identity));
 			return;
 		}
 
@@ -159,7 +159,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						LogUtils.d("onFailure");
 
 						l.dismiss();
-						DisPlay("登陆失败");
+						DisPlay(rs.getString(R.string.activity_login_fail));
 					}
 
 					@Override
@@ -178,11 +178,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 											"idendity",
 											identity == R.id.radiobutton_customer ? "customer"
 													: "manu");
-							DisPlay("登陆成功");
+							DisPlay(rs.getString(R.string.activity_login_success));
 							LoginActivity.this.finish();
-							startActivity(new Intent(LoginActivity.this,PersonalActivity.class));
+							Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+							intent.putExtra("currenttab", HomeActivity.TAB_PERSONAL);
+							startActivity(intent);
 						} catch (JSONException e) {
-							DisPlay("登陆失败");
+							DisPlay(rs.getString(R.string.activity_login_fail));
 							e.printStackTrace();
 						}
 					}

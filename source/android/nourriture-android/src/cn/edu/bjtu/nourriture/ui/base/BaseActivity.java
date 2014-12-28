@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +34,7 @@ public abstract class BaseActivity extends Activity {
 	protected Handler mHandler = null;
 	protected InputMethodManager imm;
 	private TelephonyManager tManager;
+	protected Resources rs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public abstract class BaseActivity extends Activity {
 		}
 		tManager=(TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 		imm=(InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+		rs = getResources();
 	}
 
 	@Override
@@ -141,23 +144,6 @@ public abstract class BaseActivity extends Activity {
 	protected void DisPlay(String content){
 		Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
 	}
-
-	/**加载进度条*/
-	public void showProgressDialog() {
-		ProgressDialog progressDialog = null;
-		
-		if(progressDialog!=null){
-			progressDialog.cancel();
-		}
-		progressDialog=new ProgressDialog(this);
-		Drawable drawable=getResources().getDrawable(R.drawable.loading_animation);
-		progressDialog.setIndeterminateDrawable(drawable);
-		progressDialog.setIndeterminate(true);
-		progressDialog.setCancelable(true);
-		progressDialog.setMessage("请稍候，正在努力加载。。");
-		progressDialog.show();
-	}
-	
 	
 	public void DisplayToast(String str) {
 		Toast.makeText(this, str, Toast.LENGTH_SHORT).show();

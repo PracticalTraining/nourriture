@@ -57,22 +57,22 @@ public class ChangePwdActivity extends BaseActivity {
 		String newpassword = ed_new_pwd.getText().toString().trim();
 		String repwd = ed_repwd.getText().toString().trim();
 		if (TextUtils.isEmpty(old_pwd)) {
-			Toast.makeText(ChangePwdActivity.this, "请输入原始密码",
+			Toast.makeText(ChangePwdActivity.this, rs.getString(R.string.activity_change_pwd_input_old_pwd),
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (TextUtils.isEmpty(newpassword)) {
-			Toast.makeText(ChangePwdActivity.this, "请输入新密码", Toast.LENGTH_SHORT)
+			Toast.makeText(ChangePwdActivity.this, rs.getString(R.string.activity_change_pwd_input_new_pwd), Toast.LENGTH_SHORT)
 					.show();
 			return;
 		}
 		if (TextUtils.isEmpty(repwd)) {
-			Toast.makeText(ChangePwdActivity.this, "请再次输入密码",
+			Toast.makeText(ChangePwdActivity.this, rs.getString(R.string.activity_change_pwd_confirm_pwd),
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (!newpassword.equals(repwd)) {
-			Toast.makeText(ChangePwdActivity.this, "两次输入的密码不一致,请重新输入",
+			Toast.makeText(ChangePwdActivity.this, rs.getString(R.string.activity_change_pwd_not_same),
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
@@ -98,7 +98,7 @@ public class ChangePwdActivity extends BaseActivity {
 					public void onFailure(HttpException arg0, String arg1) {
 						// TODO Auto-generated method stub
 						LogUtils.d("onFailure");
-						Toast.makeText(ChangePwdActivity.this, "密码修改失败",
+						Toast.makeText(ChangePwdActivity.this, rs.getString(R.string.activity_change_pwd_fail),
 								Toast.LENGTH_SHORT).show();
 					}
 
@@ -107,7 +107,7 @@ public class ChangePwdActivity extends BaseActivity {
 						// TODO Auto-generated method stub
 						LogUtils.d("onSuccess");
 						System.out.println(arg0.result);
-						Toast.makeText(ChangePwdActivity.this, "密码修改成功",
+						Toast.makeText(ChangePwdActivity.this, rs.getString(R.string.activity_change_pwd_success),
 								Toast.LENGTH_SHORT).show();
 						ChangePwdActivity.this.finish();
 					}
