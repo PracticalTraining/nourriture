@@ -105,3 +105,11 @@
 a#registerButton img {
 	vertical-align: bottom;
 }
+
+
+/********** search*************/
+.top_grid1{
+	overflow:hidden;
+	margin-bottom:10px;
+}
+
