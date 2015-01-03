@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>Duhoot Bootstarp Website Template | Home :: w3layouts</title>
+		<link href="./css/bootstrap.css" rel='stylesheet' type='text/css' />
+		<link rel="stylesheet" type="text/css" href="css/docs.min.css" />
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<!-- Custom Theme files -->
+		<link href="./css/style.css" rel='stylesheet' type='text/css' />
+		<!-- Custom Theme files -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="application/x-javascript">
+			addEventListener("load", function() {
+				setTimeout(hideURLbar, 0);
+			}, false);
+
+			function hideURLbar() {
+				window.scrollTo(0, 1);
+			}
+		</script>
+		<!--webfont-->
+		<!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+		<link href="./css/css.css" rel='stylesheet' type='text/css' />
+		<script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="./js/angular.js"></script>
+		<script type="text/javascript" src="./js/angular-cookies.js"></script>
+		<script type="text/javascript" src="./js/angular/app.js"></script>
+		<script type="text/javascript" src="./js/angular/lrCtrl.js"></script>
+		<script type="text/javascript" src="./js/angular/searchCtrl.js"></script>
+		<script type="text/javascript" src="./js/login.js"></script>
+		<script type="text/javascript" src="./js/jquery.easydropdown.js"></script>
+		<!--Animation-->
+		<script type="text/javascript" src="./js/wow.min.js"></script>
+		<script src="js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+		<link href="./css/animate.css" rel='stylesheet' type='text/css' />
+		<script type="text/javascript">
+			new WOW().init();
+		</script>
+		<link href="./css/mystyle.css" rel='stylesheet' type='text/css' />
+
+
+		<style type="text/css">
+			body {
+				position: relative;
+			}
+			* {
+				padding: 0;
+				margin: 0
+			}
+			body ul {
+				padding: 0;
+				margin: 0;
+			}
+			li {
+				list-style: none;
+			}
+			img {
+				border: 0;
+			}
+			.play {
+				width: 400px;
+				height: 390px;
+				background: #333;
+				font: 12px Arial;
+				/*margin: 0 auto;*/
+			}
+			.big_pic {
+				width: 400px;
+				height: 280px;
+				overflow: hidden;
+				border-bottom: 1px solid #ccc;
+				background: #222;
+				position: relative;
+			}
+			.big_pic li {
+				width: 400px;
+				height: 280px;
+				overflow: hidden;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 0;
+				background: url(images/loading.gif) no-repeat center center;
+			}
+			.mark_left {
+				width: 200px;
+				height: 320px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				background: red;
+				filter: alpha(opacity: 0);
+				opacity: 0;
+				z-index: 3000;
+			}
+			.mark_right {
+				width: 200px;
+				height: 320px;
+				position: absolute;
+				left: 200px;
+				top: 0;
+				background: green;
+				filter: alpha(opacity: 0);
+				opacity: 0;
+				z-index: 3000;
+			}
+			.big_pic .prev {
+				width: 60px;
+				height: 60px;
+				background: url(images/btn.gif) no-repeat;
+				position: absolute;
+				top: 130px;
+				left: 10px;
+				z-index: 3001;
+				cursor: pointer;
+				filter: alpha(opacity: 0);
+				opacity: 0;
+			}
+			.big_pic .next {
+				width: 60px;
+				height: 60px;
+				background: url(images/btn.gif) no-repeat 0 -60px;
+				position: absolute;
+				top: 130px;
+				right: 10px;
+				z-index: 3001;
+				cursor: pointer;
+				filter: alpha(opacity: 0);
+				opacity: 0;
+			}
+			.big_pic .text {
+				position: absolute;
+				left: 10px;
+				top: 302px;
+				z-index: 3000;
+				color: #ccc;
+			}
+			.big_pic .length {
+				position: absolute;
+				right: 10px;
+				bottom: 4px;
+				z-index: 3000;
+				color: #ccc;
+			}
+			.big_pic .bg {
+				width: 400px;
+				height: 25px;
+				background: #000;
+				filter: alpha(opacity=60);
+				opacity: 0.6;
+				position: absolute;
+				z-index: 2999;
+				bottom: 0;
+				left: 0;
+			}
+			.small_pic {
+				width: 380px;
+				height: 94px;
+				position: relative;
+				top: 7px;
+				left: 10px;
+				overflow: hidden;
+			}
+			.small_pic ul {
+				height: 94px;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			.small_pic li {
+				width: 120px;
+				height: 94px;
+				float: left;
+				padding-right: 10px;
+				background: url(images/loading.gif) no-repeat center center;
+				cursor: pointer;
+				filter: alpha(opacity=60);
+				opacity: 0.6;
+			}
+			.small_pic img {
+				width: 120px;
+				height: 94px;
+			}
+		</style>
+		<script>
+			function getStyle(obj, attr) {
+				if (obj.currentStyle) {
+					return obj.currentStyle[attr];
+				} else {
+					return getComputedStyle(obj, false)[attr];
+				}
+			}
+
+			function startMove(obj, attr, iTarget) {
+				clearInterval(obj.timer);
+				obj.timer = setInterval(function() {
+					var iCur = 0;
+
+					if (attr == 'opacity') {
+						iCur = parseInt(parseFloat(getStyle(obj, attr)) * 100);
+					} else {
+						iCur = parseInt(getStyle(obj, attr));
+					}
+
+					var iSpeed = (iTarget - iCur) / 8;
+					iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+
+					if (iCur == iTarget) {
+						clearInterval(obj.timer);
+					} else {
+						if (attr == 'opacity') {
+							obj.style.filter = 'alpha(opacity:' + (iCur + iSpeed) + ')';
+							obj.style.opacity = (iCur + iSpeed) / 100;
+						} else {
+							obj.style[attr] = iCur + iSpeed + 'px';
+						}
+					}
+				}, 30)
+			}
+
+			function getByClass(oParent, sClass) {
+				var aEle = document.getElementsByTagName('*');
+				var i = 0;
+				var aResult = [];
+
+				for (i = 0; i < aEle.length; i++) {
+					if (aEle[i].className == sClass) {
+						aResult.push(aEle[i]);
+					}
+				}
+
+				return aResult;
+			}
+
+			window.onload = function() {
+				var oDiv = document.getElementById('playeimages');
+				var oBtnPrev = getByClass(oDiv, 'prev')[0];
+				var oBtnNext = getByClass(oDiv, 'next')[0];
+				var oMarkLeft = getByClass(oDiv, 'mark_left')[0];
+				var oMarkRight = getByClass(oDiv, 'mark_right')[0];
+
+				var oSmallUl = getByClass(oDiv, 'small_pic')[0].getElementsByTagName('ul')[0];
+				var aSmallLi = oSmallUl.getElementsByTagName('li');
+				var oBigUl = getByClass(oDiv, 'big_pic')[0];
+				var aBigLi = oBigUl.getElementsByTagName('li');
+				var iNow = 0;
+				var iMinZindex = 2;
+				var i = 0;
+
+				oSmallUl.style.width = aSmallLi.length * aSmallLi[0].offsetWidth + 'px';
+
+				//上面的左右按钮
+				oBtnPrev.onmouseover = oMarkLeft.onmouseover = function() {
+					startMove(oBtnPrev, 'opacity', 100);
+				}
+
+				oBtnPrev.onmouseout = oMarkLeft.onmouseout = function() {
+					startMove(oBtnPrev, 'opacity', 0);
+				}
+
+				oBtnNext.onmouseover = oMarkRight.onmouseover = function() {
+					startMove(oBtnNext, 'opacity', 100);
+				}
+
+				oBtnNext.onmouseout = oMarkRight.onmouseout = function() {
+					startMove(oBtnNext, 'opacity', 0);
+				}
+
+				//小图点击，大图显示
+				for (i = 0; i < aSmallLi.length; i++) {
+					aSmallLi[i].index = i;
+					aSmallLi[i].onmouseover = function() {
+						startMove(this, 'opacity', 100);
+					}
+					aSmallLi[i].onmouseout = function() {
+						if (this.index != iNow) {
+							startMove(this, 'opacity', 60);
+						}
+					}
+
+					aSmallLi[i].onclick = function() {
+						if (this.index == iNow) return;
+						iNow = this.index;
+
+						tab();
+					}
+
+					function tab() {
+						for (i = 0; i < aSmallLi.length; i++) {
+							startMove(aSmallLi[i], 'opacity', 60);
+						}
+						startMove(aSmallLi[iNow], 'opacity', 100);
+						aBigLi[iNow].style.zIndex = iMinZindex++;
+						aBigLi[iNow].style.height = 0;
+
+						startMove(aBigLi[iNow], 'height', oBigUl.offsetHeight);
+
+						if (iNow == 0) {
+							startMove(oSmallUl, 'left', 0);
+						} else if (iNow == aSmallLi.length - 1) {
+							startMove(oSmallUl, 'left', -(iNow - 2) * aSmallLi[0].offsetWidth);
+						} else {
+							startMove(oSmallUl, 'left', -(iNow - 1) * aSmallLi[0].offsetWidth);
+						}
+					}
+
+					oBtnPrev.onclick = function() {
+						iNow--;
+						if (iNow == -1) {
+							iNow = aSmallLi.length - 1;
+						}
+
+						tab();
+					}
+
+					oBtnNext.onclick = function() {
+						iNow++;
+						if (iNow == aSmallLi.length) {
+							iNow = 0;
+						}
+
+						tab();
+					}
+				}
+			}
+		</script>
+		<script type="text/javascript">
+			$('body').scrollspy({
+				target: '.navbar-example'
+			})
+		</script>
+	</head>
+
+	<body ng-app="nourriture">
+		<div class="header">
+			<div class="header-left">
+				<div class="logo">
+					<a href="index.html">
+						<img src="./images/logo.png" alt="" />
+					</a>
+				</div>
+				<div class="menu">
+					<a class="toggleMenu" href="#">
+						<img src="./images/nav.png" alt="" />
+					</a>
+					<ul class="nav" id="nav">
+						<li class="active"><a href="index.html">Food</a>
+						</li>
+						<li><a href="company.html">Company</a>
+						</li>
+						<li><a href="description.html">Description</a>
+						</li>
+						<li><a href="entertain.html">Entertainment</a>
+						</li>
+					</ul>
+					<script type="text/javascript" src="./js/responsive-nav.js"></script>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="header_right">
+				<!-- start search-->
+				<div class="search-box">
+					<div id="sb-search" class="sb-search">
+						<form>
+							<input class="sb-search-input" placeholder="Enter your search term..." type="search" name="search" id="search">
+							<input class="sb-search-submit" type="submit" value=""> <span class="sb-icon-search"> </span>
+						</form>
+					</div>
+				</div>
+				<!----search-scripts---->
+				<script src="./js/classie.js"></script>
+				<script src="./js/uisearch.js"></script>
+				<script>
+					new UISearch(document.getElementById('sb-search'));
+				</script>
+				<!----//search-scripts---->
+				<div id="loginContainer" ng-controller="lr">
+					<a href="#" id="loginButton">
+						<img src="./images/login.png">
+						<span>{{ name }}</span>
+					</a>
+					<a href="#" ng-hide="loginBox" ng-click="logout()"> <span>Logout</span>
+					</a>
+					<a href="#" id="registerButton" ng-show="loginBox"> <span>Register</span>
+					</a>
+					<div id="loginBox" ng-show="loginBox">
+						<form id="loginForm">
+							<fieldset id="body">
+								<fieldset ng-show="hintShow">
+									<label for="username" style="color: red">{{ hint }}</label>
+								</fieldset>
+								<fieldset>
+									<label for="username">User name</label>
+									<input type="text" name="username" id="username" ng-model="username">
+								</fieldset>
+								<fieldset>
+									<label for="password">Password</label>
+									<input type="password" name="password" id="password" ng-model="password">
+								</fieldset>
+								<fieldset>
+									<label for="identity">Identity</label>
+									<select ng-model="identity">
+										<option value="customer">customer</option>
+										<option value="manafacture">manafacture</option>
+									</select>
+								</fieldset>
+								<input type="button" ng-click="login()" id="login" value="Sign in">
+							</fieldset>
+						</form>
+					</div>
+
+					<div id="registerBox" ng-show="loginBox">
+						<form id="registerForm">
+							<fieldset id="body">
+								<fieldset ng-show="rhintShow">
+									<label for="username" style="color: red">{{ rhint }}</label>
+								</fieldset>
+								<fieldset>
+									<label for="username">User name</label>
+									<input type="text" name="username" id="username" ng-model="rusername">
+								</fieldset>
+								<fieldset>
+									<label for="password">Password</label>
+									<input type="password" name="password" id="password" ng-model="rpassword">
+								</fieldset>
+								<fieldset>
+									<label for="password">Confirm Password</label>
+									<input type="password" name="password" id="password">
+								</fieldset>
+								<fieldset>
+									<label for="ridentity">Identity</label>
+									<select ng-model="ridentity">
+										<option value="customer">customer</option>
+										<option value="manafacture">manafacture</option>
+									</select>
+								</fieldset>
+								<input type="button" ng-click="register()" id="register" value="Register">
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="living_middle" style="padding-top: 15px;">
+			<div class="container" style="width: 960px;">
+				<div class="overflow-h" style="background-color: #fff;padding-bottom: 15px; padding-top: 15px;margin-bottom:15px;">
+					<div class="col-md-6">
+						<div id="playimages" class="play">
+							<ul class="big_pic">
+								<div class="prev"></div>
+								<div class="next"></div>
+								<a class="mark_left" href="javascript:;"></a>
+								<a class="mark_right" href="javascript:;"></a>
+								<!--<div class="bg"></div>	-->
+								<li style="z-index:1;">
+									<img src="images/1.jpg" />
+								</li>
+								<li>
+									<img src="images/2.jpg" />
+								</li>
+								<li>
+									<img src="images/3.jpg" />
+								</li>
+								<li>
+									<img src="images/4.jpg" />
+								</li>
+								<li>
+									<img src="images/5.jpg" />
+								</li>
+							</ul>
+							<div class="small_pic">
+								<ul style="width:390px;">
+									<li style="filter: 100; opacity: 1;">
+										<img src="images/5.jpg" />
+									</li>
+									<li>
+										<img src="images/4.jpg" />
+									</li>
+									<li>
+										<img src="images/3.jpg" />
+									</li>
+									<li>
+										<img src="images/2.jpg" />
+									</li>
+									<li>
+										<img src="images/1.jpg" />
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<h1 style="margin-bottom: 10px;"><b>大鸭梨烤鸭店</b></h1>
+						<p style="margin-bottom: 10px;">仅售85元，价值100元代金券，不限时段通用！无需预约，可累积使用！</p>
+						<div class="overflow-h">
+							<table class="table">
+								<tr>
+									<td>已售出156154份</td>
+									<td><a href="#">50</a> 条用户评论</td>
+									<td>评分</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="overflow-h" style="background-color: #fff;padding-bottom: 15px; padding-top: 15px;">
+					<div class="overflow-h">
+						<div style="padding: 15px;">
+							<nav id="navbar-example2" class="navbar navbar-default navbar-static" role="navigation">
+								<div class="container-fluid">
+									<div class="collapse navbar-collapse bs-example-js-navbar-scrollspy">
+										<ul class="nav navbar-nav">
+											<li class="active"><a href="#address">address</a>
+											</li>
+											<li class=""><a href="#introduction">introduction</a>
+											</li>
+											<li class=""><a href="#comment">comment</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</nav>
+							<div data-spy="scroll" data-target="#navbar-example2" data-offset="0" class="scrollspy-example" style="height: 3400px;">
+								<h4 id="address" class="divide-title">address</h4>
+								<div class="overflow-h mb15">
+									<div class="col-md-4">
+										<img src="images/map.png" / class="img-responsive">
+									</div>
+									<div class="col-md-8">
+										<div class="overflow-h">
+											<h5 class="mb15">Store Name:<span style="margin-left: 20px;">冰城串吧（松榆里店）</span></h5>
+											<div class="mb15">
+												<img src="images/m_star.png" class="mr20" /><span class="mr20">人均¥70</span><span>340封点评</span>
+											</div>
+											<p class="mb15">Address:&nbsp;&nbsp;百子湾路狮子坟1号(易购空间路北)</p>
+											<p class="mb15">Telephone:&nbsp;&nbsp;010-87775526</p>
+											<p class="mb15">Business Hour:&nbsp;&nbsp;10：00-03：00</p>
+										</div>
+									</div>
+								</div>
+
+								<h4 id="introduction" class="divide-title">introduction</h4>
+								<div class="overflow-h mb15">
+
+									<img src="images/fooddetial1.jpg" class="img-responsive mb15" />
+									<img src="images/fooddetial2.jpg" class="img-responsive mb15" />
+									<img src="images/fooddetial3.jpg" class="img-responsive mb15" />
+									<img src="images/fooddetial4.jpg" class="img-responsive mb15" />
+									<img src="images/fooddetial5.jpg" class="img-responsive mb15" />
+								</div>
+
+								<h4 id="comment" class="divide-title">comment</h4>
+								<div class="overflow-h">
+									<div class="overflow-h mb15">
+										<div class="col-md-1">
+											<a href="">
+												<img src="images/headimage.png" class="img-responsive" />
+												<p style="margin-top: 2px;text-align: center;">651</p>
+											</a>
+										</div>
+										<div class="col-md-11">
+											<div class="overflow-h">
+												<div class="overflow-h mb15" style="background-color: #f3f3f3;">
+													<img src="./images/star1.png" class="mr20" alt="">
+													<span class="mr20">口味3(很好)</span>
+													<span class="mr20">环境3(很好)</span>
+													<span class="mr20">服务3(很好)</span>
+												</div>
+												<div class="overflow-h">
+													<p>菜的口味还不错，就是都咸了，烤排骨不熟肉不太新鲜，老顾客了，总的比不上原来了</p>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="overflow-h mb15">
+										<div class="col-md-1">
+											<a href="">
+												<img src="images/headimage1.png" class="img-responsive" />
+												<p style="margin-top: 2px;text-align: center;">我是哈哈</p>
+											</a>
+										</div>
+										<div class="col-md-11">
+											<div class="overflow-h">
+												<div class="overflow-h mb15" style="background-color: #f3f3f3;">
+													<img src="./images/star1.png" class="mr20" alt="">
+													<span class="mr20">口味3(很好)</span>
+													<span class="mr20">环境1(一般)</span>
+													<span class="mr20">服务1(一般)</span>
+												</div>
+												<div class="overflow-h">
+													<p>挺大的店面，停车比较紧张，五哥烤翅，面包片，水果捞，烤串都很推荐~晚上需要等位。</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+
+
+
+		<div class="footer">
+			<div class="container">
+				<div class="footer_top">
+					<h3>Subscribe to our newsletter</h3>
+					<form>
+						<span> <i><img src="./images/mail.png" alt=""></i> <input
+						type="text" value="Enter your email" onfocus="this.value = '';"
+						onblur="if (this.value == '') {this.value = 'Enter your email';}">
+						<label class="btn1 btn2 btn-2 btn-2g"> <input
+							name="submit" type="submit" id="submit" value="Subscribe">
+					</label>
+					</span>
+					</form>
+				</div>
+				<div class="footer_grids">
+					<div class="footer-grid">
+						<h4>Corporation</h4>
+						<ul class="list1">
+							<li><a href="contact.html">Contact</a>
+							</li>
+							<li><a href="#">group</a>
+							</li>
+							<li><a href="#">develop</a>
+							</li>
+							<li><a href="#">open API</a>
+							</li>
+							<li><a href="#">links</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-grid">
+						<h4>Help</h4>
+						<ul class="list1">
+							<li><a href="#">how to use</a>
+							</li>
+							<li><a href="#">normal problem</a>
+							</li>
+							<li><a href="#">about us </a>
+							</li>
+							<li><a href="#">hiring</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-grid last_grid">
+						<h4>Follow Us</h4>
+						<ul class="footer_social">
+							<li>
+								<a href=""> <i class="fb"> </i>
+								</a>
+							</li>
+							<li><a href=""><i class="tw"> </i> </a>
+							</li>
+							<li><a href=""><i class="google"> </i> </a>
+							</li>
+							<li><a href=""><i class="u_tube"> </i> </a>
+							</li>
+						</ul>
+						<div class="copy" id="contact">
+							<p>
+								&copy; Template by <a href="http://w3layouts.com/" target="_blank">W3layouts</a>
+							</p>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
