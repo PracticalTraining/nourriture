@@ -170,6 +170,9 @@
            <activity android:name="cn.edu.bjtu.nourriture.ui.AddFoodActivity"></activity>
            <activity android:name="cn.edu.bjtu.nourriture.ui.AddRecipeActivity"></activity>
            <activity android:name="cn.edu.bjtu.nourriture.ui.CmtActivity"></activity>
+           <activity android:name="cn.edu.bjtu.nourriture.zxing.view.SelectPicPopupWindow"
+               android:theme="@style/MyDialogStyleBottom"></activity>
+           <activity android:name="cn.edu.bjtu.nourriture.ui.FlavourActivity"></activity>
     </application>
 
 </manifest>

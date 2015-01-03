@@ -106,6 +106,7 @@
     <string name="activity_edit_manu_info_success">修改成功</string>
     
     <!-- FoodActivity -->
+    <string name="activity_food_name">食物名：</string>
     <string name="activity_food_price">价格：</string>
     <string name="activity_food_category">种类：</string>
     <string name="activity_food_flavour">口味：</string>
@@ -177,4 +178,12 @@
     <string name="activity_manu_not_support">暂不支持厂商评论</string>
     <string name="activity_manu_cmt_not_empty">评论不能为空</string>
     <string name="activity_cmt_fail">评论失败</string>
+    
+    <!-- AddFoodActivity -->
+    <string name="activity_add_food_title">添加食物</string>
+    <string name="activity_add_food_locate">点击定位</string>
+    <string name="activity_add_food_sel_flavour">点击选择口味</string>
+    
+    <!-- FlavourActivity -->
+    <string name="activity_flavour_title">选择口味</string>
 </resources>

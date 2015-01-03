@@ -81,4 +81,8 @@ public class FlavourDao extends HibernateDaoSupport implements IFlavourDao {
 		return getHibernateTemplate().find("from Flavour");
 	}
 
+	public List<Flavour> getChildren(int pId) {
+		return getHibernateTemplate().find("from Flavour where superiorFlavourId = ?",pId);
+	}
+
 }

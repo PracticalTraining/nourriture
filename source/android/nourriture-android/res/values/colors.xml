@@ -29,6 +29,8 @@
     <!-- 浅玫瑰色 -->
     <color name="bisque">#ffe4c4</color>
     <!-- 桔黄色 -->
+    <color name="tbisque">#66ffe4c4</color>
+    <!-- 桔黄色 -->
     <color name="moccasin">#ffe4b5</color>
     <!-- 鹿皮色 -->
     <color name="navajowhite">#ffdead</color>

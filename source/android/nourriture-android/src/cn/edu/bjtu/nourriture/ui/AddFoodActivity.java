@@ -1,34 +1,26 @@
 package cn.edu.bjtu.nourriture.ui;
 
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.Window;
-import android.widget.EditText;
-import android.widget.Toast;
-import cn.edu.bjtu.nourriture.R;
-import cn.edu.bjtu.nourriture.bean.Constants;
-import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
-
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.util.LogUtils;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import cn.edu.bjtu.nourriture.R;
+import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
+import cn.edu.bjtu.nourriture.zxing.view.SelectPicPopupWindow;
+
 public class AddFoodActivity extends BaseActivity {
-
-	private EditText ed_food_name;
-	private EditText ed_food_price;
-	private EditText ed_food_picture;
-	private EditText ed_food_categoryId;
-	private EditText ed_food_flavourId;
-	private EditText ed_food_manufacturerId;
-	private EditText ed_food_produceLocationId;
-	private EditText ed_food_buyLocationId;
-
+	private ImageView iv_picture;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -36,115 +28,82 @@ public class AddFoodActivity extends BaseActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_add_food);
 		findViewById();
+		setLisenters();
+		initView();
 	}
 
 	@Override
 	protected void findViewById() {
-		ed_food_name = (EditText) findViewById(R.id.ed_food_name);
-		ed_food_price = (EditText) findViewById(R.id.ed_food_price);
-		ed_food_picture = (EditText) findViewById(R.id.ed_food_picture);
-		ed_food_categoryId = (EditText) findViewById(R.id.ed_food_categoryId);
-		ed_food_flavourId = (EditText) findViewById(R.id.ed_food_flavourId);
-		ed_food_manufacturerId = (EditText) findViewById(R.id.ed_food_manufacturerId);
-		ed_food_produceLocationId = (EditText) findViewById(R.id.ed_food_produceLocationId);
-		ed_food_buyLocationId = (EditText) findViewById(R.id.ed_food_buyLocationId);
+		iv_picture = (ImageView) findViewById(R.id.imageview_picture);
+	}
+	
+	private void setLisenters(){
+		iv_picture.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+			
+			@Override
+			public void onGlobalLayout() {
+				int width = iv_picture.getWidth();
+				int rmdHeight = width / 2;
+				LinearLayout.LayoutParams lp = (LayoutParams) iv_picture.getLayoutParams();
+				lp.height = rmdHeight;
+				iv_picture.setLayoutParams(lp);
+			}
+		});
+		iv_picture.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startActivityForResult(new Intent(AddFoodActivity.this,
+						SelectPicPopupWindow.class), 1);
+			}
+		});
 	}
 
 	@Override
 	protected void initView() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
-	/**
-	 * 确认修改的事件处理
-	 * 
-	 * @param view
-	 */
-	public void addFood(View view) {
-		String name = ed_food_name.getText().toString().trim();
-		String price = ed_food_price.getText().toString().trim();
-		String picture = ed_food_picture.getText().toString().trim();
-		String categoryId = ed_food_categoryId.getText().toString().trim();
-		String flavourId = ed_food_flavourId.getText().toString().trim();
-		String manufacturerId = ed_food_manufacturerId.getText().toString()
-				.trim();
-		String produceLocationId = ed_food_produceLocationId.getText()
-				.toString().trim();
-		String buyLocationId = ed_food_buyLocationId.getText().toString()
-				.trim();
-		if (TextUtils.isEmpty(name)) {
-			Toast.makeText(AddFoodActivity.this, "请输入食物名称", Toast.LENGTH_SHORT)
-					.show();
-			return;
-		}
-		if (TextUtils.isEmpty(price)) {
-			Toast.makeText(AddFoodActivity.this, "请输入食物价格", Toast.LENGTH_SHORT)
-					.show();
-			return;
-		}
-		if (TextUtils.isEmpty(picture)) {
-			Toast.makeText(AddFoodActivity.this, "请输入食物图片路径",
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
-		if (TextUtils.isEmpty(categoryId)) {
-			Toast.makeText(AddFoodActivity.this, "请输入食物类别ID",
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
-		if (TextUtils.isEmpty(flavourId)) {
-			Toast.makeText(AddFoodActivity.this, "请输入食物口味ID",
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
-		if (TextUtils.isEmpty(manufacturerId)) {
-			Toast.makeText(AddFoodActivity.this, "请输入食物制造商ID",
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
-		if (TextUtils.isEmpty(produceLocationId)) {
-			Toast.makeText(AddFoodActivity.this, "请输入食物产地ID",
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
-		if (TextUtils.isEmpty(buyLocationId)) {
-			Toast.makeText(AddFoodActivity.this, "请输入食物购买地", Toast.LENGTH_SHORT)
-					.show();
-			return;
-		}
-		HttpUtils httpUtils = new HttpUtils();
-		// String id = EMobileTask.getCookie("userId");
-		String url = Constants.MOBILE_SERVER_URL + "food";
-		RequestParams params = new RequestParams();
-		params.addBodyParameter("name", name);
-		params.addBodyParameter("price", price);
-		params.addBodyParameter("picture", picture);
-		params.addBodyParameter("categoryId", categoryId);
-		params.addBodyParameter("flavourId", flavourId);
-		params.addBodyParameter("manufacturerId", manufacturerId);
-		params.addBodyParameter("produceLocationId", produceLocationId);
-		params.addBodyParameter("buyLocationId", buyLocationId);
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		httpUtils.send(HttpMethod.POST, url, params,
-				new RequestCallBack<String>() {
-
-					@Override
-					public void onFailure(HttpException arg0, String arg1) {
-						LogUtils.d("onFailure");
-						Toast.makeText(AddFoodActivity.this, "添加失败",
-								Toast.LENGTH_SHORT).show();
+		switch (resultCode) {
+		case 1:
+			if (data != null) {
+				Uri mImageCaptureUri = data.getData();
+				//LogUtils.d(mImageCaptureUri.toString());
+				if (mImageCaptureUri != null) {
+					Bitmap image;
+					try {
+						image = MediaStore.Images.Media.getBitmap(
+								this.getContentResolver(), mImageCaptureUri);
+						if (image != null) {
+							LinearLayout.LayoutParams lp = (LayoutParams) iv_picture.getLayoutParams();
+							lp.height = LayoutParams.WRAP_CONTENT;
+							iv_picture.setLayoutParams(lp);
+							iv_picture.setImageBitmap(image);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-
-					@Override
-					public void onSuccess(ResponseInfo<String> arg0) {
-						LogUtils.d("onSuccess");
-						System.out.println(arg0.result.toString());
-						Toast.makeText(AddFoodActivity.this, "添加成功",
-								Toast.LENGTH_SHORT).show();
-						AddFoodActivity.this.finish();
+				} else {
+					Bundle extras = data.getExtras();
+					if (extras != null) {
+						Bitmap image = extras.getParcelable("data");
+						if (image != null) {
+							LinearLayout.LayoutParams lp = (LayoutParams) iv_picture.getLayoutParams();
+							lp.height = LayoutParams.WRAP_CONTENT;
+							iv_picture.setLayoutParams(lp);
+							iv_picture.setImageBitmap(image);
+						}
 					}
+				}
 
-				});
+			}
+			break;
+		default:
+			break;
+
+		}
 	}
 }

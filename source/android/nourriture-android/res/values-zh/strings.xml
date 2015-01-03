@@ -174,4 +174,9 @@
     <!-- CmtActivity -->
     <string name="activity_cmt_no_cmt">暂时还没有评论哦</string>
     <string name="activity_cmt_fail">评论失败</string>
+    
+    <!-- AddFoodActivity -->
+    <string name="activity_add_food_title">添加食物</string>
+    <string name="activity_add_food_from_album">从相册选择</string>
+    <string name="activity_add_food_take_photo">拍照</string>
 </resources>

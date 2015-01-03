@@ -177,4 +177,7 @@
     <string name="activity_manu_not_support">manufacturer is not surpport now</string>
     <string name="activity_manu_cmt_not_empty">comment can not be empty</string>
     <string name="activity_cmt_fail">comment fail</string>
+    
+    <!-- AddFoodActivity -->
+    <string name="activity_add_food_title">Add Food</string>
 </resources>
