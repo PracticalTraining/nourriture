@@ -113,3 +113,18 @@ a#registerButton img {
 	margin-bottom:10px;
 }
 
+/********** fooddetail*************/
+.overflow-h{
+	overflow: hidden;
+}
+
+.mb15{
+	margin-bottom: 15px;
+}
+.mr20{
+	margin-right: 20px;
+}
+
+.divide-title{
+	border-bottom: solid #E6E6E6 1px;
+}
