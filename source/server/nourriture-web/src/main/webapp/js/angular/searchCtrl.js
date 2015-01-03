@@ -63,7 +63,7 @@ app.controller("search", function($scope, $http) {
 								+'</div>'
 								+'<i class="home"></i>'
 								+'<div class="inner_wrap">'
-								+'<h3>2 bedroom house for rent in Dubai</h3>'
+								+'<h3>'+foods[i].name+'</h3>'
 								+'<ul class="star1">'
 								+'<h4 class="green">Vision Agency</h4>'
 								+'<li><a href="#"> <img src="./images/star1.png" alt="">(236)</a></li>'
