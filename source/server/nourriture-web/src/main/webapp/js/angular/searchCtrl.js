@@ -45,6 +45,7 @@ app.controller("search", function($scope, $http) {
 							
 							var foodcol3='<div class="col-md-3">'
 								+'<div class="grid1">'
+								+'<a href="fooddetail.html">'
 								+'<div class="view view-first">'
 								+'<div class="index_img">'
 								+'<img src='+foods[i].picture+' class="img-responsive" alt="">'
@@ -61,6 +62,7 @@ app.controller("search", function($scope, $http) {
 								+'</ul>'
 								+'</div>'
 								+'</div>'
+								+'</a>'
 								+'<i class="home"></i>'
 								+'<div class="inner_wrap">'
 								+'<h3>'+foods[i].name+'</h3>'
