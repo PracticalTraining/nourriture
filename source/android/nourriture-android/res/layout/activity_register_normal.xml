@@ -28,7 +28,7 @@
         android:orientation="vertical">
        
        <EditText 
-           android:id="@+id/ed_register_username"
+            android:id="@+id/ed_register_username"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:hint="@string/register_normal_useraccount_hint"

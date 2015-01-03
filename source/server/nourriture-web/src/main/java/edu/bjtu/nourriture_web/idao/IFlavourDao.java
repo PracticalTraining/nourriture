@@ -1,5 +1,7 @@
 package edu.bjtu.nourriture_web.idao;
 
+import java.util.List;
+
 import edu.bjtu.nourriture_web.bean.Flavour;
 import edu.bjtu.nourriture_web.bean.FoodCategory;
 import edu.bjtu.nourriture_web.bean.RecipeCategory;
@@ -23,4 +25,6 @@ public interface IFlavourDao {
 
 	/** update the Flavour **/
 	void update(Flavour updateFlavour);
+	
+	List<Flavour> getChildren(int pId);
 }

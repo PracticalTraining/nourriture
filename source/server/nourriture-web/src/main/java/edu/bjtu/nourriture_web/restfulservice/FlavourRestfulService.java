@@ -263,6 +263,21 @@ public class FlavourRestfulService {
 		return ret.toString();
 
 	}
+	
+	@GET
+	@Path("{pId}/getChildren")
+	public String getChildren(@PathParam("pId") int pId){
+		JsonObject ret = new JsonObject();
+		List<Flavour> flavours = FlavourDao.getChildren(pId);
+		JsonArray jFlavours = new JsonArray();
+		for(Flavour f : flavours){
+			JsonObject jFlavour = JsonUtil.beanToJson(f);
+			jFlavours.add(jFlavour);
+		}
+		ret.add("flavours", jFlavours);
+		ret.add("links", new JsonArray());
+		return ret.toString();
+	}
 
 	/**
 	 * transform Flavour from bean to json
