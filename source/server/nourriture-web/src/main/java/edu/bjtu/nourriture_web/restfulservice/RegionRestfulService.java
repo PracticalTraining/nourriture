@@ -16,6 +16,7 @@ import javax.ws.rs.QueryParam;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import edu.bjtu.nourriture_web.bean.Flavour;
 import edu.bjtu.nourriture_web.bean.Region;
 import edu.bjtu.nourriture_web.common.JsonUtil;
 import edu.bjtu.nourriture_web.common.RestfulServiceUtil;
@@ -254,6 +255,21 @@ public class RegionRestfulService {
 		regionDao.delete(deleteRegion);
 		ret.addProperty("id", id);
 		ret.add("links", regionChildrenLinks);
+		return ret.toString();
+	}
+	
+	@GET
+	@Path("{pId}/getChildren")
+	public String getChildren(@PathParam("pId") int pId){
+		JsonObject ret = new JsonObject();
+		List<Region> regions = regionDao.getChildren(pId);
+		JsonArray jRegions = new JsonArray();
+		for(Region f : regions){
+			JsonObject jRegion = JsonUtil.beanToJson(f);
+			jRegions.add(jRegion);
+		}
+		ret.add("regions", jRegions);
+		ret.add("links", new JsonArray());
 		return ret.toString();
 	}
 

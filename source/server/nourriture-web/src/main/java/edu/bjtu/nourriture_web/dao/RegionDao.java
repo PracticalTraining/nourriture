@@ -73,4 +73,9 @@ public class RegionDao extends HibernateDaoSupport implements IRegionDao {
 		// TODO Auto-generated method stub
 		return getHibernateTemplate().find("from Region");
 	}
+
+	public List<Region> getChildren(int pId) {
+		// TODO Auto-generated method stub
+		return  getHibernateTemplate().find("from Region where superiorRegionId = ?",pId);
+	}
 }

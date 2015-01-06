@@ -27,4 +27,6 @@ public interface IRegionDao {
 	void update(Region updateRegion);
 
 	boolean isRegionExist(int regionId);
+	
+	List<Region> getChildren(int pId);
 }
