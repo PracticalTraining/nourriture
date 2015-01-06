@@ -84,12 +84,32 @@
                 android:text="@string/activity_food_flavour"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"/>
-            <TextView 
+            <TextView
+                android:id="@+id/textview_sel_flavour" 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textColor="#555"
                 android:text="@string/activity_add_food_sel_flavour"
+                android:drawableRight="@drawable/web_go_red"
+                android:gravity="center_vertical"
+                android:layout_margin="10dp"/>
+        </TableRow>
+        <TableRow>
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/activity_food_category"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/textview_sel_food_category"  
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#555"
+                android:text="@string/activity_add_food_sel_category"
                 android:drawableRight="@drawable/web_go_red"
                 android:gravity="center_vertical"
                 android:layout_margin="10dp"/>

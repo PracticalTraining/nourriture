@@ -62,15 +62,10 @@
         <item name="thumb">@drawable/switch_thumb_activated_mz</item>
         -->
         <item name="switchTextAppearance">@android:style/TextAppearance.Small</item>
-        <item name="textOn">@string/switch_on</item>
-        <item name="textOff">@string/switch_off</item>
         <item name="thumbTextPadding">12dip</item>
         <item name="switchMinWidth">96dip</item>
         <item name="switchPadding">16dip</item>
  
     </style>
-
-    <string name="switch_on"></string>
-    <string name="switch_off"></string>
 
 </resources>

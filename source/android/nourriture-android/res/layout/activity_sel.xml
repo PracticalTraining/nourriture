@@ -23,7 +23,7 @@
     </LinearLayout>
 
  <ListView 
-     android:id="@+id/flavour_listview"
+     android:id="@+id/sel_listview"
      android:layout_width="wrap_content"
      android:layout_height="fill_parent"
      android:divider="@drawable/filter_spider_line"

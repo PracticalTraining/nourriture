@@ -17,7 +17,7 @@
 package cn.edu.bjtu.nourriture.zxing.camera;
 
 import java.util.regex.Pattern;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Point;
 import android.hardware.Camera;
@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
+@SuppressLint("NewApi")
 final class CameraConfigurationManager {
 
     private static final String TAG = CameraConfigurationManager.class.getSimpleName();

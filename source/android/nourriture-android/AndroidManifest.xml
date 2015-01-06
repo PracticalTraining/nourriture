@@ -53,10 +53,6 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.MainActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".ui.IndexActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme" />
@@ -66,10 +62,6 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.SndCategoryActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".ui.CartActivity"
-            android:launchMode="singleTop"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.PersonalActivity"
@@ -95,32 +87,12 @@
             android:theme="@style/AppTheme" >
         </activity>
         <activity
-            android:name=".ui.MoreActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" >
-        </activity>
-        <activity
             android:name=".ui.IndexShakeActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme" >
         </activity>
         <activity
-            android:name=".ui.IndexClothingActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" >
-        </activity>
-        <activity
             android:name=".ui.IndexDigtalActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" >
-        </activity>
-        <activity
-            android:name=".ui.IndexDaily"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" >
-        </activity>
-        <activity
-            android:name=".ui.IndexEbookActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme" >
         </activity>
@@ -172,7 +144,8 @@
            <activity android:name="cn.edu.bjtu.nourriture.ui.CmtActivity"></activity>
            <activity android:name="cn.edu.bjtu.nourriture.zxing.view.SelectPicPopupWindow"
                android:theme="@style/MyDialogStyleBottom"></activity>
-           <activity android:name="cn.edu.bjtu.nourriture.ui.FlavourActivity"></activity>
+           <activity android:name="cn.edu.bjtu.nourriture.ui.SelFlavourActivity"></activity>
+           <activity android:name="cn.edu.bjtu.nourriture.ui.SelFoodCategoryActivity"></activity>
     </application>
 
 </manifest>

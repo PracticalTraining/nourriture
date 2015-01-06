@@ -183,7 +183,10 @@
     <string name="activity_add_food_title">添加食物</string>
     <string name="activity_add_food_locate">点击定位</string>
     <string name="activity_add_food_sel_flavour">点击选择口味</string>
+    <string name="activity_add_food_sel_category">点击选择类别</string>
     
     <!-- FlavourActivity -->
     <string name="activity_flavour_title">选择口味</string>
+    <string name="activity_add_food_from_album">从相册选择</string>
+    <string name="activity_add_food_take_photo">拍照</string>
 </resources>
