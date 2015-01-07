@@ -5,10 +5,19 @@
   
 <struts> 
     <include file="struts-default.xml" />
-    <constant name="struts.action.extension" value="action"></constant> 
+    <constant name="struts.action.extension" value="action"></constant>
+    <constant name="struts.multipart.maxSize" value="10000000"/> 
  	<package name="default" namespace="/" extends="struts-default" >
-        <action name="testAction" class="testAction">
-            <result name="success">index.jsp</result>
+        <action name="upload" class="edu.bjtu.nourriture_web.action.UploadImageAction" method="upload">
+            <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">
+                    image/*
+                </param>
+                <param name="maximumSize">5000000</param>
+            </interceptor-ref>
+            
+            <!-- 默认的拦截器，必须要写 -->
+            <interceptor-ref name="defaultStack" />
         </action>  
     </package>
 </struts> 
