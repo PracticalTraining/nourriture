@@ -184,9 +184,36 @@
     <string name="activity_add_food_locate">点击定位</string>
     <string name="activity_add_food_sel_flavour">点击选择口味</string>
     <string name="activity_add_food_sel_category">点击选择类别</string>
-    
-    <!-- FlavourActivity -->
-    <string name="activity_flavour_title">选择口味</string>
     <string name="activity_add_food_from_album">从相册选择</string>
     <string name="activity_add_food_take_photo">拍照</string>
+    <string name="activity_add_food_no_image">图片不能为空</string>
+    <string name="activity_add_food_no_name">食物名不能为空</string>
+    <string name="activity_add_food_no_price">食物价格不能为空</string>
+    <string name="activity_add_food_no_flavour">请为食物选择一种口味</string>
+    <string name="activity_add_food_no_category">请为食物选择一种类别</string>
+    <string name="activity_add_food_no_produce_loc">请为食物选择生产地</string>
+    <string name="activity_add_food_no_buy_loc">请为食物选择销售地</string>
+    
+    <!-- SelFlavourActivity -->
+    <string name="activity_sel_flavour_title">选择口味</string>
+    
+    <!-- SelFoodCategoryActivity -->
+    <string name="activity_sel_food_category_title">选择食物类别</string>
+    
+    <!-- SelRecipeCategoryActivity -->
+    <string name="activity_sel_recipe_category_title">选择食谱类别</string>
+    
+    <!-- SelRegionActivity -->
+    <string name="activity_sel_region_title">选择地区</string>
+    
+    <!-- SearchLocationActivity -->
+    <string name="activity_search_location_title">输入详细地址</string>
+    <string name="activity_search_location_locate">定位当前位置</string>
+    <string name="activity_search_location_click">直接点击地图地位</string>
+    <string name="activity_search_location_keyword">关键词不能为空</string>
+    <string name="activity_search_location_no_result">没有找到结果，请尝试其他关键字</string>
+    <string name="activity_search_location_other_city">在当前区域中未找到结果，但您可以尝试：</string>
+    
+    <!-- ConfirmLocationActivity -->
+    <string name="activity_confirm_location_title">确认位置</string>
 </resources>

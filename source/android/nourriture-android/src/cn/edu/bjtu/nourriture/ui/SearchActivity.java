@@ -73,7 +73,7 @@ public class SearchActivity extends BaseActivity {
 		lyNoHistory = (LinearLayout) findViewById(R.id.layout_login);
 		line1 = findViewById(R.id.line1);
 		line2 = findViewById(R.id.line2);
-		clearHistory = (RelativeLayout) findViewById(R.id.relativelayout_clear_history);
+		clearHistory = (RelativeLayout) findViewById(R.id.relativelayout_option_op);
 	}
 
 	@Override

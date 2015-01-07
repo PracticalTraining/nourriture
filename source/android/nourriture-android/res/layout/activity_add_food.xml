@@ -51,6 +51,7 @@
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"/>
             <EditText
+                android:id="@+id/edittext_name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
@@ -171,7 +172,7 @@
         android:orientation="vertical">
         
         <Button
-	        android:id="@+id/button_cmt"
+	        android:id="@+id/button_ok"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_horizontal"

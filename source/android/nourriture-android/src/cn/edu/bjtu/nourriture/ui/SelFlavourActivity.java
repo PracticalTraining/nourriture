@@ -79,7 +79,7 @@ public class SelFlavourActivity extends BaseActivity {
 					} else {
 						Intent intent = new Intent();
 						intent.putExtra(EXTRA_FLAVOUR, jFlavour.toString());
-						setResult(AddFoodActivity.REQUEST_CODE_FLAVOUR,intent);
+						setResult(RESULT_OK,intent);
 						finish();
 					}
 				} catch (JSONException e) {
@@ -110,6 +110,8 @@ public class SelFlavourActivity extends BaseActivity {
 					}
 				}
 			});
+		} else {
+			tv_title.setText(rs.getString(R.string.activity_sel_flavour_title));
 		}
 		
 		adapter = new FlavourAdapter(new ArrayList<JSONObject>());

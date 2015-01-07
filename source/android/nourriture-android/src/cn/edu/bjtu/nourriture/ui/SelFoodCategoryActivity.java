@@ -80,7 +80,7 @@ public class SelFoodCategoryActivity extends BaseActivity {
 					} else {
 						Intent intent = new Intent();
 						intent.putExtra(EXTRA_FOOD_CATEGORY, jFoodCategory.toString());
-						setResult(AddFoodActivity.REQUEST_CODE_FOOD_CATEGORY,intent);
+						setResult(RESULT_OK,intent);
 						finish();
 					}
 				} catch (JSONException e) {
@@ -104,13 +104,15 @@ public class SelFoodCategoryActivity extends BaseActivity {
 				@Override
 				public void onSuccess(ResponseInfo<String> arg0) {
 					try {
-						JSONObject jFlavour = new JSONObject(arg0.result).getJSONObject("superiorFlavour");
+						JSONObject jFlavour = new JSONObject(arg0.result).getJSONObject("superiorFood");
 						tv_title.setText(jFlavour.getString("name"));
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
 				}
 			});
+		} else {
+			tv_title.setText(rs.getString(R.string.activity_sel_food_category_title));
 		}
 		
 		adapter = new FoodCategoryAdapter(new ArrayList<JSONObject>());

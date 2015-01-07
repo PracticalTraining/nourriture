@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,18 +41,29 @@ public class SelRegionActivity extends BaseActivity {
 	private HttpUtils httpUtils;
 	private TextView tv_title;
 	private int superiorId;
-	public static final String EXTRA_FLAVOUR = "EXTRA_FLAVOUR";
-	private FlavourAdapter adapter;
+	public static final String EXTRA_REGION = "EXTRA_REGION";
+	private RegionAdapter adapter;
+	private int type;
+	public static final String EXTRA_TYPE= "EXTRA_TYPE";
+	public static final int TYPE_PRODUCE = 1;
+	public static final int TYPE_BUY= 2;
+	private List<String> regions;
+	public static final int REQUEST_CODE_LOCATION = 1;
+	private int selectedRegionId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 		httpUtils = new HttpUtils();
 		httpUtils.configCurrentHttpCacheExpiry(0L);
 		
+		type = getIntent().getIntExtra(EXTRA_TYPE, 0);
+		
 		setContentView(R.layout.activity_sel);
+		
+		regions = new ArrayList<String>();
+		
 		findViewById();
 		setListeners();
 		initView();
@@ -71,16 +83,21 @@ public class SelRegionActivity extends BaseActivity {
 					int position, long id) {
 				JSONObject jFlavour = (JSONObject) adapter.getItem(position);
 				try {
+					regions.add(jFlavour.getString("name"));
 					int childrenNum = jFlavour.getInt("childrenNum");
 					if(childrenNum > 0)
 					{
 						superiorId = (int) id;
 						initView();
 					} else {
-						Intent intent = new Intent();
-						intent.putExtra(EXTRA_FLAVOUR, jFlavour.toString());
-						setResult(AddFoodActivity.REQUEST_CODE_FLAVOUR,intent);
-						finish();
+						selectedRegionId = (int) id;
+						Intent intent = new Intent(SelRegionActivity.this,SearchLocationActivity.class);
+						String[] regionArys = new String[regions.size()];
+						for(int i = 0;i < regions.size();i++){
+							regionArys[i] = regions.get(i);
+						}
+						intent.putExtra(SearchLocationActivity.EXTRA_REGIONS, regionArys);
+						startActivityForResult(intent,REQUEST_CODE_LOCATION);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -88,11 +105,23 @@ public class SelRegionActivity extends BaseActivity {
 			}
 		});
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == Activity.RESULT_CANCELED){
+			superiorId = 0;
+			initView();
+		} else if(resultCode == Activity.RESULT_OK) {
+			data.putExtra(AddFoodActivity.EXTRA_REGION_ID, selectedRegionId);
+			setResult(RESULT_OK, data);
+			finish();
+		}
+	}
 
 	@Override
 	protected void initView() {
 		if(superiorId != 0){
-			String url = Constants.MOBILE_SERVER_URL + "flavour/" + superiorId;
+			String url = Constants.MOBILE_SERVER_URL + "region/" + superiorId;
 			httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
 
 				@Override
@@ -103,25 +132,29 @@ public class SelRegionActivity extends BaseActivity {
 				@Override
 				public void onSuccess(ResponseInfo<String> arg0) {
 					try {
-						JSONObject jFlavour = new JSONObject(arg0.result).getJSONObject("superiorFlavour");
-						tv_title.setText(jFlavour.getString("name"));
+						JSONObject jRegion = new JSONObject(arg0.result).getJSONObject("superiorRecipe");
+						tv_title.setText(jRegion.getString("name"));
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
 				}
 			});
+		} else {
+			tv_title.setText(rs.getString(R.string.activity_sel_region_title));
+			regions.clear();
+			selectedRegionId = 0;
 		}
 		
-		adapter = new FlavourAdapter(new ArrayList<JSONObject>());
+		adapter = new RegionAdapter(new ArrayList<JSONObject>());
 		lv_sel_listview.setAdapter(adapter);
 		
 		new GetFlavourTask().execute();
 	}
 	
-	private class FlavourAdapter extends BaseAdapter{
+	private class RegionAdapter extends BaseAdapter{
 		private List<JSONObject> data;
 		
-		public FlavourAdapter(List<JSONObject> data) {
+		public RegionAdapter(List<JSONObject> data) {
 			super();
 			this.data = data;
 		}
@@ -195,18 +228,18 @@ public class SelRegionActivity extends BaseActivity {
 
 		@Override
 		protected List<JSONObject> doInBackground(Void... params) {
-			String url = Constants.MOBILE_SERVER_URL + "flavour/" + superiorId + "/getChildren";
+			String url = Constants.MOBILE_SERVER_URL + "region/" + superiorId + "/getChildren";
 			try {
 				String rs = httpUtils.sendSync(HttpMethod.GET, url).readString();
-				JSONArray jFlavours = new JSONObject(rs).getJSONArray("flavours");
+				JSONArray jRegions = new JSONObject(rs).getJSONArray("regions");
 				List<JSONObject> data = new ArrayList<JSONObject>();
-				for(int i = 0;i < jFlavours.length();i++){
-					JSONObject jFlavour = jFlavours.getJSONObject(i);
-					url = Constants.MOBILE_SERVER_URL + "flavour/" + jFlavour.getInt("id") + "/getChildren";
+				for(int i = 0;i < jRegions.length();i++){
+					JSONObject jRegion = jRegions.getJSONObject(i);
+					url = Constants.MOBILE_SERVER_URL + "region/" + jRegion.getInt("id") + "/getChildren";
 					rs = httpUtils.sendSync(HttpMethod.GET, url).readString();
-					int childrenNum = new JSONObject(rs).getJSONArray("flavours").length();
-					jFlavour.put("childrenNum", childrenNum);
-					data.add(jFlavour);
+					int childrenNum = new JSONObject(rs).getJSONArray("regions").length();
+					jRegion.put("childrenNum", childrenNum);
+					data.add(jRegion);
 				}
 				return data;
 			} catch (HttpException e) {
