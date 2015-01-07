@@ -70,6 +70,7 @@ public class SelectPicPopupWindow extends Activity implements OnClickListener {
 		        	 Uri capturedImage = Uri.parse(
 		        			 	 	 android.provider.MediaStore.Images.Media.insertImage(getContentResolver(),  
 		        					 f.getAbsolutePath(), null, null)); 
+		        	 f.delete();
 		             intent.setData(capturedImage);
 		         } catch (FileNotFoundException e) {                                          
 		             e.printStackTrace();                        
@@ -80,7 +81,7 @@ public class SelectPicPopupWindow extends Activity implements OnClickListener {
 			intent.setData(data.getData());
 		if (data != null && data.getExtras() != null)
 			intent.putExtras(data.getExtras());
-		setResult(1, intent);
+		setResult(RESULT_OK, intent);
 		finish();
 
 	}

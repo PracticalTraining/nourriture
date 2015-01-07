@@ -2,6 +2,8 @@ package cn.edu.bjtu.nourriture;
 
 import java.util.Locale;
 
+import com.baidu.mapapi.SDKInitializer;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -40,6 +42,8 @@ public class BaseApplication extends Application {
             config.locale = Locale.getDefault();
         }
 	    resources.updateConfiguration(config, dm);
+	    
+	    SDKInitializer.initialize(this);
 	}
 
 	@Override

@@ -11,10 +11,11 @@ import android.view.View.OnFocusChangeListener;
 import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import cn.edu.bjtu.nourriture.R;
 
-public class AutoClearEditText extends EditText implements
+public class AutoClearEditText extends AutoCompleteTextView implements
 		OnFocusChangeListener, TextWatcher {
 	/**
 	 * 删除按钮的引用

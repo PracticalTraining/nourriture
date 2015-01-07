@@ -54,7 +54,7 @@
         style="@style/SearchLine"
         android:visibility="gone"/>
     <RelativeLayout
-        android:id="@+id/relativelayout_clear_history" 
+        android:id="@+id/relativelayout_option_op" 
 	    android:layout_width="match_parent"
 	    android:layout_height="50dp"
 	    android:padding="10dp"

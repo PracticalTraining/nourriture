@@ -18,8 +18,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dip"
             android:textColor="#ffffff"
-            android:textSize="@dimen/medium_text_size"
-            android:text="@string/activity_flavour_title"  />
+            android:textSize="@dimen/medium_text_size"/>
     </LinearLayout>
 
  <ListView 
