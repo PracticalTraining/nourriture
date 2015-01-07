@@ -92,7 +92,7 @@ public class SelFlavourActivity extends BaseActivity {
 	@Override
 	protected void initView() {
 		if(superiorId != 0){
-			String url = Constants.MOBILE_SERVER_URL + "flavour/" + superiorId;
+			String url = Constants.MOBILE_SERVER_WS_URL + "flavour/" + superiorId;
 			httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
 
 				@Override
@@ -197,14 +197,14 @@ public class SelFlavourActivity extends BaseActivity {
 
 		@Override
 		protected List<JSONObject> doInBackground(Void... params) {
-			String url = Constants.MOBILE_SERVER_URL + "flavour/" + superiorId + "/getChildren";
+			String url = Constants.MOBILE_SERVER_WS_URL + "flavour/" + superiorId + "/getChildren";
 			try {
 				String rs = httpUtils.sendSync(HttpMethod.GET, url).readString();
 				JSONArray jFlavours = new JSONObject(rs).getJSONArray("flavours");
 				List<JSONObject> data = new ArrayList<JSONObject>();
 				for(int i = 0;i < jFlavours.length();i++){
 					JSONObject jFlavour = jFlavours.getJSONObject(i);
-					url = Constants.MOBILE_SERVER_URL + "flavour/" + jFlavour.getInt("id") + "/getChildren";
+					url = Constants.MOBILE_SERVER_WS_URL + "flavour/" + jFlavour.getInt("id") + "/getChildren";
 					rs = httpUtils.sendSync(HttpMethod.GET, url).readString();
 					int childrenNum = new JSONObject(rs).getJSONArray("flavours").length();
 					jFlavour.put("childrenNum", childrenNum);

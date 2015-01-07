@@ -98,7 +98,7 @@ public class FoodActivity extends BaseActivity {
 		
 		bitmapUtils.display(iv_picture, food.getPicture());
 		
-		String url = Constants.MOBILE_SERVER_URL + "manuFacturer/" + food.getManufacturerId();
+		String url = Constants.MOBILE_SERVER_WS_URL + "manuFacturer/" + food.getManufacturerId();
 		HttpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
 
 			@Override
@@ -120,7 +120,7 @@ public class FoodActivity extends BaseActivity {
 		
 		tv_price.setText(String.valueOf(food.getPrice()));
 		
-		url = Constants.MOBILE_SERVER_URL + "foodCategory/" + food.getCategoryId();
+		url = Constants.MOBILE_SERVER_WS_URL + "foodCategory/" + food.getCategoryId();
 		HttpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
 
 			@Override
@@ -140,7 +140,7 @@ public class FoodActivity extends BaseActivity {
 			}
 		});
 		
-		url = Constants.MOBILE_SERVER_URL + "flavour/" + food.getFlavourId();
+		url = Constants.MOBILE_SERVER_WS_URL + "flavour/" + food.getFlavourId();
 		HttpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
 
 			@Override
@@ -199,7 +199,7 @@ public class FoodActivity extends BaseActivity {
 	}
 	
 	private String loadRegion(int id){
-		String rUrl = Constants.MOBILE_SERVER_URL + "region/" + id;
+		String rUrl = Constants.MOBILE_SERVER_WS_URL + "region/" + id;
 		try {
 			String regionStr = HttpUtils.sendSync(HttpMethod.GET, rUrl).readString();
 			JSONObject jRegion = new JSONObject(regionStr);
@@ -232,7 +232,7 @@ public class FoodActivity extends BaseActivity {
 		@Override
 		public void run() {
 			try {
-				String lUrl = Constants.MOBILE_SERVER_URL + "location/" + lId;
+				String lUrl = Constants.MOBILE_SERVER_WS_URL + "location/" + lId;
 				String locationStr = HttpUtils.sendSync(HttpMethod.GET, lUrl).readString();
 				JSONObject jLocation = new JSONObject(locationStr);
 				String locationName = jLocation.getString("detailAddress");
@@ -267,7 +267,7 @@ public class FoodActivity extends BaseActivity {
 		@Override
 		public void run() {
 			try {
-				String lUrl = Constants.MOBILE_SERVER_URL + "location/" + lId;
+				String lUrl = Constants.MOBILE_SERVER_WS_URL + "location/" + lId;
 				String locationStr = HttpUtils.sendSync(HttpMethod.GET, lUrl).readString();
 				JSONObject jLocation = new JSONObject(locationStr);
 				String locationName = jLocation.getString("detailAddress");

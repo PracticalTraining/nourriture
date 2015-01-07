@@ -186,7 +186,7 @@ public class CmtActivity extends BaseActivity {
 				
 				final String cmt = et_cmt.getText().toString();
 				et_cmt.setText("");
-				String url = Constants.MOBILE_SERVER_URL + "comments";
+				String url = Constants.MOBILE_SERVER_WS_URL + "comments";
 				RequestParams params = new RequestParams();
 				params.addBodyParameter("score", String.valueOf(score));
 				params.addBodyParameter("description", cmt);
@@ -244,7 +244,7 @@ public class CmtActivity extends BaseActivity {
 	
 	private List<JSONObject> getData(){
 		List<JSONObject> data = new ArrayList<JSONObject>();
-		String url = Constants.MOBILE_SERVER_URL;
+		String url = Constants.MOBILE_SERVER_WS_URL;
 		if(type == TYPE_FOOD){
 			url += "comments/getFoodCmt";
 		} else if(type == TYPE_RECIPE){
@@ -264,7 +264,7 @@ public class CmtActivity extends BaseActivity {
 			for(int i = 0;i < jCmts.length();i++){
 				JSONObject jCmt = jCmts.getJSONObject(i);
 				int customerId = jCmt.getInt("customerId");
-				url = Constants.MOBILE_SERVER_URL + "customer/" + customerId;
+				url = Constants.MOBILE_SERVER_WS_URL + "customer/" + customerId;
 				String customerStr = httpUtils.sendSync(HttpMethod.GET, url).readString();
 				JSONObject jCustomer = new JSONObject(customerStr).getJSONObject("customer");
 				String name = jCustomer.getString("name");

@@ -81,9 +81,9 @@ public class ChangePwdActivity extends BaseActivity {
 		String id = EMobileTask.getCookie("userId");
 		String url = null;
 		if (idendity.equals("customer")) {
-			url = Constants.MOBILE_SERVER_URL + "customer/password/" + id;
+			url = Constants.MOBILE_SERVER_WS_URL + "customer/password/" + id;
 		} else if (idendity.equals("manu")) {
-			url = Constants.MOBILE_SERVER_URL + "manuFacturer/password/" + id;
+			url = Constants.MOBILE_SERVER_WS_URL + "manuFacturer/password/" + id;
 		}
 		RequestParams params = new RequestParams();
 		// params.addBodyParameter("name", name);

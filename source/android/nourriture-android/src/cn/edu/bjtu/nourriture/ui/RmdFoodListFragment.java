@@ -143,7 +143,7 @@ public class RmdFoodListFragment extends Fragment {
 	
 	private List<JSONObject> getData(){
 		List<JSONObject> data = new ArrayList<JSONObject>();
-		String url = Constants.MOBILE_SERVER_URL + "food/recommend";
+		String url = Constants.MOBILE_SERVER_WS_URL + "food/recommend";
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("customerId", EMobileTask.getCookie("userId"));
 		params.addQueryStringParameter("page", String.valueOf(page));
@@ -154,7 +154,7 @@ public class RmdFoodListFragment extends Fragment {
 				JSONObject jFood = jFoods.getJSONObject(i);
 				jFood.put("jsonStr", jFood.toString());
 				int flavourId = jFood.getInt("flavourId");
-				url = Constants.MOBILE_SERVER_URL + "flavour/" + flavourId;
+				url = Constants.MOBILE_SERVER_WS_URL + "flavour/" + flavourId;
 				String flavourStr = httpUtils.sendSync(HttpMethod.GET, url).readString();
 				JSONObject jFlavour = new JSONObject(flavourStr).getJSONObject("superiorFlavour");
 				String name = jFlavour.getString("name");

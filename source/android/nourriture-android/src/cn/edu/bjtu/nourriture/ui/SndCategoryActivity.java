@@ -66,7 +66,7 @@ public class SndCategoryActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> adapterview, View view, int parent,
 					final long id) {
 				LogUtils.i(id + "");
-				String url = Constants.MOBILE_SERVER_URL;
+				String url = Constants.MOBILE_SERVER_WS_URL;
 				url = type == 0 ? url + "foodCategory/getChildren" : url + "recipeCategory/getChildren";
 				RequestParams params = new RequestParams();
 				params.addQueryStringParameter("id", String.valueOf(id));
@@ -113,7 +113,7 @@ public class SndCategoryActivity extends BaseActivity {
 
 	@Override
 	protected void initView() {
-		String url = Constants.MOBILE_SERVER_URL;
+		String url = Constants.MOBILE_SERVER_WS_URL;
 		url = type == 0 ? url + "foodCategory/getChildren" : url + "recipeCategory/getChildren";
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("id", String.valueOf(superiorCategoryId));
@@ -152,7 +152,7 @@ public class SndCategoryActivity extends BaseActivity {
 				tv_title.setText(R.string.recipe);
 			}
 		} else {
-			url = Constants.MOBILE_SERVER_URL;
+			url = Constants.MOBILE_SERVER_WS_URL;
 			url = type == 0 ? url + "foodCategory/" : url + "recipeCategory/";
 			url += superiorCategoryId;
 			httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {

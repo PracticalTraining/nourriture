@@ -89,7 +89,7 @@ public class RecipeListActivity extends BaseActivity {
 		pl_refresh.getLoadingLayoutProxy(true, false).setRefreshingLabel(rs.getString(R.string.refreshing));
 		pl_refresh.getLoadingLayoutProxy(true, false).setReleaseLabel(rs.getString(R.string.loosen_refreshing));
 		
-		String url = Constants.MOBILE_SERVER_URL + "recipeCategory/" + categoryId;
+		String url = Constants.MOBILE_SERVER_WS_URL + "recipeCategory/" + categoryId;
 		httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
 
 			@Override
@@ -293,7 +293,7 @@ public class RecipeListActivity extends BaseActivity {
 	
 	private List<JSONObject> getData(){
 		List<JSONObject> data = new ArrayList<JSONObject>();
-		String url = Constants.MOBILE_SERVER_URL + "recipe/getPage";
+		String url = Constants.MOBILE_SERVER_WS_URL + "recipe/getPage";
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("categoryId", String.valueOf(categoryId));
 		params.addQueryStringParameter("page", String.valueOf(page));

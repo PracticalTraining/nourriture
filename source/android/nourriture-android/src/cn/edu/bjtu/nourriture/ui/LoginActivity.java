@@ -144,9 +144,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		HttpUtils httpUtils = new HttpUtils();
 		String url = null;
 		if (identity == R.id.radiobutton_customer) {
-			url = Constants.MOBILE_SERVER_URL + "customer/login";
+			url = Constants.MOBILE_SERVER_WS_URL + "customer/login";
 		} else {
-			url = Constants.MOBILE_SERVER_URL + "manuFacturer/login";
+			url = Constants.MOBILE_SERVER_WS_URL + "manuFacturer/login";
 		}
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("name", username);

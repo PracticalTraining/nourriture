@@ -158,7 +158,7 @@ public class CaptureActivity extends Activity implements Callback {
 				l.show();
 				if(jObj.getString("type").equals("food")){
 					resultIntent = new Intent(CaptureActivity.this,FoodActivity.class);
-					httpUtils.send(HttpMethod.GET, Constants.MOBILE_SERVER_URL + "food/" + jObj.getInt("id"), new RequestCallBack<String>() {
+					httpUtils.send(HttpMethod.GET, Constants.MOBILE_SERVER_WS_URL + "food/" + jObj.getInt("id"), new RequestCallBack<String>() {
 
 						@Override
 						public void onFailure(HttpException arg0, String arg1) {
@@ -180,7 +180,7 @@ public class CaptureActivity extends Activity implements Callback {
 					
 				} else {
 					resultIntent = new Intent(CaptureActivity.this,RecipeActivity.class);
-					httpUtils.send(HttpMethod.GET, Constants.MOBILE_SERVER_URL + "recipe/" + jObj.getInt("id"), new RequestCallBack<String>() {
+					httpUtils.send(HttpMethod.GET, Constants.MOBILE_SERVER_WS_URL + "recipe/" + jObj.getInt("id"), new RequestCallBack<String>() {
 
 						@Override
 						public void onFailure(HttpException arg0, String arg1) {

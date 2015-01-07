@@ -1,11 +1,15 @@
 package cn.edu.bjtu.nourriture.ui;
 
+import java.io.File;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -22,13 +26,18 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.edu.bjtu.nourriture.R;
+import cn.edu.bjtu.nourriture.bean.Constants;
 import cn.edu.bjtu.nourriture.bean.Food;
 import cn.edu.bjtu.nourriture.bean.Location;
 import cn.edu.bjtu.nourriture.task.EMobileTask;
 import cn.edu.bjtu.nourriture.ui.base.BaseActivity;
+import cn.edu.bjtu.nourriture.widgets.LoadingWindow;
 import cn.edu.bjtu.nourriture.zxing.view.SelectPicPopupWindow;
 
 import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 
 public class AddFoodActivity extends BaseActivity {
 	private ImageView iv_picture;
@@ -39,6 +48,7 @@ public class AddFoodActivity extends BaseActivity {
 	private Button bt_ok;
 	private EditText et_name;
 	private EditText et_price;
+	private LoadingWindow l;
 	public static final int REQUEST_CODE_PICTURE = 1;
 	public static final int REQUEST_CODE_FLAVOUR = 2;
 	public static final int REQUEST_CODE_FOOD_CATEGORY = 3;
@@ -49,7 +59,7 @@ public class AddFoodActivity extends BaseActivity {
 	private Food food;
 	private Location produce_loc;
 	private Location buy_loc;
-	private Bitmap image;
+	private String imagePath;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +150,7 @@ public class AddFoodActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View v) {
-				if(image == null){
+				if(TextUtils.isEmpty(imagePath)){
 					Toast.makeText(AddFoodActivity.this, R.string.activity_add_food_no_image, Toast.LENGTH_SHORT).show();
 					return;
 				}
@@ -176,6 +186,10 @@ public class AddFoodActivity extends BaseActivity {
 					Toast.makeText(AddFoodActivity.this, R.string.activity_add_food_no_buy_loc, Toast.LENGTH_SHORT).show();
 					return;
 				}
+				
+				l = EMobileTask.createLoaingWindow(AddFoodActivity.this);
+				l.show();
+				mAddFoodTask.execute();
 			}
 		});
 	}
@@ -184,6 +198,14 @@ public class AddFoodActivity extends BaseActivity {
 	protected void initView() {
 		
 	}
+	
+	private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -199,7 +221,7 @@ public class AddFoodActivity extends BaseActivity {
 							Bitmap image = MediaStore.Images.Media.getBitmap(
 									this.getContentResolver(), mImageCaptureUri);
 							if (image != null) {
-								this.image = image;
+								this.imagePath = getRealPathFromURI(mImageCaptureUri);
 								LinearLayout.LayoutParams lp = (LayoutParams) iv_picture.getLayoutParams();
 								lp.height = LayoutParams.WRAP_CONTENT;
 								iv_picture.setLayoutParams(lp);
@@ -261,4 +283,32 @@ public class AddFoodActivity extends BaseActivity {
 
 		}
 	}
+	
+	private AsyncTask<Void, Integer, Void> mAddFoodTask = new AsyncTask<Void, Integer, Void>(){
+
+		@Override
+		protected Void doInBackground(Void... p) {
+			String url = Constants.MOBILE_SERVER_URL + "upload.action";
+			RequestParams params = new RequestParams();
+			params.addBodyParameter("file", new File(imagePath));
+			try {
+				httpUtils.sendSync(HttpMethod.POST, url, params);
+			} catch (HttpException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			l.dismiss();
+			super.onPostExecute(result);
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			super.onProgressUpdate(values);
+		}
+		
+	};
 }

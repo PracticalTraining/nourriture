@@ -96,7 +96,7 @@ public class RegisterBormalActivity extends BaseActivity {
 			sex = 1;
 		}
 		HttpUtils httpUtils = new HttpUtils();
-		String url = Constants.MOBILE_SERVER_URL + "customer";
+		String url = Constants.MOBILE_SERVER_WS_URL + "customer";
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("name", name);
 		params.addBodyParameter("password", password);

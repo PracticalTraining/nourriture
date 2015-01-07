@@ -36,7 +36,7 @@ public class EditManuInfoActivity extends BaseActivity {
 		
 		HttpUtils httpUtils = new HttpUtils();
 		httpUtils.configCurrentHttpCacheExpiry(0L);
-		String url = Constants.MOBILE_SERVER_URL + "manuFacturer/" + EMobileTask.getCookie("userId");		
+		String url = Constants.MOBILE_SERVER_WS_URL + "manuFacturer/" + EMobileTask.getCookie("userId");		
 		httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
 
 			@Override
@@ -91,7 +91,7 @@ public class EditManuInfoActivity extends BaseActivity {
 		}
 		HttpUtils httpUtils = new HttpUtils();
 		String id = EMobileTask.getCookie("userId");
-		String url = Constants.MOBILE_SERVER_URL + "manuFacturer/" + id;
+		String url = Constants.MOBILE_SERVER_WS_URL + "manuFacturer/" + id;
 		RequestParams params = new RequestParams();
 		// params.addBodyParameter("id", id);
 		params.addBodyParameter("companyName", companyName);

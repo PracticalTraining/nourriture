@@ -94,7 +94,7 @@ public class RegisterManuActivity extends BaseActivity {
 			return;
 		}
 		HttpUtils httpUtils = new HttpUtils();
-		String url = Constants.MOBILE_SERVER_URL + "manuFacturer";
+		String url = Constants.MOBILE_SERVER_WS_URL + "manuFacturer";
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("name", name);
 		params.addBodyParameter("password", password);

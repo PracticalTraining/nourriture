@@ -121,7 +121,7 @@ public class SelRegionActivity extends BaseActivity {
 	@Override
 	protected void initView() {
 		if(superiorId != 0){
-			String url = Constants.MOBILE_SERVER_URL + "region/" + superiorId;
+			String url = Constants.MOBILE_SERVER_WS_URL + "region/" + superiorId;
 			httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
 
 				@Override
@@ -228,14 +228,14 @@ public class SelRegionActivity extends BaseActivity {
 
 		@Override
 		protected List<JSONObject> doInBackground(Void... params) {
-			String url = Constants.MOBILE_SERVER_URL + "region/" + superiorId + "/getChildren";
+			String url = Constants.MOBILE_SERVER_WS_URL + "region/" + superiorId + "/getChildren";
 			try {
 				String rs = httpUtils.sendSync(HttpMethod.GET, url).readString();
 				JSONArray jRegions = new JSONObject(rs).getJSONArray("regions");
 				List<JSONObject> data = new ArrayList<JSONObject>();
 				for(int i = 0;i < jRegions.length();i++){
 					JSONObject jRegion = jRegions.getJSONObject(i);
-					url = Constants.MOBILE_SERVER_URL + "region/" + jRegion.getInt("id") + "/getChildren";
+					url = Constants.MOBILE_SERVER_WS_URL + "region/" + jRegion.getInt("id") + "/getChildren";
 					rs = httpUtils.sendSync(HttpMethod.GET, url).readString();
 					int childrenNum = new JSONObject(rs).getJSONArray("regions").length();
 					jRegion.put("childrenNum", childrenNum);

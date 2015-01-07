@@ -101,7 +101,7 @@ public class RecipeActivity extends BaseActivity {
 		
 		bitmapUtils.display(iv_icon, recipe.getPicture());
 		
-		String url = Constants.MOBILE_SERVER_URL + "customer/" + recipe.getCustomerId();
+		String url = Constants.MOBILE_SERVER_WS_URL + "customer/" + recipe.getCustomerId();
 		httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
 
 			@Override
@@ -123,7 +123,7 @@ public class RecipeActivity extends BaseActivity {
 		
 		tv_des.setText(recipe.getDescription());
 		
-		url = Constants.MOBILE_SERVER_URL + "recipeCategory/" + recipe.getCatogeryId();
+		url = Constants.MOBILE_SERVER_WS_URL + "recipeCategory/" + recipe.getCatogeryId();
 		httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
 
 			@Override
@@ -145,7 +145,7 @@ public class RecipeActivity extends BaseActivity {
 		
 		tv_ingredient.setText(recipe.getIngredient());
 		
-		url = Constants.MOBILE_SERVER_URL + "cookingStep/getRecipeSteps";
+		url = Constants.MOBILE_SERVER_WS_URL + "cookingStep/getRecipeSteps";
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("rId", String.valueOf(recipe.getId()));
 		httpUtils.send(HttpMethod.GET, url, params, new RequestCallBack<String>() {

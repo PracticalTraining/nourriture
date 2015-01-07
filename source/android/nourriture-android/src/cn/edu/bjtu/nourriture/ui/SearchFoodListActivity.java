@@ -137,7 +137,7 @@ public class SearchFoodListActivity extends BaseActivity {
 				return;
 			}
 			HttpUtils httpUtils = new HttpUtils();
-			String url = Constants.MOBILE_SERVER_URL + "flavour/" + flavourId;
+			String url = Constants.MOBILE_SERVER_WS_URL + "flavour/" + flavourId;
 			httpUtils.send(HttpMethod.GET, url , new RequestCallBack<String>() {
 
 				@Override

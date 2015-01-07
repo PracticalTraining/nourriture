@@ -142,7 +142,7 @@ public class RmdRecipeListFragment extends Fragment {
 	
 	private List<JSONObject> getData(){
 		List<JSONObject> data = new ArrayList<JSONObject>();
-		String url = Constants.MOBILE_SERVER_URL + "recipe/recommend";
+		String url = Constants.MOBILE_SERVER_WS_URL + "recipe/recommend";
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("customerId", EMobileTask.getCookie("userId"));
 		params.addQueryStringParameter("page", String.valueOf(page));

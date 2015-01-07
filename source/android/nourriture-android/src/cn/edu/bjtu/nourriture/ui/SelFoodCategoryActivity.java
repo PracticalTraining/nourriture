@@ -93,7 +93,7 @@ public class SelFoodCategoryActivity extends BaseActivity {
 	@Override
 	protected void initView() {
 		if(superiorId != 0){
-			String url = Constants.MOBILE_SERVER_URL + "foodCategory/" + superiorId;
+			String url = Constants.MOBILE_SERVER_WS_URL + "foodCategory/" + superiorId;
 			httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
 
 				@Override
@@ -198,7 +198,7 @@ public class SelFoodCategoryActivity extends BaseActivity {
 
 		@Override
 		protected List<JSONObject> doInBackground(Void... p) {
-			String url = Constants.MOBILE_SERVER_URL + "foodCategory/getChildren";
+			String url = Constants.MOBILE_SERVER_WS_URL + "foodCategory/getChildren";
 			try {
 				RequestParams params = new RequestParams();
 				params.addQueryStringParameter("id", String.valueOf(superiorId));
@@ -207,7 +207,7 @@ public class SelFoodCategoryActivity extends BaseActivity {
 				List<JSONObject> data = new ArrayList<JSONObject>();
 				for(int i = 0;i < jFoodCategorys.length();i++){
 					JSONObject jFoodCategory = jFoodCategorys.getJSONObject(i);
-					url = Constants.MOBILE_SERVER_URL + "foodCategory/getChildren";
+					url = Constants.MOBILE_SERVER_WS_URL + "foodCategory/getChildren";
 					params = new RequestParams();
 					params.addQueryStringParameter("id", String.valueOf(jFoodCategory.getInt("id")));
 					rs = httpUtils.sendSync(HttpMethod.GET, url, params).readString();

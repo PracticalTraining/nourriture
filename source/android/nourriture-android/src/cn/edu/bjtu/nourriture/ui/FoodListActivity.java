@@ -94,7 +94,7 @@ public class FoodListActivity extends BaseActivity {
 		pl_refresh.getLoadingLayoutProxy(true, false).setRefreshingLabel(rs.getString(R.string.refreshing));
 		pl_refresh.getLoadingLayoutProxy(true, false).setReleaseLabel(rs.getString(R.string.loosen_refreshing));
 		
-		String url = Constants.MOBILE_SERVER_URL + "foodCategory/" + categoryId;
+		String url = Constants.MOBILE_SERVER_WS_URL + "foodCategory/" + categoryId;
 		httpUtils.send(HttpMethod.GET, url, new RequestCallBack<String>() {
 
 			@Override
@@ -231,7 +231,7 @@ public class FoodListActivity extends BaseActivity {
 	
 	private List<JSONObject> getData(){
 		List<JSONObject> data = new ArrayList<JSONObject>();
-		String url = Constants.MOBILE_SERVER_URL + "food/getPage";
+		String url = Constants.MOBILE_SERVER_WS_URL + "food/getPage";
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("categoryId", String.valueOf(categoryId));
 		params.addQueryStringParameter("page", String.valueOf(page));
@@ -242,7 +242,7 @@ public class FoodListActivity extends BaseActivity {
 				JSONObject jFood = jFoods.getJSONObject(i);
 				jFood.put("jsonStr", jFood.toString());
 				int flavourId = jFood.getInt("flavourId");
-				url = Constants.MOBILE_SERVER_URL + "flavour/" + flavourId;
+				url = Constants.MOBILE_SERVER_WS_URL + "flavour/" + flavourId;
 				String flavourStr = httpUtils.sendSync(HttpMethod.GET, url).readString();
 				JSONObject jFlavour = new JSONObject(flavourStr).getJSONObject("superiorFlavour");
 				String name = jFlavour.getString("name");

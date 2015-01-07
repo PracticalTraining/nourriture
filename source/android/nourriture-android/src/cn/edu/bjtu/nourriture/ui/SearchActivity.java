@@ -200,8 +200,8 @@ public class SearchActivity extends BaseActivity {
 		public void run() {
 			HttpUtils httpUtils = new HttpUtils();
 
-			String foodUrl = Constants.MOBILE_SERVER_URL + "food/searchByName";
-			String recipeUrl = Constants.MOBILE_SERVER_URL
+			String foodUrl = Constants.MOBILE_SERVER_WS_URL + "food/searchByName";
+			String recipeUrl = Constants.MOBILE_SERVER_WS_URL
 					+ "recipe/searchByName";
 			RequestParams params = new RequestParams();
 			params.addQueryStringParameter("name", keyWord);

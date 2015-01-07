@@ -96,7 +96,7 @@ public class AddRecipeActivity extends BaseActivity {
 		}
 		HttpUtils httpUtils = new HttpUtils();
 		// String id = EMobileTask.getCookie("userId");
-		String url = Constants.MOBILE_SERVER_URL + "recipe";
+		String url = Constants.MOBILE_SERVER_WS_URL + "recipe";
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("name", name);
 		params.addBodyParameter("description", description);
