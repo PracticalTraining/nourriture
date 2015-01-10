@@ -14,6 +14,9 @@ import android.widget.TabHost;
 import cn.edu.bjtu.nourriture.AppManager;
 import cn.edu.bjtu.nourriture.R;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class HomeActivity extends TabActivity {
@@ -31,11 +34,18 @@ public class HomeActivity extends TabActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		AppManager.getInstance().addActivity(this);
 		current_tab = getIntent().getStringExtra("currenttab");
 		setContentView(R.layout.activity_home);
+		GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+		analytics.setLocalDispatchPeriod(15);
+		Tracker				my_tracker = analytics.newTracker(R.xml.app_tracker);
+		
+		my_tracker.setScreenName("HomeActivity");
+		my_tracker.send(new HitBuilders.AppViewBuilder().build());
 		findViewById();
 		initView();
 	}

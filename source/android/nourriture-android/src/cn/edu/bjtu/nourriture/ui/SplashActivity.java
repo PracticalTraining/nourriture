@@ -1,5 +1,9 @@
 package cn.edu.bjtu.nourriture.ui;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -32,6 +36,7 @@ public class SplashActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
@@ -41,7 +46,13 @@ public class SplashActivity extends BaseActivity {
 		Constants.SCREEN_DENSITY = metrics.density;
 		Constants.SCREEN_HEIGHT = metrics.heightPixels;
 		Constants.SCREEN_WIDTH = metrics.widthPixels;
-
+		
+		GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+		analytics.setLocalDispatchPeriod(15);
+		Tracker				my_tracker = analytics.newTracker(R.xml.app_tracker);
+		
+		my_tracker.setScreenName("SplashActivity");
+		my_tracker.send(new HitBuilders.AppViewBuilder().build());
 		mHandler = new Handler(getMainLooper());
 		findViewById();
 		initView();
