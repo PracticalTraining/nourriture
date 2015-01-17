@@ -6,7 +6,7 @@
 
 		<script src="./js/jquery.js"></script>
 		<link rel="stylesheet" type="text/css" href="./css/webuploader.css">
-		<link rel="stylesheet" type="text/css" href="./css/diyUpload.css">
+		<!-- <link rel="stylesheet" type="text/css" href="./css/diyUpload.css"> -->
 		<script type="text/javascript" src="./js/webuploader.html5only.min.js"></script>
 		<script type="text/javascript" src="./js/diyUpload.js"></script>
 
@@ -33,12 +33,17 @@
 		<!--webfont-->
 		<!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
 		<link href="./css/css.css" rel='stylesheet' type='text/css' />
+
+		<script type="text/javascript" src="./js/angular.js"></script>
+		<script type="text/javascript" src="./js/angular-cookies.js"></script>
+		<script type="text/javascript" src="./js/angular/app.js"></script>
+		<script type="text/javascript" src="./js/angular/lrCtrl.js"></script>
+		<script type="text/javascript" src="./js/angular/addfoodCtrl.js"></script>
 		<script type="text/javascript" src="./js/login.js"></script>
 		<script src="./js/jquery.easydropdown.js"></script>
 		<!--Animation-->
 		<script src="./js/wow.min.js"></script>
 		<link href="./css/animate.css" rel='stylesheet' type='text/css' />
-		<script type="text/javascript" src="./js/login.js"></script>
 		<link href="./css/mystyle.css" rel='stylesheet' type='text/css' />
 		<script>
 			new WOW().init();
@@ -73,7 +78,7 @@
 		}
 	</style>
 
-	<body>
+	<body ng-app="nourriture">
 		<div class="header">
 			<div class="header-left">
 				<div class="logo">
@@ -185,9 +190,9 @@
 			</div>
 			<div class="clearfix"></div>
 		</div>
-		<div class="content_top wow bounceInRight">
+		<div class="content_top wow bounceInRight" ng-controller="addfood">
 			<div class="container">
-				<form action="" method="post">
+				<form action="index.html" method="post">
 
 					<div class="col-md-6" style="margin-top: 50px;">
 						<div id="box">
@@ -204,7 +209,7 @@
 									<label>food name</label>
 								</div>
 								<div class="col-md-8">
-									<input type="text" style="width: 73%">
+									<input type="text" style="width: 73%" ng-model="foodname">
 								</div>
 							</div>
 							<!--price -->
@@ -213,7 +218,7 @@
 									<label>price</label>
 								</div>
 								<div class="col-md-8">
-									<input type="text" style="width: 73%">
+									<input type="text" style="width: 73%" ng-model="price">
 									<label>RMB</label>
 								</div>
 							</div>
@@ -223,10 +228,10 @@
 									<label>category</label>
 								</div>
 								<div class="col-md-8">
-									<select style="width: 73%">
+									<select style="width: 73%"  ng-model="category" >
 										<option value="0">火锅</option>
 										<option value="1">炖菜</option>
-										<option value="2">炒菜</option>
+										<option value="2" ng-selected="category" >炒菜</option>
 										<option value="3">Newziland</option>
 										<option value="4">Pakistan</option>
 										<option value="5">United Kingdom</option>
@@ -243,8 +248,8 @@
 									<label>flavour</label>
 								</div>
 								<div class="col-md-8">
-									<select style="width: 73%">
-										<option value="0">甜味</option>
+									<select style="width: 73%" ng-model="flavour">
+										<option value="0"  ng-selected="flavour">甜味</option>
 										<option value="1">辣味</option>
 										<option value="2">酸味</option>
 										<option value="3">苦味</option>
@@ -262,7 +267,7 @@
 									<label>manufacturer</label>
 								</div>
 								<div class="col-md-8">
-									<input type="text">
+									<input type="text" ng-model="manufacturer">
 								</div>
 							</div>
 							<!--producelocation-->
@@ -272,7 +277,7 @@
 								</div>
 
 								<div class="col-md-8">
-									<select style="width: 34.5%">
+									<select style="width: 34.5%"  ng-model="producelocation">
 										<option value="0">北京</option>
 										<option value="1">上海</option>
 										<option value="2">内蒙古</option>
@@ -284,7 +289,7 @@
 										<option value="8">Mirum</option>
 									</select>
 									<select style="width: 34.5%">
-										<option value="0">海淀区</option>
+										<option value="0" ng-selected="producelocation">海淀区</option>
 										<option value="1">东城区</option>
 										<option value="2">西城区</option>
 										<option value="3">昌平区</option>
@@ -316,8 +321,8 @@
 										<option value="7">Russia</option>
 										<option value="8">Mirum</option>
 									</select>
-									<select style="width: 34.5%">
-										<option value="0">海淀区</option>
+									<select style="width: 34.5%" ng-model="buylocation">
+										<option value="0" ng-selected="buylocation">海淀区</option>
 										<option value="1">东城区</option>
 										<option value="2">西城区</option>
 										<option value="3">昌平区</option>
@@ -332,7 +337,7 @@
 						</div>
 					</div>
 
-					<input style="float: right; margin-right: 550px;" type="submit" value="submit" />
+					<input style="float: right; margin-right: 550px;" type="submit" value="submit" ng-click="addfood()" ng-model="addfood"/>
 				</form>
 			</div>
 		</div>
