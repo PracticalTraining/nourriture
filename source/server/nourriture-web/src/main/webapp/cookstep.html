@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<title>Free CSS template by ChocoTemplates.com</title>
+<link rel="stylesheet" href="./css/mystyle1.css" type="text/css"
+	media="all" />
+<link href="./css/bootstrap.css" rel='stylesheet' type='text/css' />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- Custom Theme files -->
+<link href="./css/style.css" rel='stylesheet' type='text/css' />
+<!-- Custom Theme files -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="application/x-javascript">
+	
+			addEventListener("load", function() {
+				setTimeout(hideURLbar, 0);
+			}, false);
+
+			function hideURLbar() {
+				window.scrollTo(0, 1);
+			}
+		
+</script>
+<!--webfont-->
+<!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+
+<link href="./css/mystyle.css" rel='stylesheet' type='text/css' />
+<link href="./css/css.css" rel='stylesheet' type='text/css' />
+<script type="text/javascript" src="./js/login.js"></script>
+<script src="./js/jquery.easydropdown.js"></script>
+<!--Animation-->
+<script type="text/javascript" src="./js/angular.js"></script>
+<script type="text/javascript" src="./js/angular-cookies.js"></script>
+<script type="text/javascript" src="./js/angular/app.js"></script>
+<script type="text/javascript" src="./js/angular/lrCtrl.js"></script>
+<script type="text/javascript" src="./js/login.js"></script>
+<script src="./js/wow.min.js"></script>
+<link href="./css/animate.css" rel='stylesheet' type='text/css' />
+<script>
+	new WOW().init();
+</script>
+
+</head>
+<body>
+	<div class="header">
+		<div class="header-left">
+			<div class="logo">
+				<a href="index.html"><img src="./images/logo.png" alt="" /></a>
+			</div>
+			<div class="menu">
+				<a class="toggleMenu" href="#"><img src="./images/nav.png"
+					alt="" /></a>
+				<ul class="nav" id="nav">
+					<li><a href="index.html">Reality</a></li>
+					<li><a href="living.html">Living</a></li>
+					<li><a href="education.html">Education</a></li>
+					<li><a href="entertain.html">Entertainment</a></li>
+				</ul>
+				<script type="text/javascript" src="./js/responsive-nav.js"></script>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="header_right">
+			<!-- start search-->
+			<div class="search-box">
+				<div id="sb-search" class="sb-search">
+					<form>
+						<input class="sb-search-input"
+							placeholder="Enter your search term..." type="search"
+							name="search" id="search"> <input
+							class="sb-search-submit" type="submit" value=""> <span
+							class="sb-icon-search"> </span>
+					</form>
+				</div>
+			</div>
+			<!----search-scripts---->
+			<script src="./js/classie.js"></script>
+			<script src="./js/uisearch.js"></script>
+			<script>
+				new UISearch(document.getElementById('sb-search'));
+			</script>
+			<!----//search-scripts---->
+			<div id="loginContainer" ng-app="nourriture" ng-controller="lr">
+				<a href="#" id="loginButton"> <img src="./images/login.png">
+					<span>{{ name }}</span>
+				</a> <a href="#" ng-hide="loginBox" ng-click="logout()"> <span>Logout</span>
+				</a> <a href="#" id="registerButton" ng-show="loginBox"> <span>Register</span>
+				</a>
+				<div id="loginBox" ng-show="loginBox">
+					<form id="loginForm">
+						<fieldset id="body">
+							<fieldset ng-show="hintShow">
+								<label for="username" style="color: red">{{ hint }}</label>
+							</fieldset>
+							<fieldset>
+								<label for="username">User name</label> <input type="text"
+									name="username" id="username" ng-model="username">
+							</fieldset>
+							<fieldset>
+								<label for="password">Password</label> <input type="password"
+									name="password" id="password" ng-model="password">
+							</fieldset>
+							<fieldset>
+								<label for="identity">Identity</label> <select
+									ng-model="identity">
+									<option value="customer">customer</option>
+									<option value="manafacture">manafacture</option>
+								</select>
+							</fieldset>
+							<input type="button" ng-click="login()" id="login"
+								value="Sign in">
+						</fieldset>
+					</form>
+				</div>
+
+				<div id="registerBox" ng-show="loginBox">
+					<form id="registerForm">
+						<fieldset id="body">
+							<fieldset ng-show="rhintShow">
+								<label for="username" style="color: red">{{ rhint }}</label>
+							</fieldset>
+							<fieldset>
+								<label for="username">User name</label> <input type="text"
+									name="username" id="username" ng-model="rusername">
+							</fieldset>
+							<fieldset>
+								<label for="password">Password</label> <input type="password"
+									name="password" id="password" ng-model="rpassword">
+							</fieldset>
+							<fieldset>
+								<label for="password">Confirm Password</label> <input
+									type="password" name="password" id="password">
+							</fieldset>
+							<fieldset>
+								<label for="ridentity">Identity</label> <select
+									ng-model="ridentity">
+									<option value="customer">customer</option>
+									<option value="manafacture">manafacture</option>
+								</select>
+							</fieldset>
+							<input type="button" ng-click="register()" id="register"
+								value="Register">
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<!-- Shell -->
+	<div class="shell">
+
+		<!-- Content -->
+		<div id="content">
+
+			<!-- Image -->
+			<div class="frame">
+				<img src="./images/picture.jpg" alt="" />
+			</div>
+			<!-- End Image -->
+
+			<!-- Description -->
+			<div class="description">
+				<h2>Photography title</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					Pellentesque libero lectus, hendrerit a commodo sed, porta nec
+					ante. Quisque vulputate, ipsum non rutrum eleifend</p>
+				<div class="color-scheme">
+					<ul>
+						<li class="black"><a href="#">&nbsp;</a></li>
+						<li class=" dark-grey"><a href="#">&nbsp;</a></li>
+						<li class="grey"><a href="#">&nbsp;</a></li>
+						<li class="light-grey"><a href="#">&nbsp;</a></li>
+						<li class="lighter-grey"><a href="#">&nbsp;</a></li>
+						<li class=" current white"><a href="#">&nbsp;</a></li>
+					</ul>
+					<div class="cl">&nbsp;</div>
+				</div>
+			</div>
+			<!-- End Description -->
+
+			<div class="cl">&nbsp;</div>
+
+			<!-- Carousel -->
+			<div class="image-frame">
+				<ul id="mycarousel" class="jcarousel-skin-tango">
+					<li><a href="#"><img src="./images/11.jpg" alt="" /></a></li>
+					<li><a href="#"><img src="./images/22.jpg" alt="" /></a></li>
+					<li><a href="#"><img src="./images/33.jpg" alt="" /></a></li>
+					<li class="last"><a href="#"><img src="./images/44.jpg"
+							alt="" /></a></li>
+				</ul>
+				<div class="cl">&nbsp;</div>
+			</div>
+			<!-- End Carousel -->
+
+			<div class="cl">&nbsp;</div>
+
+		</div>
+		<!-- End Content -->
+
+	</div>
+	<!-- End Shell -->
+	
+	<div class="footer">
+		<div class="container">
+			<div class="footer_top">
+				<h3>Subscribe to our newsletter</h3>
+				<form>
+					<span> <i><img src="./images/mail.png" alt=""></i> <input
+						type="text" value="Enter your email" onfocus="this.value = '';"
+						onblur="if (this.value == '') {this.value = 'Enter your email';}">
+						<label class="btn1 btn2 btn-2 btn-2g"> <input
+							name="submit" type="submit" id="submit" value="Subscribe">
+					</label>
+					</span>
+				</form>
+			</div>
+			<div class="footer_grids">
+				<div class="footer-grid">
+					<h4>Corporation</h4>
+					<ul class="list1">
+						<li><a href="contact.html">Contact</a></li>
+						<li><a href="#">group</a></li>
+						<li><a href="#">develop</a></li>
+						<li><a href="#">open API</a></li>
+						<li><a href="#">links</a></li>
+					</ul>
+				</div>
+				<div class="footer-grid">
+					<h4>Help</h4>
+					<ul class="list1">
+						<li><a href="#">how to use</a></li>
+						<li><a href="#">normal problem</a></li>
+						<li><a href="#">about us </a></li>
+						<li><a href="#">hiring</a></li>
+					</ul>
+				</div>
+				<div class="footer-grid last_grid">
+					<h4>Follow Us</h4>
+					<ul class="footer_social">
+						<li><a href=""> <i class="fb"> </i>
+						</a></li>
+						<li><a href=""><i class="tw"> </i> </a></li>
+						<li><a href=""><i class="google"> </i> </a></li>
+						<li><a href=""><i class="u_tube"> </i> </a></li>
+					</ul>
+					<div class="copy" id="contact">
+						<p>
+							&copy; Template by <a href="http://w3layouts.com/"
+								target="_blank">W3layouts</a>
+						</p>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
