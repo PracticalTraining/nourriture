@@ -170,7 +170,8 @@ public class SearchActivity extends BaseActivity {
 		DbUtils dbUtils = DbUtils.create(SearchActivity.this);
 		try {
 			dbUtils.createTableIfNotExist(SearchHistory.class);
-			SqlInfo sqlInfo = new SqlInfo("select * from search_history where keyword = ?");
+			SqlInfo sqlInfo = new SqlInfo(
+					"select * from search_history where keyword = ?");
 			sqlInfo.addBindArg(keyword);
 			List<DbModel> list = dbUtils.findDbModelAll(sqlInfo);
 			if (list.size() == 0)
@@ -199,7 +200,6 @@ public class SearchActivity extends BaseActivity {
 		@Override
 		public void run() {
 			HttpUtils httpUtils = new HttpUtils();
-
 			String foodUrl = Constants.MOBILE_SERVER_URL + "food/searchByName";
 			String recipeUrl = Constants.MOBILE_SERVER_URL
 					+ "recipe/searchByName";
@@ -221,30 +221,33 @@ public class SearchActivity extends BaseActivity {
 			} catch (final HttpException e1) {
 				e1.printStackTrace();
 				SearchActivity.this.runOnUiThread(new Runnable() {
-					
+
 					@Override
 					public void run() {
-						DisPlay(rs.getString(R.string.activity_search_fail) + e1.getMessage());
+						DisPlay(rs.getString(R.string.activity_search_fail)
+								+ e1.getMessage());
 						l.dismiss();
 					}
 				});
 			} catch (final IOException e) {
 				e.printStackTrace();
 				SearchActivity.this.runOnUiThread(new Runnable() {
-					
+
 					@Override
 					public void run() {
-						DisPlay(rs.getString(R.string.activity_search_fail) + e.getMessage());
+						DisPlay(rs.getString(R.string.activity_search_fail)
+								+ e.getMessage());
 						l.dismiss();
 					}
 				});
 			} catch (final JSONException e) {
 				e.printStackTrace();
 				SearchActivity.this.runOnUiThread(new Runnable() {
-					
+
 					@Override
 					public void run() {
-						DisPlay(rs.getString(R.string.activity_search_fail) + e.getMessage());
+						DisPlay(rs.getString(R.string.activity_search_fail)
+								+ e.getMessage());
 						l.dismiss();
 					}
 				});
